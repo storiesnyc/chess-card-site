@@ -1,147 +1,237 @@
+<!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chess Trading Cards — Chess deserves better collectibles.</title>
 <meta name="description" content="Original illustrated trading cards for chess. 64 cards, 8 secret rares, Grandmasters serialized to 64. First Edition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@300;400;500&family=Zilla+Slab:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --ink-900:#0A0C10; --ink-850:#0E1117; --line:#252C38;
-  --bone:#E7E3D9; --bone-dim:#8A8F98;
-  --claret:#A6303A; --claret-lift:#C4404A;
+  /* A rolled-out vinyl tournament board, and the paper that goes with it. */
+  --felt:#23372C; --felt-deep:#16241C; --felt-lift:#2C4436;
+  --buff:#E8E0CE; --buff-dim:#9BA894; --ink:#131A16;
+  --kraft:#C0A87E; --pencil:#B0432F; --pencil-lift:#CB5A40;
+  --line:rgba(232,224,206,.16); --line-hard:rgba(232,224,206,.30);
   --holo:linear-gradient(135deg,#6FD3E6 0%,#B79BE8 26%,#E8B87F 52%,#7FE0C0 74%,#6FD3E6 100%);
-  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif;
-  --f-data:"JetBrains Mono",ui-monospace,monospace; --f-note:"Newsreader",Georgia,serif;
-  --pad:clamp(20px,5vw,64px); --maxw:1180px;
+  --f-display:"Zilla Slab",Georgia,serif;
+  --f-body:"Karla",system-ui,sans-serif;
+  --f-note:"Zilla Slab",Georgia,serif;
+  --f-data:"Martian Mono",ui-monospace,monospace;
+  --pad:clamp(20px,5vw,64px); --maxw:1140px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 html.is-locked,html.is-locked body{overflow:hidden;height:100%}
-body{background:var(--ink-900);color:var(--bone);font-family:var(--f-body);font-size:16px;
+body{background:var(--felt);color:var(--buff);font-family:var(--f-body);font-size:16px;
   line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--claret-lift);outline-offset:3px}
-.data{font-family:var(--f-data);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+:focus-visible{outline:2px solid var(--pencil-lift);outline-offset:3px}
+.data{font-family:var(--f-data);font-size:10px;font-weight:400;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--buff-dim)}
 
 /* ============== GATE ============== */
 #gate{position:relative;height:100svh;min-height:520px;overflow:hidden;
-  background:radial-gradient(125% 85% at 50% 46%,#171E29 0%,#0A0C10 66%)}
+  background:radial-gradient(125% 85% at 50% 46%,#2E4839 0%,#16241C 66%)}
 #gate.is-skipped{display:none}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;
   touch-action:none;cursor:grab}
 #gl:active{cursor:grabbing}
-.gate-mark{position:absolute;top:var(--pad);left:var(--pad);font-family:var(--f-data);font-size:10px;
-  letter-spacing:.28em;text-transform:uppercase;color:#4E5663;z-index:3;pointer-events:none}
-.gate-skip{position:absolute;top:var(--pad);right:var(--pad);font-family:var(--f-data);font-size:10px;
-  letter-spacing:.22em;text-transform:uppercase;color:#4E5663;background:none;border:0;cursor:pointer;
-  padding:6px;transition:color .25s;z-index:3}
-.gate-skip:hover{color:var(--bone)}
+.gate-mark{position:absolute;top:var(--pad);left:var(--pad);font-family:var(--f-data);font-size:9px;
+  font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:#6D7D6F;z-index:3;pointer-events:none}
+.gate-skip{position:absolute;top:var(--pad);right:var(--pad);font-family:var(--f-data);font-size:9px;
+  font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:#6D7D6F;background:none;border:0;
+  cursor:pointer;padding:6px;transition:color .25s;z-index:3}
+.gate-skip:hover{color:var(--buff)}
 .cue{position:absolute;left:50%;bottom:calc(var(--pad) + 6px);transform:translateX(-50%);
-  font-family:var(--f-data);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#5C6371;
-  white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
+  font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;
+  color:#7E8E80;white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
   background:var(--holo);background-size:200% 200%;mix-blend-mode:screen;
   transition:opacity .55s ease}
 .veil{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;
-  background:var(--ink-900);transition:opacity .45s ease}
+  background:var(--felt);transition:opacity .45s ease}
 
-/* ============== SITE ============== */
+/* ============== SHELL ============== */
 #site{opacity:0;transition:opacity .7s ease}
 #site.is-in{opacity:1}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-nav{position:sticky;top:0;z-index:60;background:rgba(10,12,16,.82);backdrop-filter:blur(12px);
+.topbar{position:sticky;top:0;z-index:60;background:rgba(35,55,44,.86);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
-.brand{font-family:var(--f-display);font-weight:800;font-size:12px;letter-spacing:.24em;
-  text-transform:uppercase;font-stretch:118%}
-.nav-links{display:flex;gap:26px}
-.nav-links a{font-family:var(--f-data);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--bone-dim);transition:color .2s}
-.nav-links a:hover{color:var(--bone)}
-@media(max-width:620px){.nav-links a:not(.nav-buy){display:none}}
-.nav-buy{color:var(--claret-lift)!important}
-.hero{padding:clamp(70px,13vh,140px) 0 clamp(56px,9vh,96px)}
-.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:26px}
-.eyebrow .rule{height:1px;width:38px;background:var(--claret)}
-h1{font-family:var(--f-display);font-weight:800;font-stretch:122%;font-size:clamp(38px,8.4vw,92px);
-  line-height:.94;letter-spacing:-.018em;text-transform:uppercase;margin:0 0 28px;max-width:16ch}
-h1 .soft{color:#5E6674}
-.lede{font-family:var(--f-note);font-style:italic;font-size:clamp(17px,2.2vw,22px);line-height:1.5;
-  color:#B9B5AC;max-width:46ch;margin:0 0 38px}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:56px}
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-data);font-size:11px;
-  letter-spacing:.18em;text-transform:uppercase;padding:14px 24px;border-radius:2px;
-  border:1px solid var(--line);transition:background .2s,border-color .2s,color .2s;cursor:pointer}
-.btn--primary{background:var(--claret);border-color:var(--claret);color:#fff}
-.btn--primary:hover{background:var(--claret-lift);border-color:var(--claret-lift)}
-.btn--ghost{color:var(--bone-dim)}
-.btn--ghost:hover{color:var(--bone);border-color:#3A4351}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
-.stat{padding:22px 0 0;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat .n{font-family:var(--f-data);font-size:clamp(22px,3.4vw,32px);color:var(--bone);line-height:1;margin-bottom:9px}
-.stat .l{font-family:var(--f-data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--bone-dim);line-height:1.5;max-width:20ch;padding-right:14px}
-section.band{padding:clamp(64px,10vh,110px) 0;border-top:1px solid var(--line)}
-.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:40px;flex-wrap:wrap}
-h2{font-family:var(--f-display);font-weight:800;font-stretch:118%;font-size:clamp(22px,3.4vw,34px);
-  text-transform:uppercase;letter-spacing:-.01em;margin:0;line-height:1}
-.sec-note{font-family:var(--f-note);font-style:italic;color:var(--bone-dim);font-size:16px}
-.ladder{border-top:1px solid var(--line)}
-.rung{display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:20px 0;
-  border-bottom:1px solid var(--line);transition:background .25s}
-.rung:hover{background:#0E1117}
-.rung .code{font-family:var(--f-data);font-size:11px;letter-spacing:.14em;color:#5C6371}
-.rung .name{font-family:var(--f-display);font-weight:600;font-size:17px}
-.rung .name span{display:block;font-family:var(--f-body);font-weight:400;font-size:13.5px;
-  color:var(--bone-dim);margin-top:3px}
-.chip{font-family:var(--f-data);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
-  padding:6px 11px;border-radius:2px;border:1px solid var(--line);color:var(--bone-dim);white-space:nowrap}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand em{font-style:normal;color:var(--kraft)}
+.topbar-links{display:flex;gap:24px;align-items:center}
+.topbar-links a{font-family:var(--f-data);font-size:10px;font-weight:300;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--buff-dim);transition:color .2s}
+.topbar-links a:hover{color:var(--buff)}
+.link-buy{color:var(--pencil-lift)!important}
+@media(max-width:620px){.topbar-links a:not(.link-buy){display:none}}
+
+/* ============== HERO ============== */
+/* vertical padding only — these classes share elements with .wrap, and the
+   `padding` shorthand would zero out its horizontal padding */
+.hero{padding-top:clamp(66px,12vh,132px);padding-bottom:clamp(54px,9vh,92px)}
+.stamp{display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;
+  border:1px solid var(--line-hard);border-radius:1px;padding:7px 12px}
+.stamp .dot{width:5px;height:5px;background:var(--pencil-lift);border-radius:50%}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,8.2vw,86px);
+  line-height:.98;letter-spacing:-.022em;margin:0 0 26px;max-width:15ch}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--kraft)}
+.lede{font-family:var(--f-note);font-size:clamp(18px,2.3vw,23px);line-height:1.5;font-weight:400;
+  color:#CFC9B8;max-width:44ch;margin:0 0 36px}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--f-data);
+  font-size:10px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;padding:15px 22px;
+  border-radius:1px;border:1px solid var(--line-hard);background:none;color:var(--buff);
+  transition:background .2s,border-color .2s,color .2s;cursor:pointer}
+.btn--fill{background:var(--pencil);border-color:var(--pencil);color:#FBF6EA}
+.btn--fill:hover{background:var(--pencil-lift);border-color:var(--pencil-lift)}
+.btn--line:hover{border-color:var(--buff);background:rgba(232,224,206,.06)}
+.btn--ink{background:var(--ink);border-color:var(--ink);color:var(--buff)}
+.btn--ink:hover{background:var(--pencil);border-color:var(--pencil);color:#FBF6EA}
+
+/* ============== SECTIONS ============== */
+.band{padding-top:clamp(60px,9vh,104px);padding-bottom:clamp(60px,9vh,104px);
+  border-top:1px solid var(--line)}
+.band-head{margin-bottom:44px;max-width:60ch}
+.band-head h2{font-family:var(--f-display);font-weight:700;font-size:clamp(27px,4.2vw,42px);
+  letter-spacing:-.018em;margin:0 0 10px;line-height:1.04}
+.band-head p{font-family:var(--f-note);font-style:italic;font-weight:400;color:#B6B3A2;
+  font-size:17px;margin:0;max-width:48ch}
+
+/* ============== THE BOARD (signature) ============== */
+.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
+  gap:clamp(26px,4.5vw,54px);align-items:start}
+@media(max-width:840px){.board-layout{grid-template-columns:1fr}}
+
+.board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:9px}
+.ranks,.files{display:grid;font-family:var(--f-data);font-size:9px;font-weight:300;color:var(--buff-dim)}
+.ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:15px}
+.files{grid-column:2;grid-template-columns:repeat(8,1fr);justify-items:center;padding-top:2px}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;
+  border:1px solid var(--line-hard);background:var(--felt-deep)}
+.sq{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;
+  padding:5px 0 0 5px;transition:transform .18s ease,filter .18s ease}
+.sq .num{font-family:var(--f-data);font-size:8px;font-weight:300;letter-spacing:-.02em;
+  color:rgba(19,26,22,.42);line-height:1}
+.sq--common.sq--lt{background:#E2DAC7}
+.sq--common.sq--dk{background:#C7BEA8}
+.sq--uncommon.sq--lt{background:#C6AE84}
+.sq--uncommon.sq--dk{background:#AC9469}
+/* Each rare is its own foil card. Every square gets a narrow window of the
+   holo ramp — a sheen, the way foil actually reads at card size — so the rank
+   travels the spectrum without any one square being a rainbow. */
+.sq--rare{background-image:linear-gradient(180deg,rgba(232,224,206,.16),rgba(232,224,206,.16)),
+  linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3));
+  box-shadow:inset 0 0 0 1px rgba(19,26,22,.20)}
+.sq--rare .num{color:rgba(19,26,22,.55)}
+@media(hover:hover){
+  .board:hover .sq{filter:saturate(.55) brightness(.82)}
+  .board .sq:hover{filter:none;transform:scale(1.06);z-index:2;
+    box-shadow:0 6px 20px rgba(0,0,0,.45),inset 0 0 0 1px rgba(19,26,22,.20)}
+}
+@media(max-width:640px){.sq .num{display:none}.sq{padding:0}}
+
+.readout{display:flex;align-items:center;gap:10px;margin-top:16px;min-height:22px;
+  font-family:var(--f-data);font-size:10px;font-weight:400;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--buff-dim)}
+.readout b{color:var(--buff);font-weight:500}
+.readout .sep{color:var(--line-hard)}
+
+/* legend — carries the real content, board or no board */
+.key{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.key-row{background:var(--felt);padding:16px 18px;display:grid;
+  grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.swatch{width:22px;height:22px;border-radius:1px;margin-top:2px}
+.swatch--common{background:linear-gradient(135deg,#E2DAC7 50%,#C7BEA8 50%)}
+.swatch--uncommon{background:linear-gradient(135deg,#C6AE84 50%,#AC9469 50%)}
+.swatch--rare{background:var(--holo);background-size:200% 200%}
+.key-row h3{font-family:var(--f-display);font-weight:700;font-size:16px;margin:0 0 3px;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.key-row .rng{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:0;
+  color:var(--buff-dim);text-transform:none}
+.key-row p{font-size:14px;color:#B6B3A2;margin:0;line-height:1.5}
+
+/* off-checklist pair */
+.offlist{margin-top:26px;display:grid;grid-template-columns:1fr;
+  gap:1px;background:var(--line);border:1px solid var(--line)}
+.offlist-cell{background:var(--felt);padding:24px 22px}
+.offlist-cell .tag{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--buff-dim);margin-bottom:12px}
+.offlist-cell h3{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0 0 8px}
+.offlist-cell p{font-size:14.5px;color:#B6B3A2;margin:0 0 16px;line-height:1.55}
+.chip{display:inline-block;font-family:var(--f-data);font-size:9px;font-weight:400;letter-spacing:.02em;
+  text-transform:uppercase;padding:6px 10px;border-radius:1px;border:1px solid var(--line-hard);
+  color:var(--buff-dim)}
 .chip--holo{background:var(--holo);background-size:180% 180%;animation:holoshift 7s linear infinite;
-  color:#0A0C10;border-color:transparent;font-weight:500}
+  color:var(--ink);border-color:transparent;font-weight:500}
 @keyframes holoshift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.chip--serial{border-color:var(--claret);color:var(--claret-lift)}
-@media(max-width:560px){.rung{grid-template-columns:56px 1fr;gap:12px}
-  .rung .chip{grid-column:2;justify-self:start;margin-top:4px}}
-.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.sku{background:var(--ink-900);padding:30px 24px 26px;display:flex;flex-direction:column;transition:background .25s}
-.sku:hover{background:var(--ink-850)}
-.sku .k{font-family:var(--f-data);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:#5C6371;margin-bottom:16px}
-.sku h3{font-family:var(--f-display);font-weight:800;font-stretch:114%;text-transform:uppercase;
-  font-size:19px;margin:0 0 10px}
-.sku p{font-size:14px;color:var(--bone-dim);margin:0 0 22px;line-height:1.55}
-.sku .price{font-family:var(--f-data);font-size:26px;margin-top:auto;margin-bottom:16px}
-.sku .btn{width:100%;justify-content:center}
-@media(max-width:800px){.shop{grid-template-columns:1fr}}
-.art-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
-@media(max-width:760px){.art-grid{grid-template-columns:1fr}}
-.art-copy p{font-size:16.5px;color:#B9B5AC;margin:0 0 18px;max-width:52ch}
-.art-copy strong{color:var(--bone);font-weight:600}
-.credit{border-left:2px solid var(--claret);padding-left:18px;margin-top:30px}
-.credit .r{font-family:var(--f-data);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:#5C6371;margin-bottom:5px}
-.credit .n{font-family:var(--f-display);font-weight:600;font-size:16px}
-.noai{border:1px solid var(--line);padding:26px;display:grid;gap:14px;align-content:start}
-.noai .big{font-family:var(--f-display);font-weight:800;font-stretch:118%;font-size:clamp(26px,4.6vw,40px);
-  text-transform:uppercase;line-height:.98}
-.noai p{font-size:14.5px;color:var(--bone-dim);margin:0;line-height:1.6}
-footer{border-top:1px solid var(--line);padding:44px 0 54px}
-.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
-.foot .t{font-family:var(--f-note);font-style:italic;font-size:19px;color:#B9B5AC}
+.chip--serial{border-color:var(--pencil);color:var(--pencil-lift)}
+
+/* ============== SHOP ============== */
+.shop{display:grid;grid-template-columns:1fr 1fr 1.22fr;gap:1px;background:var(--line);
+  border:1px solid var(--line)}
+@media(max-width:820px){.shop{grid-template-columns:1fr}}
+.sku{background:var(--felt);padding:28px 24px 26px;display:flex;flex-direction:column}
+.sku--feature{background:var(--buff);color:var(--ink)}
+.sku .count{font-family:var(--f-data);font-size:clamp(28px,4vw,38px);font-weight:300;
+  letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.sku .unit{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--buff-dim);margin-bottom:20px}
+.sku--feature .unit{color:#6E7568}
+.sku h3{font-family:var(--f-display);font-weight:700;font-size:19px;margin:0 0 8px}
+.sku p{font-size:14px;color:#B6B3A2;margin:0 0 24px;line-height:1.55}
+.sku--feature p{color:#4C5449}
+.sku .price{font-family:var(--f-data);font-size:20px;font-weight:400;letter-spacing:-.02em;
+  margin-top:auto;margin-bottom:16px}
+.sku .btn{width:100%}
+.ships{margin-top:20px;display:flex;gap:10px;align-items:baseline}
+
+/* ============== THE ART ============== */
+.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4.5vw,56px);align-items:start}
+@media(max-width:800px){.art-layout{grid-template-columns:1fr}}
+.art-copy p{font-family:var(--f-note);font-size:18px;line-height:1.55;color:#CFC9B8;
+  margin:0 0 18px;max-width:46ch}
+.art-copy strong{color:var(--buff);font-weight:500;font-style:italic}
+.sheet{background:var(--buff);color:var(--ink);padding:clamp(26px,3.6vw,38px)}
+.sheet .big{font-family:var(--f-display);font-weight:700;font-size:clamp(25px,3.8vw,36px);
+  line-height:1.04;letter-spacing:-.02em;margin:0 0 18px}
+.sheet .big mark{background:none;color:var(--pencil);
+  text-decoration:underline;text-decoration-color:rgba(176,67,47,.4);text-underline-offset:5px}
+.sheet p{font-size:15px;line-height:1.6;color:#4C5449;margin:0}
+.credits{margin-top:30px;border-top:1px solid var(--line);padding-top:6px}
+.credit{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:13px 0;
+  border-bottom:1px solid var(--line);align-items:baseline}
+.credit dt{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--buff-dim)}
+.credit dd{font-family:var(--f-display);font-weight:500;font-size:16px;margin:0}
+.credit dd span{color:var(--buff-dim);font-weight:400}
+
+/* ============== FOOTER ============== */
+.foot{border-top:1px solid var(--line);padding-top:46px;padding-bottom:54px}
+.foot-in{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-end}
+.foot-in .t{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:21px;color:#CFC9B8;
+  max-width:20ch;margin:0}
 .foot-links{display:flex;gap:20px}
-.foot-links a{font-family:var(--f-data);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--bone-dim);transition:color .2s}
-.foot-links a:hover{color:var(--bone)}
-.rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.foot-links a{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--buff-dim);transition:color .2s}
+.foot-links a:hover{color:var(--buff)}
+.colophon{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap}
+
+/* ============== MOTION ============== */
+.rise{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
 .rise.seen{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   .rise{opacity:1;transform:none}
+  .board:hover .sq,.board .sq:hover{filter:none;transform:none}
 }
 </style>
+
+<noscript><style>#gate{display:none}#site{opacity:1}</style></noscript>
 
 <section id="gate" aria-label="Open a pack to enter the site">
   <canvas id="gl" role="button" tabindex="0" aria-label="Tear open the booster pack to enter the site"></canvas>
@@ -153,83 +243,151 @@ footer{border-top:1px solid var(--line);padding:44px 0 54px}
 </section>
 
 <main id="site">
-  <nav><div class="wrap nav-in">
-    <a href="#site" class="brand">Chess Trading Cards</a>
-    <div class="nav-links"><a href="#set">The set</a><a href="#art">The art</a>
-      <a href="#shop" class="nav-buy">Shop</a></div>
-  </div></nav>
+  <header class="topbar"><div class="wrap topbar-in">
+    <a href="#site" class="brand">Chess <em>Trading Cards</em></a>
+    <nav class="topbar-links" aria-label="Sections">
+      <a href="#checklist">Checklist</a><a href="#art">The art</a>
+      <a href="#shop" class="link-buy">Shop</a>
+    </nav>
+  </div></header>
 
-  <header class="hero wrap">
-    <div class="eyebrow rise"><span class="rule"></span><span class="data">First Edition · 64 cards · Printing 001</span></div>
-    <h1 class="rise">Chess deserves <span class="soft">better</span> collectibles.</h1>
+  <section class="hero wrap">
+    <div class="stamp rise"><span class="dot"></span><span class="data">First Edition · Printing 001</span></div>
+    <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
     <p class="lede rise">Sixty-four cards on the openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
     <div class="actions rise">
-      <a href="#shop" class="btn btn--primary">Shop packs</a>
-      <a href="#set" class="btn btn--ghost">See the set</a>
+      <a href="#shop" class="btn btn--fill">Shop packs</a>
+      <a href="#checklist" class="btn btn--line">See the checklist</a>
     </div>
-    <div class="stats rise">
-      <div class="stat"><div class="n">064</div><div class="l">Cards in the base set</div></div>
-      <div class="stat"><div class="n">008</div><div class="l">Secret rares hidden in the run</div></div>
-      <div class="stat"><div class="n">/64</div><div class="l">Copies of each serialized Grandmaster</div></div>
-    </div>
-  </header>
+  </section>
 
-  <section class="band wrap" id="set">
-    <div class="sec-head rise"><h2>The set</h2><p class="sec-note">Five ways a card can come out of a pack.</p></div>
-    <div class="ladder rise">
-      <div class="rung"><div class="code">#001–042</div>
-        <div class="name">Common<span>Openings, tactics, terminology. The backbone of the set.</span></div>
-        <div class="chip">Matte</div></div>
-      <div class="rung"><div class="code">#043–056</div>
-        <div class="name">Uncommon<span>Deeper cuts. Harder to complete than you'd think.</span></div>
-        <div class="chip">Matte</div></div>
-      <div class="rung"><div class="code">#057–064</div>
-        <div class="name">Rare<span>Ends on the titles: Expert, Master, Grandmaster.</span></div>
-        <div class="chip chip--holo">Holofoil</div></div>
-      <div class="rung"><div class="code">SR 1–8</div>
-        <div class="name">Secret Rare<span>Morphy blindfolded. The Immortal Game. Zugzwang. Not on the checklist by accident.</span></div>
-        <div class="chip chip--holo">Full art · Holofoil</div></div>
-      <div class="rung"><div class="code">GM</div>
-        <div class="name">Serialized Grandmaster<span>Hand-numbered. Sixty-four squares, sixty-four copies.</span></div>
-        <div class="chip chip--serial">Numbered to 64</div></div>
+  <section class="band wrap" id="checklist">
+    <div class="band-head rise">
+      <h2>The checklist is a board.</h2>
+      <p>Sixty-four cards, sixty-four squares. The set gets rarer as it counts up, which puts all eight rares on the back rank.</p>
+    </div>
+
+    <div class="board-layout rise">
+      <div>
+        <div class="board-frame">
+          <div class="ranks" aria-hidden="true">
+            <span>8</span><span>7</span><span>6</span><span>5</span>
+            <span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+          <div class="board" id="board" role="img"
+               aria-label="The 64-card base set laid out as a chessboard, card 001 on a8 through card 064 on h1. Cards 001 to 042 are common, 043 to 056 are uncommon, and 057 to 064 are rare, filling the back rank a1 to h1."></div>
+          <div class="files" aria-hidden="true">
+            <span>a</span><span>b</span><span>c</span><span>d</span>
+            <span>e</span><span>f</span><span>g</span><span>h</span>
+          </div>
+        </div>
+        <p class="readout" id="readout" aria-hidden="true">
+          <span class="data">Hover a square</span>
+        </p>
+      </div>
+
+      <div class="side">
+      <dl class="key">
+        <div class="key-row">
+          <span class="swatch swatch--common" aria-hidden="true"></span>
+          <div>
+            <h3>Common <span class="rng">#001–042</span></h3>
+            <p>Openings, tactics, terminology. The backbone of the set, printed matte.</p>
+          </div>
+        </div>
+        <div class="key-row">
+          <span class="swatch swatch--uncommon" aria-hidden="true"></span>
+          <div>
+            <h3>Uncommon <span class="rng">#043–056</span></h3>
+            <p>Deeper cuts. Harder to complete than you'd think, and still matte.</p>
+          </div>
+        </div>
+        <div class="key-row">
+          <span class="swatch swatch--rare" aria-hidden="true"></span>
+          <div>
+            <h3>Rare <span class="rng">#057–064</span></h3>
+            <p>Holofoil, and it ends on the titles: Expert, Master, Grandmaster.</p>
+          </div>
+        </div>
+      </dl>
+
+      <div class="offlist">
+      <div class="offlist-cell">
+        <div class="tag">Not on the checklist</div>
+        <h3>Secret Rare · 8 cards</h3>
+        <p>Morphy blindfolded. The Immortal Game. Zugzwang. Left off the printed checklist on purpose, and seeded through the run.</p>
+        <span class="chip chip--holo">Full art · Holofoil</span>
+      </div>
+      <div class="offlist-cell">
+        <div class="tag">Not on the checklist</div>
+        <h3>Serialized Grandmaster</h3>
+        <p>Hand-numbered in the corner as they come off the press. Sixty-four squares, sixty-four copies.</p>
+        <span class="chip chip--serial">Numbered to 64</span>
+      </div>
+      </div>
+      </div>
     </div>
   </section>
 
   <section class="band wrap" id="shop">
-    <div class="sec-head rise"><h2>Shop</h2><p class="sec-note">Every box ships with the First Edition checklist booklet.</p></div>
-    <div class="shop rise">
-      <div class="sku"><div class="k">01 / Pack</div><h3>Booster pack</h3>
-        <p>Eight cards. One is guaranteed to be better than a common.</p>
-        <div class="price">$8</div><a href="#" class="btn btn--ghost">Add to cart</a></div>
-      <div class="sku"><div class="k">02 / Bundle</div><h3>Five packs</h3>
-        <p>Forty cards. Enough to see the set take shape and find the holes in it.</p>
-        <div class="price">$35</div><a href="#" class="btn btn--ghost">Add to cart</a></div>
-      <div class="sku"><div class="k">03 / Box</div><h3>Booster box</h3>
-        <p>Twenty-four packs, 192 cards, and the First Edition checklist booklet.</p>
-        <div class="price">$144</div><a href="#" class="btn btn--primary">Add to cart</a></div>
+    <div class="band-head rise">
+      <h2>Shop</h2>
+      <p>One printing. When the First Edition run is gone, it isn't reprinted.</p>
     </div>
+    <div class="shop rise">
+      <div class="sku">
+        <div class="count">8</div><div class="unit">Cards</div>
+        <h3>Booster pack</h3>
+        <p>Eight cards, and one of them is guaranteed to be better than a common.</p>
+        <div class="price">$8</div>
+        <a href="#" class="btn btn--line">Add to cart</a>
+      </div>
+      <div class="sku">
+        <div class="count">40</div><div class="unit">Cards · 5 packs</div>
+        <h3>Five packs</h3>
+        <p>Enough to watch the set take shape and find the holes in it.</p>
+        <div class="price">$35</div>
+        <a href="#" class="btn btn--line">Add to cart</a>
+      </div>
+      <div class="sku sku--feature">
+        <div class="count">192</div><div class="unit">Cards · 24 packs</div>
+        <h3>Booster box</h3>
+        <p>The whole box, plus the First Edition checklist booklet that only ships inside one.</p>
+        <div class="price">$144</div>
+        <a href="#" class="btn btn--ink">Add to cart</a>
+      </div>
+    </div>
+    <div class="ships"><span class="data">Ships flat, sleeved, and boxed · All sales final</span></div>
   </section>
 
   <section class="band wrap" id="art">
-    <div class="sec-head rise"><h2>The art</h2><p class="sec-note">Sixty-four originals, commissioned.</p></div>
-    <div class="art-grid rise">
+    <div class="band-head rise">
+      <h2>The art</h2>
+      <p>Sixty-four originals, every one of them commissioned for this set.</p>
+    </div>
+    <div class="art-layout rise">
       <div class="art-copy">
         <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, sixty-four times.</p>
-        <p>Every illustration in the set was commissioned and drawn for this project. Nothing was pulled from a photo archive, nothing was traced, nothing was generated.</p>
-        <div class="credit"><div class="r">Illustration</div><div class="n">Austin McDonald &middot; stinmaster</div></div>
-        <div class="credit"><div class="r">Created by</div><div class="n">Matt &middot; @byredofantome</div></div>
+        <p>Nothing here was pulled from a photo archive, and nothing was traced.</p>
+        <dl class="credits">
+          <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>· stinmaster</span></dd></div>
+          <div class="credit"><dt>Created by</dt><dd>Matt <span>· @byredofantome</span></dd></div>
+          <div class="credit"><dt>Printing</dt><dd>First Edition <span>· 001</span></dd></div>
+        </dl>
       </div>
-      <div class="noai">
-        <div class="big">No AI was used for the illustrations.</div>
-        <p>Worth saying out loud in 2026. An artist was paid, briefed, and given revisions. That is the whole reason these are worth collecting instead of printing.</p>
+      <div class="sheet">
+        <p class="big">No AI was used for <mark>any</mark> of the illustrations.</p>
+        <p>Worth saying out loud in 2026. An artist was paid, briefed, and given revisions, and that is the whole reason these are worth collecting instead of printing.</p>
       </div>
     </div>
   </section>
 
-  <footer class="wrap">
-    <div class="foot"><div class="t">Chess deserves better collectibles.</div>
-      <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div></div>
-    <div class="data" style="margin-top:28px">chesstradingcard.com &nbsp;·&nbsp; First Edition &nbsp;·&nbsp; All sales final</div>
+  <footer class="foot wrap">
+    <div class="foot-in">
+      <p class="t">Chess deserves better collectibles.</p>
+      <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
+    </div>
+    <div class="colophon"><span class="data">chesstradingcard.com</span><span class="data">·</span><span class="data">First Edition</span></div>
   </footer>
 </main>
 
@@ -262,6 +420,60 @@ var io=new IntersectionObserver(function(en){en.forEach(function(x){
 document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
 
 /* ================================================================
+   THE BOARD — 64 cards, one per square, a8 through h1
+   ================================================================ */
+(function(){
+  var board=document.getElementById('board'), readout=document.getElementById('readout');
+  if(!board) return;
+  var FILES='abcdefgh';
+  function tier(n){ return n<=42?'common':(n<=56?'uncommon':'rare'); }
+
+  // the holo ramp, sampled cyclically so each foil gets its own slice of it
+  var RAMP=[[111,211,230],[183,155,232],[232,184,127],[127,224,192]];
+  function sheen(t){
+    t=(t%1+1)%1;
+    var f=t*RAMP.length, i=Math.floor(f), m=f-i;
+    var a=RAMP[i%RAMP.length], b=RAMP[(i+1)%RAMP.length];
+    return 'rgb('+a.map(function(v,k){return Math.round(v+(b[k]-v)*m);}).join(',')+')';
+  }
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<64;i++){
+    var row=Math.floor(i/8), col=i%8, rank=8-row, n=i+1;
+    var sq=document.createElement('div');
+    // a1 is dark: a square is light when (file index + rank) is even
+    sq.className='sq sq--'+tier(n)+' '+(((col+rank)%2===0)?'sq--lt':'sq--dk');
+    if(tier(n)==='rare'){
+      var base=col/8;
+      sq.style.setProperty('--a',(58+col*29)+'deg');
+      sq.style.setProperty('--c1',sheen(base));
+      sq.style.setProperty('--c2',sheen(base+0.07));
+      sq.style.setProperty('--c3',sheen(base+0.14));
+    }
+    sq.dataset.n=(n<10?'00':(n<100?'0':''))+n;
+    sq.dataset.sqr=FILES[col]+rank;
+    sq.dataset.tier=tier(n);
+    var num=document.createElement('span');
+    num.className='num'; num.textContent=sq.dataset.n;
+    sq.appendChild(num); frag.appendChild(sq);
+  }
+  board.appendChild(frag);
+
+  // states the range by default, so it says something useful on touch too
+  var idle='<b>a8</b><span class="sep">/</span><span>Card 001</span>'+
+           '<span class="sep">&rarr;</span><b>h1</b><span class="sep">/</span><span>Card 064</span>';
+  readout.innerHTML=idle;
+  function show(e){
+    var sq=e.target.closest('.sq'); if(!sq) return;
+    readout.innerHTML='<b>'+sq.dataset.sqr+'</b><span class="sep">/</span>'+
+      '<span>Card '+sq.dataset.n+'</span><span class="sep">/</span>'+
+      '<b>'+sq.dataset.tier+'</b>';
+  }
+  board.addEventListener('mouseover',show);
+  board.addEventListener('pointerdown',show);
+  board.addEventListener('mouseleave',function(){ readout.innerHTML=idle; });
+})();
+
+/* ================================================================
    3D PACK
    ================================================================ */
 function boot(){
@@ -290,7 +502,7 @@ function boot(){
     var c=document.createElement('canvas'); c.width=1024; c.height=512;
     var x=c.getContext('2d');
     var g=x.createLinearGradient(0,0,0,512);
-    g.addColorStop(0,'#20262F'); g.addColorStop(.45,'#0B0E13'); g.addColorStop(1,'#05070A');
+    g.addColorStop(0,'#2A3830'); g.addColorStop(.45,'#0E1611'); g.addColorStop(1,'#070C09');
     x.fillStyle=g; x.fillRect(0,0,1024,512);
     function band(cx,cy,w,h,a,col){
       var r=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(w,h));
@@ -299,7 +511,7 @@ function boot(){
       x.fillStyle=r; x.beginPath(); x.arc(cx,cy,w,0,6.3); x.fill(); x.restore();
     }
     band(300,140,240,150,'1','rgba(255,251,240,A)');     // key
-    band(820,190,190,300,'0.55','rgba(150,200,255,A)');  // cool rim
+    band(820,190,190,300,'0.55','rgba(160,220,190,A)');  // cool rim, greened
     band(560,430,300,120,'0.30','rgba(255,170,120,A)');  // warm bounce
     var t=new THREE.CanvasTexture(c);
     t.mapping=THREE.EquirectangularReflectionMapping;
@@ -311,33 +523,46 @@ function boot(){
   scene.environment=env;
 
   /* ---- pack surface maps ---- */
-  function colorMap(){
-    var c=document.createElement('canvas'); c.width=512; c.height=736;
-    var x=c.getContext('2d');
+  var cmapCanvas=document.createElement('canvas');
+  cmapCanvas.width=512; cmapCanvas.height=736;
+  function drawColorMap(){
+    var c=cmapCanvas, x=c.getContext('2d');
     var g=x.createLinearGradient(0,0,512,736);
-    g.addColorStop(0,'#1B2431'); g.addColorStop(.4,'#0C1119');
-    g.addColorStop(.68,'#151D29'); g.addColorStop(1,'#090D13');
+    g.addColorStop(0,'#2C4436'); g.addColorStop(.4,'#15221A');
+    g.addColorStop(.68,'#22362A'); g.addColorStop(1,'#101A14');
     x.fillStyle=g; x.fillRect(0,0,512,736);
-    x.fillStyle='rgba(255,255,255,.028)';
+    x.fillStyle='rgba(232,224,206,.028)';
     for(var i=0;i<512;i+=13) x.fillRect(i,0,3,736);
     x.fillStyle='rgba(0,0,0,.34)';
     x.fillRect(0,0,512,54); x.fillRect(0,682,512,54);
-    x.fillStyle='rgba(255,255,255,.05)';
+    x.fillStyle='rgba(232,224,206,.05)';
     for(var j=0;j<512;j+=10){ x.fillRect(j,0,4,54); x.fillRect(j,682,4,54); }
-    x.fillStyle='#E7E3D9';
-    x.font='800 26px "Archivo",sans-serif'; x.textAlign='center';
-    x.fillText('CHESS',256,140); x.fillText('TRADING CARDS',256,176);
-    x.globalAlpha=.92;
-    x.beginPath(); x.arc(256,400,86,0,6.3); x.fill();
-    x.globalCompositeOperation='destination-out';
-    x.beginPath(); x.arc(256,400,66,0,6.3); x.fill();
-    x.globalCompositeOperation='source-over';
-    x.fillRect(246,286,20,58); x.fillRect(222,300,68,20);
-    x.globalAlpha=1;
-    x.fillStyle='#C4404A'; x.font='500 15px "JetBrains Mono",monospace';
+    x.fillStyle='#E8E0CE';
+    x.textAlign='center';
+    x.font='700 30px "Zilla Slab",Georgia,serif';
+    x.fillText('CHESS',256,142);
+    x.font='700 24px "Zilla Slab",Georgia,serif';
+    x.fillText('TRADING CARDS',256,176);
+    // the mark is a board: 4x4, buff on kraft, a1 dark
+    var bx=176, by=320, sz=40;
+    for(var r=0;r<4;r++){
+      for(var f=0;f<4;f++){
+        x.fillStyle=((f+r)%2===0)?'#E8E0CE':'#C0A87E';
+        x.fillRect(bx+f*sz, by+r*sz, sz, sz);
+      }
+    }
+    x.strokeStyle='rgba(232,224,206,.35)'; x.lineWidth=2;
+    x.strokeRect(bx-1,by-1,sz*4+2,sz*4+2);
+    x.fillStyle='#CB5A40';
+    x.font='500 14px "Martian Mono",ui-monospace,monospace';
     x.fillText('FIRST EDITION',256,614);
-    x.fillStyle='#5C6371'; x.fillText('8 CARDS',256,640);
-    var t=new THREE.CanvasTexture(c); t.encoding=THREE.sRGBEncoding;
+    x.fillStyle='#7E8E80';
+    x.font='300 13px "Martian Mono",ui-monospace,monospace';
+    x.fillText('8 CARDS',256,642);
+  }
+  function colorMap(){
+    drawColorMap();
+    var t=new THREE.CanvasTexture(cmapCanvas); t.encoding=THREE.sRGBEncoding;
     t.anisotropy=renderer.capabilities.getMaxAnisotropy(); return t;
   }
   function roughMap(){
@@ -352,6 +577,11 @@ function boot(){
     return new THREE.CanvasTexture(c);
   }
   var CMAP=colorMap(), RMAP=roughMap();
+
+  // the wrapper is typeset — redraw once the webfonts actually land
+  if(document.fonts&&document.fonts.ready){
+    document.fonts.ready.then(function(){ drawColorMap(); CMAP.needsUpdate=true; });
+  }
 
   /* ---- peel shader ---- */
   var CHUNK_COMMON=[
@@ -450,7 +680,7 @@ function boot(){
   (function(){
     var x=gc.getContext('2d');
     var r=x.createRadialGradient(64,64,0,64,64,64);
-    r.addColorStop(0,'rgba(190,230,255,0.9)'); r.addColorStop(1,'rgba(190,230,255,0)');
+    r.addColorStop(0,'rgba(214,240,220,0.9)'); r.addColorStop(1,'rgba(214,240,220,0)');
     x.fillStyle=r; x.fillRect(0,0,128,128);
   })();
   glow=new THREE.Mesh(new THREE.PlaneGeometry(1.4,1.4),
@@ -467,8 +697,8 @@ function boot(){
   key.shadow.camera.top=2.4; key.shadow.camera.bottom=-2.4;
   key.shadow.bias=-0.0012;
   scene.add(key);
-  scene.add(new THREE.DirectionalLight(0x8fbcff,0.55).translateX(3).translateY(-1).translateZ(1));
-  scene.add(new THREE.AmbientLight(0x5a6472,0.55));
+  scene.add(new THREE.DirectionalLight(0x9ad8b4,0.55).translateX(3).translateY(-1).translateZ(1));
+  scene.add(new THREE.AmbientLight(0x5f7266,0.55));
 
   shadowPl=new THREE.Mesh(new THREE.PlaneGeometry(9,9),
     new THREE.ShadowMaterial({opacity:0.42}));
@@ -478,7 +708,7 @@ function boot(){
   function resize(){
     var w=gate.clientWidth, h=gate.clientHeight;
     renderer.setSize(w,h,false);
-    cam.aspect=w/h; 
+    cam.aspect=w/h;
     var fill = w<640 ? 0.50 : 0.60;
     var need = H/(fill*2*Math.tan(THREE.MathUtils.degToRad(30)/2));
     var widthNeed = (W*1.5)/( (w/h) * 2*Math.tan(THREE.MathUtils.degToRad(30)/2));
@@ -591,3 +821,4 @@ function boot(){
 }
 })();
 </script>
+</html>
