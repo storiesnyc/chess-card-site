@@ -688,21 +688,29 @@ function boot(){
       blending:THREE.AdditiveBlending,depthWrite:false,opacity:0}));
   glow.position.set(XF,0,-0.02); group.add(glow);
 
-  /* lights + soft contact shadow */
+  /* lights. The key sits high and to the left because that angle is what
+     rakes the foil; it does NOT cast, or the shadow lands most of a pack
+     width away from the pack. */
   var key=new THREE.DirectionalLight(0xfff4e2,2.1);
-  key.position.set(-2.4,3.0,3.2); key.castShadow=true;
-  key.shadow.mapSize.set(1024,1024); key.shadow.radius=6;
-  key.shadow.camera.near=0.5; key.shadow.camera.far=12;
-  key.shadow.camera.left=-2.4; key.shadow.camera.right=2.4;
-  key.shadow.camera.top=2.4; key.shadow.camera.bottom=-2.4;
-  key.shadow.bias=-0.0012;
+  key.position.set(-2.4,3.0,3.2);
   scene.add(key);
   scene.add(new THREE.DirectionalLight(0x9ad8b4,0.55).translateX(3).translateY(-1).translateZ(1));
   scene.add(new THREE.AmbientLight(0x5f7266,0.55));
 
+  /* a dedicated, near-frontal caster so the shadow reads as contact:
+     tucked just behind the pack and nudged down-right, not flung off it */
+  var caster=new THREE.DirectionalLight(0xffffff,0);
+  caster.position.set(-0.30,0.72,3.2); caster.castShadow=true;
+  caster.shadow.mapSize.set(2048,2048); caster.shadow.radius=12;
+  caster.shadow.camera.near=0.5; caster.shadow.camera.far=12;
+  caster.shadow.camera.left=-2.4; caster.shadow.camera.right=2.4;
+  caster.shadow.camera.top=2.4; caster.shadow.camera.bottom=-2.4;
+  caster.shadow.bias=-0.0012;
+  scene.add(caster);
+
   shadowPl=new THREE.Mesh(new THREE.PlaneGeometry(9,9),
-    new THREE.ShadowMaterial({opacity:0.42}));
-  shadowPl.position.z=-0.85; shadowPl.receiveShadow=true; scene.add(shadowPl);
+    new THREE.ShadowMaterial({opacity:0.34}));
+  shadowPl.position.z=-0.72; shadowPl.receiveShadow=true; scene.add(shadowPl);
 
   /* ---------- sizing ---------- */
   function resize(){
