@@ -477,7 +477,8 @@ document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
    3D PACK
    ================================================================ */
 function boot(){
-  var W=1.0, H=1.44, XF=-W*0.325;         // pack size, fold line x
+  // the real booster bag: a 70mm x 130mm front panel, so H/W = 130/70
+  var W=1.0, H=W*130/70, XF=-W*0.325;     // pack size, fold line x
   var renderer, scene, cam, group, strip, body, inner, glow, shadowPl;
   var uniS=[], uniB=[];
   var front=0, target=0, vel=0, exitT=0, opened=false, dragging=false,
@@ -488,8 +489,8 @@ function boot(){
   }catch(e){ gate.classList.add('is-skipped'); site.classList.add('is-in'); return; }
   renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));
   renderer.outputEncoding=THREE.sRGBEncoding;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.05;
+  // the pack is printed artwork, so don't let a filmic curve desaturate it
+  renderer.toneMapping=THREE.NoToneMapping;
   renderer.shadowMap.enabled=true;
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 
@@ -523,65 +524,25 @@ function boot(){
   scene.environment=env;
 
   /* ---- pack surface maps ---- */
-  var cmapCanvas=document.createElement('canvas');
-  cmapCanvas.width=512; cmapCanvas.height=736;
-  function drawColorMap(){
-    var c=cmapCanvas, x=c.getContext('2d');
-    var g=x.createLinearGradient(0,0,512,736);
-    g.addColorStop(0,'#2C4436'); g.addColorStop(.4,'#15221A');
-    g.addColorStop(.68,'#22362A'); g.addColorStop(1,'#101A14');
-    x.fillStyle=g; x.fillRect(0,0,512,736);
-    x.fillStyle='rgba(232,224,206,.028)';
-    for(var i=0;i<512;i+=13) x.fillRect(i,0,3,736);
-    x.fillStyle='rgba(0,0,0,.34)';
-    x.fillRect(0,0,512,54); x.fillRect(0,682,512,54);
-    x.fillStyle='rgba(232,224,206,.05)';
-    for(var j=0;j<512;j+=10){ x.fillRect(j,0,4,54); x.fillRect(j,682,4,54); }
-    x.fillStyle='#E8E0CE';
-    x.textAlign='center';
-    x.font='700 30px "Zilla Slab",Georgia,serif';
-    x.fillText('CHESS',256,142);
-    x.font='700 24px "Zilla Slab",Georgia,serif';
-    x.fillText('TRADING CARDS',256,176);
-    // the mark is a board: 4x4, buff on kraft, a1 dark
-    var bx=176, by=320, sz=40;
-    for(var r=0;r<4;r++){
-      for(var f=0;f<4;f++){
-        x.fillStyle=((f+r)%2===0)?'#E8E0CE':'#C0A87E';
-        x.fillRect(bx+f*sz, by+r*sz, sz, sz);
-      }
-    }
-    x.strokeStyle='rgba(232,224,206,.35)'; x.lineWidth=2;
-    x.strokeRect(bx-1,by-1,sz*4+2,sz*4+2);
-    x.fillStyle='#CB5A40';
-    x.font='500 14px "Martian Mono",ui-monospace,monospace';
-    x.fillText('FIRST EDITION',256,614);
-    x.fillStyle='#7E8E80';
-    x.font='300 13px "Martian Mono",ui-monospace,monospace';
-    x.fillText('8 CARDS',256,642);
-  }
-  function colorMap(){
-    drawColorMap();
-    var t=new THREE.CanvasTexture(cmapCanvas); t.encoding=THREE.sRGBEncoding;
-    t.anisotropy=renderer.capabilities.getMaxAnisotropy(); return t;
-  }
+  // the printed front panel, straight off the production artwork
+  var CMAP=new THREE.TextureLoader().load('pack-front.png',function(t){
+    t.anisotropy=renderer.capabilities.getMaxAnisotropy();
+  });
+  CMAP.encoding=THREE.sRGBEncoding;
+
+  // vertical brushing, so the mylar catches light along its length
   function roughMap(){
-    var c=document.createElement('canvas'); c.width=512; c.height=736;
+    var c=document.createElement('canvas'); c.width=512; c.height=950;
     var x=c.getContext('2d');
-    x.fillStyle='#4a4a4a'; x.fillRect(0,0,512,736);
+    x.fillStyle='#4a4a4a'; x.fillRect(0,0,512,950);
     for(var i=0;i<512;i+=2){
       var v=60+Math.sin(i*0.7)*22+Math.random()*26;
       x.fillStyle='rgb('+(v|0)+','+(v|0)+','+(v|0)+')';
-      x.fillRect(i,0,2,736);
+      x.fillRect(i,0,2,950);
     }
     return new THREE.CanvasTexture(c);
   }
-  var CMAP=colorMap(), RMAP=roughMap();
-
-  // the wrapper is typeset — redraw once the webfonts actually land
-  if(document.fonts&&document.fonts.ready){
-    document.fonts.ready.then(function(){ drawColorMap(); CMAP.needsUpdate=true; });
-  }
+  var RMAP=roughMap();
 
   /* ---- peel shader ---- */
   var CHUNK_COMMON=[
@@ -611,10 +572,13 @@ function boot(){
   ].join('\n');
 
   function makeMat(isStrip){
+    // printed ink on a mylar bag: mostly dielectric so the artwork keeps its
+    // colour, with a clearcoat doing the glossy-foil work instead of metalness
     var m=new THREE.MeshPhysicalMaterial({
-      map:CMAP, roughnessMap:RMAP, metalness:0.82, roughness:0.34,
-      clearcoat:0.65, clearcoatRoughness:0.28,
-      side:THREE.DoubleSide, envMapIntensity:1.25, transparent:true
+      map:CMAP, roughnessMap:RMAP, metalness:0.04, roughness:0.46,
+      emissiveMap:CMAP, emissive:0xffffff, emissiveIntensity:0.22,
+      clearcoat:0.85, clearcoatRoughness:0.20,
+      side:THREE.DoubleSide, envMapIntensity:0.30, transparent:true
     });
     m.onBeforeCompile=function(sh){
       sh.uniforms.uFront={value:0}; sh.uniforms.uK={value:H*0.19};
@@ -691,11 +655,12 @@ function boot(){
   /* lights. The key sits high and to the left because that angle is what
      rakes the foil; it does NOT cast, or the shadow lands most of a pack
      width away from the pack. */
-  var key=new THREE.DirectionalLight(0xfff4e2,2.1);
+  // neutral white, or the green cast contaminates the printed inks
+  var key=new THREE.DirectionalLight(0xffffff,0.72);
   key.position.set(-2.4,3.0,3.2);
   scene.add(key);
-  scene.add(new THREE.DirectionalLight(0x9ad8b4,0.55).translateX(3).translateY(-1).translateZ(1));
-  scene.add(new THREE.AmbientLight(0x5f7266,0.55));
+  scene.add(new THREE.DirectionalLight(0xffffff,0.18).translateX(3).translateY(-1).translateZ(1));
+  scene.add(new THREE.AmbientLight(0xffffff,0.42));
 
   /* a dedicated, near-frontal caster so the shadow reads as contact:
      tucked just behind the pack and nudged down-right, not flung off it */
