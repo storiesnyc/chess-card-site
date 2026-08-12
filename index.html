@@ -6,227 +6,240 @@
 <meta name="description" content="Original illustrated trading cards for chess. 64 cards, 8 secret rares, Grandmasters serialized to 64. First Edition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@300;400;500&family=Zilla+Slab:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  /* A rolled-out vinyl tournament board, and the paper that goes with it. */
-  --felt:#23372C; --felt-deep:#16241C; --felt-lift:#2C4436;
-  --buff:#E8E0CE; --buff-dim:#9BA894; --ink:#131A16;
-  --kraft:#C0A87E; --pencil:#B0432F; --pencil-lift:#CB5A40;
-  --line:rgba(232,224,206,.16); --line-hard:rgba(232,224,206,.30);
+  /* straight off the pack artwork */
+  --cream:#FFFAD0; --cream-2:#F2E7B0; --paper:#FFFFFF;
+  --yellow:#FFE200; --yellow-2:#E8CB00;
+  --red:#FF5241; --red-2:#E63A28;
+  --blue:#00A4FF; --magenta:#B7006E;
+  --ink:#000000; --grey:#51555B;
   --holo:linear-gradient(135deg,#6FD3E6 0%,#B79BE8 26%,#E8B87F 52%,#7FE0C0 74%,#6FD3E6 100%);
-  --f-display:"Zilla Slab",Georgia,serif;
-  --f-body:"Karla",system-ui,sans-serif;
-  --f-note:"Zilla Slab",Georgia,serif;
-  --f-data:"Martian Mono",ui-monospace,monospace;
-  --pad:clamp(20px,5vw,64px); --maxw:1140px;
+  --f-display:"Archivo Black",Impact,sans-serif;
+  --f-body:"Archivo",system-ui,sans-serif;
+  --pad:clamp(18px,5vw,56px); --maxw:1180px;
+  --bd:3px; --pop:6px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 html.is-locked,html.is-locked body{overflow:hidden;height:100%}
-body{background:var(--felt);color:var(--buff);font-family:var(--f-body);font-size:16px;
-  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:16px;
+  line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--pencil-lift);outline-offset:3px}
-.data{font-family:var(--f-data);font-size:10px;font-weight:400;letter-spacing:.02em;
-  text-transform:uppercase;color:var(--buff-dim)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.data{font-family:var(--f-body);font-weight:700;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase}
+
+/* the pack's own halftone burst, reused as page texture */
+.dots{background-image:radial-gradient(var(--red) 21%,transparent 23%);
+  background-size:15px 15px}
 
 /* ============== GATE ============== */
-#gate{position:relative;height:100svh;min-height:520px;overflow:hidden;
-  background:radial-gradient(125% 85% at 50% 46%,#2E4839 0%,#16241C 66%)}
+#gate{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--cream)}
+#gate::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:16px 16px;
+  -webkit-mask-image:radial-gradient(78% 62% at 50% 42%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(78% 62% at 50% 42%,#000 0%,transparent 72%);opacity:.55}
 #gate.is-skipped{display:none}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;
-  touch-action:none;cursor:grab}
+  touch-action:none;cursor:grab;z-index:1}
 #gl:active{cursor:grabbing}
-.gate-mark{position:absolute;top:var(--pad);left:var(--pad);font-family:var(--f-data);font-size:9px;
-  font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:#6D7D6F;z-index:3;pointer-events:none}
-.gate-skip{position:absolute;top:var(--pad);right:var(--pad);font-family:var(--f-data);font-size:9px;
-  font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:#6D7D6F;background:none;border:0;
-  cursor:pointer;padding:6px;transition:color .25s;z-index:3}
-.gate-skip:hover{color:var(--buff)}
-.cue{position:absolute;left:50%;bottom:calc(var(--pad) + 6px);transform:translateX(-50%);
-  font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;
-  color:#7E8E80;white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
+.gate-mark{position:absolute;top:var(--pad);left:var(--pad);font-family:var(--f-display);
+  font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);z-index:3;
+  pointer-events:none}
+.gate-skip{position:absolute;top:var(--pad);right:var(--pad);font-family:var(--f-body);
+  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  background:none;border:0;cursor:pointer;padding:6px;z-index:3}
+.gate-skip:hover{color:var(--red-2)}
+.cue{position:absolute;left:50%;bottom:calc(var(--pad) + 4px);transform:translateX(-50%);
+  font-family:var(--f-body);font-weight:700;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);background:var(--yellow);
+  border:var(--bd) solid var(--ink);padding:8px 14px;
+  white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
   background:var(--holo);background-size:200% 200%;mix-blend-mode:screen;
   transition:opacity .55s ease}
 .veil{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;
-  background:var(--felt);transition:opacity .45s ease}
+  background:var(--cream);transition:opacity .45s ease}
 
 /* ============== SHELL ============== */
 #site{opacity:0;transition:opacity .7s ease}
 #site.is-in{opacity:1}
-.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.topbar{position:sticky;top:0;z-index:60;background:rgba(35,55,44,.86);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line)}
-.topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px}
-.brand{font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:-.01em}
-.brand em{font-style:normal;color:var(--kraft)}
-.topbar-links{display:flex;gap:24px;align-items:center}
-.topbar-links a{font-family:var(--f-data);font-size:10px;font-weight:300;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--buff-dim);transition:color .2s}
-.topbar-links a:hover{color:var(--buff)}
-.link-buy{color:var(--pencil-lift)!important}
-@media(max-width:620px){.topbar-links a:not(.link-buy){display:none}}
+.topbar{position:sticky;top:0;z-index:60;background:var(--cream);
+  border-bottom:var(--bd) solid var(--ink)}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--f-display);font-size:18px;letter-spacing:-.01em;text-transform:uppercase}
+.brand em{font-style:normal;color:var(--red-2)}
+.topbar-links{display:flex;gap:22px;align-items:center}
+.topbar-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.topbar-links a:hover{color:var(--red-2)}
+/* black on red, not white: white-on-red is only 3.2:1, and on the pack
+   itself white type always sits on black anyway */
+.link-buy{background:var(--red);color:var(--ink);border:var(--bd) solid var(--ink);
+  padding:8px 14px;box-shadow:4px 4px 0 var(--ink)}
+.link-buy:hover{color:var(--ink)!important;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+@media(max-width:640px){.topbar-links a:not(.link-buy){display:none}}
+
+/* ============== BUTTONS / CHIPS ============== */
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--f-body);
+  font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:15px 24px;border:var(--bd) solid var(--ink);background:var(--paper);color:var(--ink);
+  box-shadow:var(--pop) var(--pop) 0 var(--ink);cursor:pointer;
+  transition:transform .12s ease,box-shadow .12s ease}
+.btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.btn--red{background:var(--red);color:var(--ink)}
+.btn--blue{background:var(--blue);color:var(--ink)}
+.chip{display:inline-block;font-weight:700;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;padding:8px 13px;background:var(--ink);color:var(--paper)}
+.chip--holo{background:var(--holo);background-size:180% 180%;
+  animation:holoshift 7s linear infinite;color:var(--ink);
+  border:2px solid var(--ink)}
+@keyframes holoshift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.chip--serial{background:var(--magenta)}
 
 /* ============== HERO ============== */
-/* vertical padding only — these classes share elements with .wrap, and the
-   `padding` shorthand would zero out its horizontal padding */
-.hero{padding-top:clamp(66px,12vh,132px);padding-bottom:clamp(54px,9vh,92px)}
-.stamp{display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;
-  border:1px solid var(--line-hard);border-radius:1px;padding:7px 12px}
-.stamp .dot{width:5px;height:5px;background:var(--pencil-lift);border-radius:50%}
-.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,8.2vw,86px);
-  line-height:.98;letter-spacing:-.022em;margin:0 0 26px;max-width:15ch}
-.hero h1 em{font-style:italic;font-weight:400;color:var(--kraft)}
-.lede{font-family:var(--f-note);font-size:clamp(18px,2.3vw,23px);line-height:1.5;font-weight:400;
-  color:#CFC9B8;max-width:44ch;margin:0 0 36px}
-.actions{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--f-data);
-  font-size:10px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;padding:15px 22px;
-  border-radius:1px;border:1px solid var(--line-hard);background:none;color:var(--buff);
-  transition:background .2s,border-color .2s,color .2s;cursor:pointer}
-.btn--fill{background:var(--pencil);border-color:var(--pencil);color:#FBF6EA}
-.btn--fill:hover{background:var(--pencil-lift);border-color:var(--pencil-lift)}
-.btn--line:hover{border-color:var(--buff);background:rgba(232,224,206,.06)}
-.btn--ink{background:var(--ink);border-color:var(--ink);color:var(--buff)}
-.btn--ink:hover{background:var(--pencil);border-color:var(--pencil);color:#FBF6EA}
+.hero{position:relative;overflow:hidden;padding-top:clamp(56px,10vh,110px);
+  padding-bottom:clamp(52px,8vh,90px)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:15px 15px;
+  -webkit-mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);opacity:.7}
+.hero .wrap{position:relative;z-index:1}
+.stamp{display:inline-block;background:var(--ink);color:var(--yellow);
+  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  padding:9px 14px;margin-bottom:24px}
+.hero h1{font-family:var(--f-display);font-size:clamp(42px,9vw,104px);line-height:.92;
+  letter-spacing:-.03em;text-transform:uppercase;margin:0 0 24px;max-width:13ch}
+.hero h1 em{font-style:normal;color:var(--red-2)}
+.lede{font-size:clamp(17px,2.1vw,21px);line-height:1.45;font-weight:500;
+  max-width:40ch;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:16px}
 
-/* ============== SECTIONS ============== */
-.band{padding-top:clamp(60px,9vh,104px);padding-bottom:clamp(60px,9vh,104px);
-  border-top:1px solid var(--line)}
-.band-head{margin-bottom:44px;max-width:60ch}
-.band-head h2{font-family:var(--f-display);font-weight:700;font-size:clamp(27px,4.2vw,42px);
-  letter-spacing:-.018em;margin:0 0 10px;line-height:1.04}
-.band-head p{font-family:var(--f-note);font-style:italic;font-weight:400;color:#B6B3A2;
-  font-size:17px;margin:0;max-width:48ch}
+/* ============== BANDS ============== */
+.band{padding-top:clamp(56px,8vh,96px);padding-bottom:clamp(56px,8vh,96px);
+  border-top:var(--bd) solid var(--ink)}
+.band--yellow{background:var(--yellow)}
+.band--blue{background:var(--blue)}
+.band-head{margin-bottom:40px;max-width:62ch}
+.band-head h2{font-family:var(--f-display);font-size:clamp(28px,5vw,52px);line-height:.98;
+  letter-spacing:-.025em;text-transform:uppercase;margin:0 0 12px}
+.band-head p{font-size:17px;font-weight:500;margin:0;max-width:46ch}
 
-/* ============== THE BOARD (signature) ============== */
-.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
-  gap:clamp(26px,4.5vw,54px);align-items:start}
-@media(max-width:840px){.board-layout{grid-template-columns:1fr}}
-
-.board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:9px}
-.ranks,.files{display:grid;font-family:var(--f-data);font-size:9px;font-weight:300;color:var(--buff-dim)}
-.ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:15px}
+/* ============== THE BOARD ============== */
+.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);
+  gap:clamp(24px,4vw,48px);align-items:start}
+@media(max-width:860px){.board-layout{grid-template-columns:1fr}}
+.board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:8px}
+.ranks,.files{display:grid;font-weight:700;font-size:11px;color:var(--ink)}
+.ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:16px}
 .files{grid-column:2;grid-template-columns:repeat(8,1fr);justify-items:center;padding-top:2px}
 .board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;
-  border:1px solid var(--line-hard);background:var(--felt-deep)}
+  border:4px solid var(--ink);box-shadow:var(--pop) var(--pop) 0 var(--ink);background:var(--ink)}
 .sq{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;
-  padding:5px 0 0 5px;transition:transform .18s ease,filter .18s ease}
-.sq .num{font-family:var(--f-data);font-size:8px;font-weight:300;letter-spacing:-.02em;
-  color:rgba(19,26,22,.42);line-height:1}
-.sq--common.sq--lt{background:#E2DAC7}
-.sq--common.sq--dk{background:#C7BEA8}
-.sq--uncommon.sq--lt{background:#C6AE84}
-.sq--uncommon.sq--dk{background:#AC9469}
-/* Each rare is its own foil card. Every square gets a narrow window of the
-   holo ramp — a sheen, the way foil actually reads at card size — so the rank
-   travels the spectrum without any one square being a rainbow. */
-.sq--rare{background-image:linear-gradient(180deg,rgba(232,224,206,.16),rgba(232,224,206,.16)),
+  padding:5px 0 0 5px;transition:transform .16s ease,filter .16s ease}
+.sq .num{font-weight:700;font-size:9px;line-height:1;color:rgba(0,0,0,.42)}
+.sq--common.sq--lt{background:var(--cream)}
+.sq--common.sq--dk{background:var(--cream-2)}
+.sq--uncommon.sq--lt{background:var(--yellow)}
+.sq--uncommon.sq--dk{background:var(--yellow-2)}
+.sq--rare{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.14)),
   linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3));
-  box-shadow:inset 0 0 0 1px rgba(19,26,22,.20)}
-.sq--rare .num{color:rgba(19,26,22,.55)}
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
 @media(hover:hover){
-  .board:hover .sq{filter:saturate(.55) brightness(.82)}
-  .board .sq:hover{filter:none;transform:scale(1.06);z-index:2;
-    box-shadow:0 6px 20px rgba(0,0,0,.45),inset 0 0 0 1px rgba(19,26,22,.20)}
+  .board:hover .sq{filter:saturate(.5) brightness(.86)}
+  .board .sq:hover{filter:none;transform:scale(1.08);z-index:2;
+    box-shadow:0 0 0 3px var(--ink)}
 }
 @media(max-width:640px){.sq .num{display:none}.sq{padding:0}}
+.readout{display:flex;align-items:center;gap:9px;margin-top:18px;min-height:24px;
+  font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.readout b{background:var(--ink);color:var(--yellow);padding:4px 8px}
+.readout .sep{opacity:.35}
 
-.readout{display:flex;align-items:center;gap:10px;margin-top:16px;min-height:22px;
-  font-family:var(--f-data);font-size:10px;font-weight:400;letter-spacing:.02em;
-  text-transform:uppercase;color:var(--buff-dim)}
-.readout b{color:var(--buff);font-weight:500}
-.readout .sep{color:var(--line-hard)}
-
-/* legend — carries the real content, board or no board */
-.key{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
-.key-row{background:var(--felt);padding:16px 18px;display:grid;
-  grid-template-columns:auto 1fr;gap:14px;align-items:start}
-.swatch{width:22px;height:22px;border-radius:1px;margin-top:2px}
-.swatch--common{background:linear-gradient(135deg,#E2DAC7 50%,#C7BEA8 50%)}
-.swatch--uncommon{background:linear-gradient(135deg,#C6AE84 50%,#AC9469 50%)}
+/* legend */
+.key{border:var(--bd) solid var(--ink);background:var(--paper);
+  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.key-row{padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:14px;
+  align-items:start;border-bottom:var(--bd) solid var(--ink)}
+.key-row:last-child{border-bottom:0}
+.swatch{width:26px;height:26px;border:2px solid var(--ink);margin-top:2px}
+.swatch--common{background:linear-gradient(135deg,var(--cream) 50%,var(--cream-2) 50%)}
+.swatch--uncommon{background:linear-gradient(135deg,var(--yellow) 50%,var(--yellow-2) 50%)}
 .swatch--rare{background:var(--holo);background-size:200% 200%}
-.key-row h3{font-family:var(--f-display);font-weight:700;font-size:16px;margin:0 0 3px;
+.key-row h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;margin:0 0 4px;
   display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
-.key-row .rng{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:0;
-  color:var(--buff-dim);text-transform:none}
-.key-row p{font-size:14px;color:#B6B3A2;margin:0;line-height:1.5}
+.key-row .rng{font-family:var(--f-body);font-weight:700;font-size:11px;color:var(--grey)}
+.key-row p{font-size:14px;margin:0;line-height:1.45}
 
-/* off-checklist pair */
-.offlist{margin-top:26px;display:grid;grid-template-columns:1fr;
-  gap:1px;background:var(--line);border:1px solid var(--line)}
-.offlist-cell{background:var(--felt);padding:24px 22px}
-.offlist-cell .tag{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--buff-dim);margin-bottom:12px}
-.offlist-cell h3{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0 0 8px}
-.offlist-cell p{font-size:14.5px;color:#B6B3A2;margin:0 0 16px;line-height:1.55}
-.chip{display:inline-block;font-family:var(--f-data);font-size:9px;font-weight:400;letter-spacing:.02em;
-  text-transform:uppercase;padding:6px 10px;border-radius:1px;border:1px solid var(--line-hard);
-  color:var(--buff-dim)}
-.chip--holo{background:var(--holo);background-size:180% 180%;animation:holoshift 7s linear infinite;
-  color:var(--ink);border-color:transparent;font-weight:500}
-@keyframes holoshift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.chip--serial{border-color:var(--pencil);color:var(--pencil-lift)}
+.offlist{margin-top:24px;display:grid;gap:24px}
+.offlist-cell{border:var(--bd) solid var(--ink);padding:22px 20px;
+  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.offlist-cell--blue{background:var(--blue)}
+.offlist-cell--magenta{background:var(--magenta);color:var(--paper)}
+.offlist-cell .tag{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:10px}
+.offlist-cell h3{font-family:var(--f-display);font-size:19px;text-transform:uppercase;margin:0 0 8px}
+.offlist-cell p{font-size:14px;margin:0 0 16px;line-height:1.45}
 
 /* ============== SHOP ============== */
-.shop{display:grid;grid-template-columns:1fr 1fr 1.22fr;gap:1px;background:var(--line);
-  border:1px solid var(--line)}
-@media(max-width:820px){.shop{grid-template-columns:1fr}}
-.sku{background:var(--felt);padding:28px 24px 26px;display:flex;flex-direction:column}
-.sku--feature{background:var(--buff);color:var(--ink)}
-.sku .count{font-family:var(--f-data);font-size:clamp(28px,4vw,38px);font-weight:300;
-  letter-spacing:-.04em;line-height:1;margin-bottom:6px}
-.sku .unit{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--buff-dim);margin-bottom:20px}
-.sku--feature .unit{color:#6E7568}
-.sku h3{font-family:var(--f-display);font-weight:700;font-size:19px;margin:0 0 8px}
-.sku p{font-size:14px;color:#B6B3A2;margin:0 0 24px;line-height:1.55}
-.sku--feature p{color:#4C5449}
-.sku .price{font-family:var(--f-data);font-size:20px;font-weight:400;letter-spacing:-.02em;
-  margin-top:auto;margin-bottom:16px}
+.shop{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:24px}
+@media(max-width:860px){.shop{grid-template-columns:1fr}}
+.sku{background:var(--paper);border:var(--bd) solid var(--ink);padding:26px 22px 24px;
+  display:flex;flex-direction:column;box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.sku--feature{background:var(--red);color:var(--ink)}
+.sku .count{font-family:var(--f-display);font-size:clamp(38px,5.5vw,58px);line-height:.9;
+  letter-spacing:-.04em;margin-bottom:4px}
+.sku .unit{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:18px}
+.sku h3{font-family:var(--f-display);font-size:19px;text-transform:uppercase;margin:0 0 8px}
+.sku p{font-size:14px;margin:0 0 22px;line-height:1.45}
+.sku .price{font-family:var(--f-display);font-size:26px;margin-top:auto;margin-bottom:16px}
 .sku .btn{width:100%}
-.ships{margin-top:20px;display:flex;gap:10px;align-items:baseline}
+.ships{margin-top:24px}
 
 /* ============== THE ART ============== */
-.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4.5vw,56px);align-items:start}
-@media(max-width:800px){.art-layout{grid-template-columns:1fr}}
-.art-copy p{font-family:var(--f-note);font-size:18px;line-height:1.55;color:#CFC9B8;
-  margin:0 0 18px;max-width:46ch}
-.art-copy strong{color:var(--buff);font-weight:500;font-style:italic}
-.sheet{background:var(--buff);color:var(--ink);padding:clamp(26px,3.6vw,38px)}
-.sheet .big{font-family:var(--f-display);font-weight:700;font-size:clamp(25px,3.8vw,36px);
-  line-height:1.04;letter-spacing:-.02em;margin:0 0 18px}
-.sheet .big mark{background:none;color:var(--pencil);
-  text-decoration:underline;text-decoration-color:rgba(176,67,47,.4);text-underline-offset:5px}
-.sheet p{font-size:15px;line-height:1.6;color:#4C5449;margin:0}
-.credits{margin-top:30px;border-top:1px solid var(--line);padding-top:6px}
-.credit{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:13px 0;
-  border-bottom:1px solid var(--line);align-items:baseline}
-.credit dt{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--buff-dim)}
-.credit dd{font-family:var(--f-display);font-weight:500;font-size:16px;margin:0}
-.credit dd span{color:var(--buff-dim);font-weight:400}
+.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
+@media(max-width:820px){.art-layout{grid-template-columns:1fr}}
+.art-copy p{font-size:17px;line-height:1.5;margin:0 0 16px;max-width:44ch}
+.art-copy strong{font-weight:700}
+/* the pack's own title treatment: white fill, hard black outline */
+.sheet{background:var(--blue);border:var(--bd) solid var(--ink);padding:clamp(24px,3.4vw,36px);
+  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.sheet .big{font-family:var(--f-display);font-size:clamp(26px,4vw,42px);line-height:1.02;
+  letter-spacing:-.02em;text-transform:uppercase;margin:0 0 16px;color:var(--paper);
+  text-shadow:-3px -3px 0 #000,3px -3px 0 #000,-3px 3px 0 #000,3px 3px 0 #000,
+    0 -3px 0 #000,0 3px 0 #000,-3px 0 0 #000,3px 0 0 #000}
+.sheet .big mark{background:none;color:var(--yellow)}
+.sheet p{font-size:15px;line-height:1.5;margin:0;font-weight:500}
+.credits{margin-top:26px;border-top:var(--bd) solid var(--ink)}
+.credit{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:12px 0;
+  border-bottom:1px solid rgba(0,0,0,.25);align-items:baseline}
+.credit dt{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grey)}
+.credit dd{font-family:var(--f-display);font-size:15px;margin:0}
+.credit dd span{font-family:var(--f-body);font-weight:500;color:var(--grey)}
 
 /* ============== FOOTER ============== */
-.foot{border-top:1px solid var(--line);padding-top:46px;padding-bottom:54px}
+.foot{background:var(--ink);color:var(--cream);padding-top:44px;padding-bottom:52px;
+  border-top:var(--bd) solid var(--ink)}
 .foot-in{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-end}
-.foot-in .t{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:21px;color:#CFC9B8;
-  max-width:20ch;margin:0}
-.foot-links{display:flex;gap:20px}
-.foot-links a{font-family:var(--f-data);font-size:9px;font-weight:300;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--buff-dim);transition:color .2s}
-.foot-links a:hover{color:var(--buff)}
-.colophon{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap}
+.foot-in .t{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);line-height:1;
+  text-transform:uppercase;max-width:16ch;margin:0}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap}
+.foot-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot-links a:hover{color:var(--yellow)}
+.colophon{margin-top:28px;color:#9A9A8A}
 
 /* ============== MOTION ============== */
-.rise{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.rise{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
 .rise.seen{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   .rise{opacity:1;transform:none}
+  .btn:hover{transform:none}
   .board:hover .sq,.board .sq:hover{filter:none;transform:none}
 }
 </style>
@@ -251,143 +264,151 @@ a{color:inherit;text-decoration:none}
     </nav>
   </div></header>
 
-  <section class="hero wrap">
-    <div class="stamp rise"><span class="dot"></span><span class="data">First Edition · Printing 001</span></div>
-    <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
-    <p class="lede rise">Sixty-four cards on the openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
-    <div class="actions rise">
-      <a href="#shop" class="btn btn--fill">Shop packs</a>
-      <a href="#checklist" class="btn btn--line">See the checklist</a>
-    </div>
-  </section>
-
-  <section class="band wrap" id="checklist">
-    <div class="band-head rise">
-      <h2>The checklist is a board.</h2>
-      <p>Sixty-four cards, sixty-four squares. The set gets rarer as it counts up, which puts all eight rares on the back rank.</p>
-    </div>
-
-    <div class="board-layout rise">
-      <div>
-        <div class="board-frame">
-          <div class="ranks" aria-hidden="true">
-            <span>8</span><span>7</span><span>6</span><span>5</span>
-            <span>4</span><span>3</span><span>2</span><span>1</span>
-          </div>
-          <div class="board" id="board" role="img"
-               aria-label="The 64-card base set laid out as a chessboard, card 001 on a8 through card 064 on h1. Cards 001 to 042 are common, 043 to 056 are uncommon, and 057 to 064 are rare, filling the back rank a1 to h1."></div>
-          <div class="files" aria-hidden="true">
-            <span>a</span><span>b</span><span>c</span><span>d</span>
-            <span>e</span><span>f</span><span>g</span><span>h</span>
-          </div>
-        </div>
-        <p class="readout" id="readout" aria-hidden="true">
-          <span class="data">Hover a square</span>
-        </p>
-      </div>
-
-      <div class="side">
-      <dl class="key">
-        <div class="key-row">
-          <span class="swatch swatch--common" aria-hidden="true"></span>
-          <div>
-            <h3>Common <span class="rng">#001–042</span></h3>
-            <p>Openings, tactics, terminology. The backbone of the set, printed matte.</p>
-          </div>
-        </div>
-        <div class="key-row">
-          <span class="swatch swatch--uncommon" aria-hidden="true"></span>
-          <div>
-            <h3>Uncommon <span class="rng">#043–056</span></h3>
-            <p>Deeper cuts. Harder to complete than you'd think, and still matte.</p>
-          </div>
-        </div>
-        <div class="key-row">
-          <span class="swatch swatch--rare" aria-hidden="true"></span>
-          <div>
-            <h3>Rare <span class="rng">#057–064</span></h3>
-            <p>Holofoil, and it ends on the titles: Expert, Master, Grandmaster.</p>
-          </div>
-        </div>
-      </dl>
-
-      <div class="offlist">
-      <div class="offlist-cell">
-        <div class="tag">Not on the checklist</div>
-        <h3>Secret Rare · 8 cards</h3>
-        <p>Morphy blindfolded. The Immortal Game. Zugzwang. Left off the printed checklist on purpose, and seeded through the run.</p>
-        <span class="chip chip--holo">Full art · Holofoil</span>
-      </div>
-      <div class="offlist-cell">
-        <div class="tag">Not on the checklist</div>
-        <h3>Serialized Grandmaster</h3>
-        <p>Hand-numbered in the corner as they come off the press. Sixty-four squares, sixty-four copies.</p>
-        <span class="chip chip--serial">Numbered to 64</span>
-      </div>
-      </div>
+  <section class="hero">
+    <div class="wrap">
+      <div class="stamp rise">First Edition · Printing 001</div>
+      <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
+      <p class="lede rise">Sixty-four cards on the openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
+      <div class="actions rise">
+        <a href="#shop" class="btn btn--red">Shop packs</a>
+        <a href="#checklist" class="btn">See the checklist</a>
       </div>
     </div>
   </section>
 
-  <section class="band wrap" id="shop">
-    <div class="band-head rise">
-      <h2>Shop</h2>
-      <p>One printing. When the First Edition run is gone, it isn't reprinted.</p>
+  <section class="band" id="checklist">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>The checklist is a board.</h2>
+        <p>Sixty-four cards, sixty-four squares. The set gets rarer as it counts up, which puts all eight rares on the back rank.</p>
+      </div>
+
+      <div class="board-layout rise">
+        <div>
+          <div class="board-frame">
+            <div class="ranks" aria-hidden="true">
+              <span>8</span><span>7</span><span>6</span><span>5</span>
+              <span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+            <div class="board" id="board" role="img"
+                 aria-label="The 64-card base set laid out as a chessboard, card 001 on a8 through card 064 on h1. Cards 001 to 042 are common, 043 to 056 are uncommon, and 057 to 064 are rare, filling the back rank a1 to h1."></div>
+            <div class="files" aria-hidden="true">
+              <span>a</span><span>b</span><span>c</span><span>d</span>
+              <span>e</span><span>f</span><span>g</span><span>h</span>
+            </div>
+          </div>
+          <p class="readout" id="readout" aria-hidden="true"></p>
+        </div>
+
+        <div class="side">
+          <dl class="key">
+            <div class="key-row">
+              <span class="swatch swatch--common" aria-hidden="true"></span>
+              <div>
+                <h3>Common <span class="rng">#001–042</span></h3>
+                <p>Openings, tactics, terminology. The backbone of the set, printed matte.</p>
+              </div>
+            </div>
+            <div class="key-row">
+              <span class="swatch swatch--uncommon" aria-hidden="true"></span>
+              <div>
+                <h3>Uncommon <span class="rng">#043–056</span></h3>
+                <p>Deeper cuts. Harder to complete than you'd think, and still matte.</p>
+              </div>
+            </div>
+            <div class="key-row">
+              <span class="swatch swatch--rare" aria-hidden="true"></span>
+              <div>
+                <h3>Rare <span class="rng">#057–064</span></h3>
+                <p>Holofoil, and it ends on the titles: Expert, Master, Grandmaster.</p>
+              </div>
+            </div>
+          </dl>
+
+          <div class="offlist">
+            <div class="offlist-cell offlist-cell--blue">
+              <div class="tag">Not on the checklist</div>
+              <h3>Secret Rare · 8 cards</h3>
+              <p>Morphy blindfolded. The Immortal Game. Zugzwang. Left off the printed checklist on purpose, and seeded through the run.</p>
+              <span class="chip chip--holo">Full art · Holofoil</span>
+            </div>
+            <div class="offlist-cell offlist-cell--magenta">
+              <div class="tag">Not on the checklist</div>
+              <h3>Serialized Grandmaster</h3>
+              <p>Hand-numbered in the corner as they come off the press. Sixty-four squares, sixty-four copies.</p>
+              <span class="chip chip--serial">Numbered to 64</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="shop rise">
-      <div class="sku">
-        <div class="count">8</div><div class="unit">Cards</div>
-        <h3>Booster pack</h3>
-        <p>Eight cards, and one of them is guaranteed to be better than a common.</p>
-        <div class="price">$8</div>
-        <a href="#" class="btn btn--line">Add to cart</a>
-      </div>
-      <div class="sku">
-        <div class="count">40</div><div class="unit">Cards · 5 packs</div>
-        <h3>Five packs</h3>
-        <p>Enough to watch the set take shape and find the holes in it.</p>
-        <div class="price">$35</div>
-        <a href="#" class="btn btn--line">Add to cart</a>
-      </div>
-      <div class="sku sku--feature">
-        <div class="count">192</div><div class="unit">Cards · 24 packs</div>
-        <h3>Booster box</h3>
-        <p>The whole box, plus the First Edition checklist booklet that only ships inside one.</p>
-        <div class="price">$144</div>
-        <a href="#" class="btn btn--ink">Add to cart</a>
-      </div>
-    </div>
-    <div class="ships"><span class="data">Ships flat, sleeved, and boxed · All sales final</span></div>
   </section>
 
-  <section class="band wrap" id="art">
-    <div class="band-head rise">
-      <h2>The art</h2>
-      <p>Sixty-four originals, every one of them commissioned for this set.</p>
-    </div>
-    <div class="art-layout rise">
-      <div class="art-copy">
-        <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, sixty-four times.</p>
-        <p>Nothing here was pulled from a photo archive, and nothing was traced.</p>
-        <dl class="credits">
-          <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>· stinmaster</span></dd></div>
-          <div class="credit"><dt>Created by</dt><dd>Matt <span>· @byredofantome</span></dd></div>
-          <div class="credit"><dt>Printing</dt><dd>First Edition <span>· 001</span></dd></div>
-        </dl>
+  <section class="band band--yellow" id="shop">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>Shop</h2>
+        <p>One printing. When the First Edition run is gone, it isn't reprinted.</p>
       </div>
-      <div class="sheet">
-        <p class="big">No AI was used for <mark>any</mark> of the illustrations.</p>
-        <p>Worth saying out loud in 2026. An artist was paid, briefed, and given revisions, and that is the whole reason these are worth collecting instead of printing.</p>
+      <div class="shop rise">
+        <div class="sku">
+          <div class="count">8</div><div class="unit">Cards</div>
+          <h3>Booster pack</h3>
+          <p>Eight cards, and one of them is guaranteed to be better than a common.</p>
+          <div class="price">$8</div>
+          <a href="#" class="btn">Add to cart</a>
+        </div>
+        <div class="sku">
+          <div class="count">40</div><div class="unit">Cards · 5 packs</div>
+          <h3>Five packs</h3>
+          <p>Enough to watch the set take shape and find the holes in it.</p>
+          <div class="price">$35</div>
+          <a href="#" class="btn">Add to cart</a>
+        </div>
+        <div class="sku sku--feature">
+          <div class="count">192</div><div class="unit">Cards · 24 packs</div>
+          <h3>Booster box</h3>
+          <p>The whole box, plus the First Edition checklist booklet that only ships inside one.</p>
+          <div class="price">$144</div>
+          <a href="#" class="btn btn--blue">Add to cart</a>
+        </div>
+      </div>
+      <div class="ships"><span class="data">Ships flat, sleeved, and boxed · All sales final</span></div>
+    </div>
+  </section>
+
+  <section class="band" id="art">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>The art</h2>
+        <p>Sixty-four originals, every one of them commissioned for this set.</p>
+      </div>
+      <div class="art-layout rise">
+        <div class="art-copy">
+          <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, sixty-four times.</p>
+          <p>Nothing here was pulled from a photo archive, and nothing was traced.</p>
+          <dl class="credits">
+            <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>· stinmaster</span></dd></div>
+            <div class="credit"><dt>Created by</dt><dd>Matt <span>· @byredofantome</span></dd></div>
+            <div class="credit"><dt>Printing</dt><dd>First Edition <span>· 001</span></dd></div>
+          </dl>
+        </div>
+        <div class="sheet">
+          <p class="big">No AI was used for <mark>any</mark> of the illustrations.</p>
+          <p>Worth saying out loud in 2026. An artist was paid, briefed, and given revisions, and that is the whole reason these are worth collecting instead of printing.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer class="foot wrap">
-    <div class="foot-in">
-      <p class="t">Chess deserves better collectibles.</p>
-      <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-in">
+        <p class="t">Chess deserves better collectibles.</p>
+        <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
+      </div>
+      <div class="colophon"><span class="data">chesstradingcard.com · First Edition</span></div>
     </div>
-    <div class="colophon"><span class="data">chesstradingcard.com</span><span class="data">·</span><span class="data">First Edition</span></div>
   </footer>
 </main>
 
@@ -479,6 +500,8 @@ document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
 function boot(){
   // the real booster bag: a 70mm x 130mm front panel, so H/W = 130/70
   var W=1.0, H=W*130/70, XF=-W*0.325;     // pack size, fold line x
+  var BODYH=H*0.5*(100/130);              // half-height of the un-crimped body
+  var BULGE=W*0.082;                      // eight cards inflate the bag
   var renderer, scene, cam, group, strip, body, inner, glow, shadowPl;
   var uniS=[], uniB=[];
   var front=0, target=0, vel=0, exitT=0, opened=false, dragging=false,
@@ -503,8 +526,12 @@ function boot(){
     var c=document.createElement('canvas'); c.width=1024; c.height=512;
     var x=c.getContext('2d');
     var g=x.createLinearGradient(0,0,0,512);
-    g.addColorStop(0,'#2A3830'); g.addColorStop(.45,'#0E1611'); g.addColorStop(1,'#070C09');
+    g.addColorStop(0,'#3A3F44'); g.addColorStop(.45,'#14171A'); g.addColorStop(1,'#0A0C0E');
     x.fillStyle=g; x.fillRect(0,0,1024,512);
+    // a hard softbox strip — this is what makes the mylar throw a blown
+    // highlight across the face instead of a dull sheen
+    x.fillStyle='rgba(255,255,255,0.95)';
+    x.fillRect(120,40,470,88);
     function band(cx,cy,w,h,a,col){
       var r=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(w,h));
       r.addColorStop(0,col.replace('A',a)); r.addColorStop(1,col.replace('A','0'));
@@ -548,13 +575,33 @@ function boot(){
   var CHUNK_COMMON=[
     'uniform float uFront; uniform float uK; uniform float uMaxA;',
     'uniform float uDroop; uniform float uSide; uniform float uH; uniform float uXf;',
-    'uniform float uDetach;',
+    'uniform float uDetach; uniform float uW; uniform float uBodyH; uniform float uBulge;',
     'varying vec2 vLoc;',
-    'vec3 gPos; vec3 gNor;'
+    'vec3 gPos; vec3 gNor;',
+    // Surface height of the sealed bag: inflated across the body, pinched flat
+    // into the crimped end seals, with soft creases over the whole face.
+    'float hgt(vec2 p){',
+    '  float bx = clamp(p.x/(uW*0.5), -1.0, 1.0);',
+    '  float by = clamp(p.y/uBodyH, -1.0, 1.0);',
+    '  float cbx = cos(bx*1.5707963);',
+    '  float cby = cos(by*1.5707963);',
+    '  float h = uBulge*cbx*cby;',
+    '  float seal = smoothstep(0.88, 1.0, abs(by));',
+    '  h += sin(p.x*88.0)*0.0032*seal;',
+    '  h += (sin(p.x*7.5+p.y*4.2)+sin(p.y*9.5-p.x*3.1))*0.0060*cbx*cby;',
+    '  return h;',
+    '}'
   ].join('\n');
 
   var CHUNK_DEFORM=[
     'vLoc = position.xy;',
+    // central-difference normal, so creases and crimping actually catch light
+    'float hh = hgt(position.xy);',
+    'float he = 0.004;',
+    'vec3 bN = normalize(vec3(',
+    '  -(hgt(position.xy+vec2(he,0.0))-hh)/he,',
+    '  -(hgt(position.xy+vec2(0.0,he))-hh)/he, 1.0));',
+    'vec3 bodyPos = vec3(position.x, position.y, position.z + hh);',
     'float frontY = uH*0.5 - uFront*uH;',
     'float d = max(0.0, position.y - frontY);',
     'float t = 1.0 - exp(-d/uK);',
@@ -566,9 +613,10 @@ function boot(){
     'float cb = cos(b), sb = sin(b);',
     'float nx = c.x*cb + c.y*sb;',
     'float nz = -c.x*sb + c.y*cb;',
-    'gPos = vec3(uXf + nx, position.y - t*u*uDroop, position.z + nz);',
+    // the torn strip flattens out as it peels, so the bulge fades with t
+    'gPos = vec3(uXf + nx, position.y - t*u*uDroop, position.z + nz + hh*(1.0-t));',
     'float ang = th + b;',
-    'gNor = normalize(vec3(sin(ang), 0.0, cos(ang)));'
+    'gNor = normalize(mix(bN, vec3(sin(ang), 0.0, cos(ang)), clamp(th*1.6,0.0,1.0)));'
   ].join('\n');
 
   function makeMat(isStrip){
@@ -576,9 +624,9 @@ function boot(){
     // colour, with a clearcoat doing the glossy-foil work instead of metalness
     var m=new THREE.MeshPhysicalMaterial({
       map:CMAP, roughnessMap:RMAP, metalness:0.04, roughness:0.46,
-      emissiveMap:CMAP, emissive:0xffffff, emissiveIntensity:0.22,
-      clearcoat:0.85, clearcoatRoughness:0.20,
-      side:THREE.DoubleSide, envMapIntensity:0.30, transparent:true
+      emissiveMap:CMAP, emissive:0xffffff, emissiveIntensity:0.20,
+      clearcoat:1.0, clearcoatRoughness:0.085,
+      side:THREE.DoubleSide, envMapIntensity:0.60, transparent:true
     });
     m.onBeforeCompile=function(sh){
       sh.uniforms.uFront={value:0}; sh.uniforms.uK={value:H*0.19};
@@ -587,21 +635,28 @@ function boot(){
       sh.uniforms.uSide={value:isStrip?1:0};
       sh.uniforms.uH={value:H}; sh.uniforms.uXf={value:XF};
       sh.uniforms.uDetach={value:0};
+      sh.uniforms.uW={value:W}; sh.uniforms.uBodyH={value:BODYH};
+      sh.uniforms.uBulge={value:BULGE};
       (isStrip?uniS:uniB).push(sh.uniforms);
 
       sh.vertexShader=sh.vertexShader
         .replace('#include <common>','#include <common>\n'+CHUNK_COMMON)
         .replace('#include <beginnormal_vertex>',
-          CHUNK_DEFORM+'\nvec3 objectNormal = (uSide>0.5)? gNor : vec3(0.0,0.0,1.0);')
+          CHUNK_DEFORM+'\nvec3 objectNormal = (uSide>0.5)? gNor : bN;')
         .replace('#include <begin_vertex>',
-          'vec3 transformed = (uSide>0.5)? gPos : position;');
+          'vec3 transformed = (uSide>0.5)? gPos : bodyPos;');
 
       sh.fragmentShader=sh.fragmentShader
-        .replace('#include <common>','#include <common>\nvarying vec2 vLoc;\nuniform float uSide;\nuniform float uXf;')
+        .replace('#include <common>','#include <common>\nvarying vec2 vLoc;\nuniform float uSide;\n'+
+          'uniform float uXf;\nuniform float uH;\nuniform float uBodyH;')
         .replace('#include <clipping_planes_fragment>',
           ['#include <clipping_planes_fragment>',
            'float e = uXf + sin(vLoc.y*47.0)*0.007 + sin(vLoc.y*113.0)*0.0035 + cos(vLoc.y*19.0)*0.005;',
-           'if(uSide>0.5){ if(vLoc.x > e) discard; } else { if(vLoc.x < e) discard; }'].join('\n'));
+           'if(uSide>0.5){ if(vLoc.x > e) discard; } else { if(vLoc.x < e) discard; }',
+           // serrated crimp along the sealed ends, cut per-pixel so the teeth
+           // can be far finer than the mesh could ever carry
+           'float ey = uH*0.5 - 0.009*(0.5+0.5*sin(vLoc.x*420.0));',
+           'if(abs(vLoc.y) > ey) discard;'].join('\n'));
     };
     return m;
   }
@@ -619,8 +674,9 @@ function boot(){
 
   group=new THREE.Group(); scene.add(group);
 
-  strip=new THREE.Mesh(plane(-W/2, XF+W*0.03, 26), makeMat(true));
-  body =new THREE.Mesh(plane(XF-W*0.03, W/2, 40), makeMat(false));
+  // dense in x so the crimp ridges and creases resolve without aliasing
+  strip=new THREE.Mesh(plane(-W/2, XF+W*0.03, 64), makeMat(true));
+  body =new THREE.Mesh(plane(XF-W*0.03, W/2, 128), makeMat(false));
   strip.castShadow=body.castShadow=true;
   group.add(strip,body);
 
@@ -644,7 +700,7 @@ function boot(){
   (function(){
     var x=gc.getContext('2d');
     var r=x.createRadialGradient(64,64,0,64,64,64);
-    r.addColorStop(0,'rgba(214,240,220,0.9)'); r.addColorStop(1,'rgba(214,240,220,0)');
+    r.addColorStop(0,'rgba(255,236,150,0.95)'); r.addColorStop(1,'rgba(255,236,150,0)');
     x.fillStyle=r; x.fillRect(0,0,128,128);
   })();
   glow=new THREE.Mesh(new THREE.PlaneGeometry(1.4,1.4),
@@ -660,7 +716,7 @@ function boot(){
   key.position.set(-2.4,3.0,3.2);
   scene.add(key);
   scene.add(new THREE.DirectionalLight(0xffffff,0.18).translateX(3).translateY(-1).translateZ(1));
-  scene.add(new THREE.AmbientLight(0xffffff,0.42));
+  scene.add(new THREE.AmbientLight(0xffffff,0.52));
 
   /* a dedicated, near-frontal caster so the shadow reads as contact:
      tucked just behind the pack and nudged down-right, not flung off it */
