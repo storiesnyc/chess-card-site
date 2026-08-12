@@ -247,10 +247,10 @@ a{color:inherit;text-decoration:none}
 <noscript><style>#gate{display:none}#site{opacity:1}</style></noscript>
 
 <section id="gate" aria-label="Open a pack to enter the site">
-  <canvas id="gl" role="button" tabindex="0" aria-label="Tear open the booster pack to enter the site"></canvas>
+  <canvas id="gl" role="button" tabindex="0" aria-label="Booster pack. Drag sideways or use the arrow keys to spin it. Drag down, or press Enter, to tear it open and enter the site."></canvas>
   <div class="gate-mark">Chess Trading Cards</div>
   <button class="gate-skip" id="skip" type="button">Skip &rarr;</button>
-  <div class="cue" id="cue">Pull down to open</div>
+  <div class="cue" id="cue">Drag to spin &middot; pull down to open</div>
   <div class="flash" id="flash"></div>
   <div class="veil" id="veil"></div>
 </section>
@@ -502,10 +502,12 @@ function boot(){
   var W=1.0, H=W*130/70, XF=-W*0.325;     // pack size, fold line x
   var BODYH=H*0.5*(100/130);              // half-height of the un-crimped body
   var BULGE=W*0.082;                      // eight cards inflate the bag
-  var renderer, scene, cam, group, strip, body, inner, glow, shadowPl;
+  var renderer, scene, cam, group, strip, body, back, packBody, inner, glow, shadowPl;
   var uniS=[], uniB=[];
   var front=0, target=0, vel=0, exitT=0, opened=false, dragging=false,
       startY=0, moved=0, px=0, py=0, tpx=0, tpy=0, last=0, camZ=4.4;
+  var startX=0, mode=null, spin=0, spinVel=0, lastSpinX=0, lastSpinT=0;
+  var SPIN_RATE=0.0085;                   // radians per pixel dragged
 
   try{
     renderer=new THREE.WebGLRenderer({canvas:cvs,antialias:true,alpha:true,powerPreference:'high-performance'});
@@ -552,10 +554,18 @@ function boot(){
 
   /* ---- pack surface maps ---- */
   // the printed front panel, straight off the production artwork
-  var CMAP=new THREE.TextureLoader().load('pack-front.png',function(t){
-    t.anisotropy=renderer.capabilities.getMaxAnisotropy();
-  });
-  CMAP.encoding=THREE.sRGBEncoding;
+  var texLoader=new THREE.TextureLoader();
+  function loadTex(src){
+    var t=texLoader.load(src,function(tt){
+      tt.anisotropy=renderer.capabilities.getMaxAnisotropy();
+    });
+    t.encoding=THREE.sRGBEncoding;
+    return t;
+  }
+  var CMAP=loadTex('pack-front.png');
+  // the back of the bag: the wrap's two 35mm side panels, joined as they are
+  // when it is sealed, which is why the barcode ends up on the left
+  var BMAP=loadTex('pack-back.png');
 
   // vertical brushing, so the mylar catches light along its length
   function roughMap(){
@@ -585,10 +595,15 @@ function boot(){
     '  float by = clamp(p.y/uBodyH, -1.0, 1.0);',
     '  float cbx = cos(bx*1.5707963);',
     '  float cby = cos(by*1.5707963);',
-    '  float h = uBulge*cbx*cby;',
+    // Baseline half-thickness. Without it the pillow term vanishes at the
+    // seals and the mirrored back face lands on exactly the same z as the
+    // front, which z-fights across the whole crimp. Film has two layers.
+    '  float h = 0.0035 + uBulge*cbx*cby;',
     '  float seal = smoothstep(0.88, 1.0, abs(by));',
     '  h += sin(p.x*88.0)*0.0032*seal;',
-    '  h += (sin(p.x*7.5+p.y*4.2)+sin(p.y*9.5-p.x*3.1))*0.0060*cbx*cby;',
+    // crumpling: broad slack folds, then a finer near-vertical crease octave
+    '  h += (sin(p.x*7.5+p.y*4.2)+sin(p.y*9.5-p.x*3.1))*0.0135*cbx*cby;',
+    '  h += (sin(p.x*17.0+p.y*2.5)*0.6+sin(p.x*26.0-p.y*4.4)*0.4)*0.0075*cbx*cby;',
     '  return h;',
     '}'
   ].join('\n');
@@ -606,7 +621,9 @@ function boot(){
     'float d = max(0.0, position.y - frontY);',
     'float t = 1.0 - exp(-d/uK);',
     'float b = uMaxA * t + uDetach*2.4;',
-    'float R = mix(0.62, 0.11, t);',
+    // near-flat until the tear actually starts, so the strip sits coplanar
+    // with the body and the join is invisible on a sealed pack
+    'float R = mix(4.0, 0.11, t);',
     'float u = max(0.0, uXf - position.x);',
     'float th = min(u/R, 5.2);',
     'vec2 c = vec2(-R*sin(th), R*(1.0-cos(th)));',
@@ -619,14 +636,19 @@ function boot(){
     'gNor = normalize(mix(bN, vec3(sin(ang), 0.0, cos(ang)), clamp(th*1.6,0.0,1.0)));'
   ].join('\n');
 
-  function makeMat(isStrip){
+  function makeMat(kind){          // 'strip' | 'body' | 'back'
+    var isStrip=kind==='strip', isBack=kind==='back';
+    var tex=isBack?BMAP:CMAP;
     // printed ink on a mylar bag: mostly dielectric so the artwork keeps its
     // colour, with a clearcoat doing the glossy-foil work instead of metalness
     var m=new THREE.MeshPhysicalMaterial({
-      map:CMAP, roughnessMap:RMAP, metalness:0.04, roughness:0.46,
-      emissiveMap:CMAP, emissive:0xffffff, emissiveIntensity:0.20,
+      map:tex, roughnessMap:RMAP, metalness:0.04, roughness:0.46,
+      emissiveMap:tex, emissive:0xffffff, emissiveIntensity:0.20,
       clearcoat:1.0, clearcoatRoughness:0.085,
-      side:THREE.DoubleSide, envMapIntensity:0.60, transparent:true
+      side:THREE.DoubleSide, envMapIntensity:0.60, transparent:true,
+      // the body sits under the strip in the overlap band; bias it back so
+      // the two coplanar surfaces cannot z-fight
+      polygonOffset:kind==='body', polygonOffsetFactor:1, polygonOffsetUnits:1
     });
     m.onBeforeCompile=function(sh){
       sh.uniforms.uFront={value:0}; sh.uniforms.uK={value:H*0.19};
@@ -637,7 +659,8 @@ function boot(){
       sh.uniforms.uDetach={value:0};
       sh.uniforms.uW={value:W}; sh.uniforms.uBodyH={value:BODYH};
       sh.uniforms.uBulge={value:BULGE};
-      (isStrip?uniS:uniB).push(sh.uniforms);
+      // the back never tears, so it needs no per-frame uniform updates
+      if(!isBack) (isStrip?uniS:uniB).push(sh.uniforms);
 
       sh.vertexShader=sh.vertexShader
         .replace('#include <common>','#include <common>\n'+CHUNK_COMMON)
@@ -649,14 +672,27 @@ function boot(){
       sh.fragmentShader=sh.fragmentShader
         .replace('#include <common>','#include <common>\nvarying vec2 vLoc;\nuniform float uSide;\n'+
           'uniform float uXf;\nuniform float uH;\nuniform float uBodyH;')
-        .replace('#include <clipping_planes_fragment>',
-          ['#include <clipping_planes_fragment>',
-           'float e = uXf + sin(vLoc.y*47.0)*0.007 + sin(vLoc.y*113.0)*0.0035 + cos(vLoc.y*19.0)*0.005;',
-           'if(uSide>0.5){ if(vLoc.x > e) discard; } else { if(vLoc.x < e) discard; }',
-           // serrated crimp along the sealed ends, cut per-pixel so the teeth
-           // can be far finer than the mesh could ever carry
-           'float ey = uH*0.5 - 0.009*(0.5+0.5*sin(vLoc.x*420.0));',
-           'if(abs(vLoc.y) > ey) discard;'].join('\n'));
+        .replace('#include <clipping_planes_fragment>',function(){
+          var cuts=['#include <clipping_planes_fragment>'];
+          if(!isBack){
+            cuts.push(
+              'float e = uXf + sin(vLoc.y*47.0)*0.007 + sin(vLoc.y*113.0)*0.0035 + cos(vLoc.y*19.0)*0.005;',
+              // overlap the two halves rather than butting them at one edge —
+              // butted, the antialiased pixels on each side let the background
+              // through and the join reads as a bright seam on a sealed pack
+              'float ov = 0.006;',
+              'if(uSide>0.5){ if(vLoc.x > e+ov) discard; } else { if(vLoc.x < e-ov) discard; }');
+          }
+          // serrated crimp along the sealed ends, cut per-pixel so the teeth
+          // can be far finer than the mesh could ever carry
+          cuts.push(
+            // cos, not sin: the back face is rotated 180 degrees, so only an
+            // even function puts its teeth in the same place as the front's.
+            // A real crimp is cut through both layers at once.
+            'float ey = uH*0.5 - 0.009*(0.5+0.5*cos(vLoc.x*420.0));',
+            'if(abs(vLoc.y) > ey) discard;');
+          return cuts.join('\n');
+        }());
     };
     return m;
   }
@@ -675,10 +711,15 @@ function boot(){
   group=new THREE.Group(); scene.add(group);
 
   // dense in x so the crimp ridges and creases resolve without aliasing
-  strip=new THREE.Mesh(plane(-W/2, XF+W*0.03, 64), makeMat(true));
-  body =new THREE.Mesh(plane(XF-W*0.03, W/2, 128), makeMat(false));
-  strip.castShadow=body.castShadow=true;
-  group.add(strip,body);
+  strip=new THREE.Mesh(plane(-W/2, XF+W*0.03, 64), makeMat('strip'));
+  body =new THREE.Mesh(plane(XF-W*0.03, W/2, 128), makeMat('body'));
+  // the far face, so the pack has a real back when you spin it. Turning it
+  // to face away also puts its bulge behind, giving the bag actual volume.
+  back =new THREE.Mesh(plane(-W/2, W/2, 128), makeMat('back'));
+  back.rotation.y=Math.PI;
+  strip.castShadow=body.castShadow=back.castShadow=true;
+  packBody=new THREE.Object3D(); packBody.add(body,back);
+  group.add(strip,packBody);
 
   /* iridescent interior, revealed through the tear */
   var ic=document.createElement('canvas'); ic.width=256; ic.height=256;
@@ -747,9 +788,13 @@ function boot(){
   resize(); addEventListener('resize',resize);
 
   /* ---------- interaction ---------- */
+  // One pointer, two gestures: whichever axis the drag commits to first wins,
+  // so spinning sideways never starts a tear and vice versa.
   function down(e){
     if(opened) return;
-    dragging=true; moved=0; startY=e.clientY;
+    dragging=true; moved=0; mode=null;
+    startX=e.clientX; startY=e.clientY;
+    lastSpinX=e.clientX; lastSpinT=performance.now(); spinVel=0;
     cue.style.opacity='0.3';
     try{ cvs.setPointerCapture(e.pointerId); }catch(err){}
   }
@@ -758,14 +803,24 @@ function boot(){
     tpx=((e.clientX-r.left)/r.width-0.5)*2;
     tpy=((e.clientY-r.top)/r.height-0.5)*2;
     if(!dragging||opened) return;
-    var d=e.clientY-startY;
-    moved=Math.max(moved,Math.abs(d));
-    var raw=d/(gate.clientHeight*0.42);
-    target=Math.max(0,Math.min(1,raw));
+    var dx=e.clientX-startX, dy=e.clientY-startY;
+    moved=Math.max(moved,Math.max(Math.abs(dx),Math.abs(dy)));
+    if(!mode && (Math.abs(dx)>7||Math.abs(dy)>7))
+      mode = Math.abs(dx)>Math.abs(dy) ? 'spin' : 'tear';
+    if(mode==='spin'){
+      var now=performance.now(), ddx=e.clientX-lastSpinX,
+          dts=Math.max(8,now-lastSpinT)/1000;
+      spin+=ddx*SPIN_RATE;
+      spinVel=Math.max(-14,Math.min(14,ddx*SPIN_RATE/dts));
+      lastSpinX=e.clientX; lastSpinT=now;
+    }else if(mode==='tear'){
+      target=Math.max(0,Math.min(1,dy/(gate.clientHeight*0.42)));
+    }
   }
   function up(){
     if(!dragging||opened) return;
     dragging=false;
+    if(mode==='spin'){ cue.style.opacity=''; return; }
     if(moved<9||front>0.34) commit();
     else { target=0; cue.style.opacity=''; }
   }
@@ -775,6 +830,8 @@ function boot(){
   cvs.addEventListener('pointercancel',up);
   cvs.addEventListener('keydown',function(e){
     if(e.key==='Enter'||e.key===' '){ e.preventDefault(); commit(); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); spinVel=-3.4; }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); spinVel=3.4; }
   });
 
   var exitStart=0;
@@ -811,9 +868,9 @@ function boot(){
       strip.material.opacity=1-seg(e,0.55,0.85);
       // stage 3: body opens toward camera and drifts
       var bo=easeInOut(seg(e,0.22,0.9));
-      body.rotation.y=bo*0.46; body.rotation.z=-bo*0.10;
-      body.position.set(bo*0.62,bo*0.06,bo*0.30);
-      body.material.opacity=1-seg(e,0.62,0.95);
+      packBody.rotation.y=bo*0.46; packBody.rotation.z=-bo*0.10;
+      packBody.position.set(bo*0.62,bo*0.06,bo*0.30);
+      body.material.opacity=back.material.opacity=1-seg(e,0.62,0.95);
       // stage 4: light from inside
       inner.material.opacity=0.9;
       glow.material.opacity=easeInOut(seg(e,0.25,0.85))*1.0;
@@ -839,8 +896,12 @@ function boot(){
     px += (tpx-px)*(1-Math.exp(-4*dt));
     py += (tpy-py)*(1-Math.exp(-4*dt));
     var idle=opened?0:1;
-    group.rotation.y=px*0.20 + Math.sin(now*0.00042)*0.05*idle;
-    group.rotation.x=-py*0.11 + Math.sin(now*0.00031)*0.035*idle;
+    // spin carries on after release, then settles
+    if(!dragging&&Math.abs(spinVel)>0.0005){
+      spin+=spinVel*dt; spinVel*=Math.exp(-2.1*dt);
+    }
+    group.rotation.y=spin + px*0.09 + Math.sin(now*0.00042)*0.045*idle;
+    group.rotation.x=-py*0.10 + Math.sin(now*0.00031)*0.032*idle;
     group.position.y=Math.sin(now*0.00038)*0.022*idle;
     cam.position.x=px*0.10; cam.lookAt(0,0,0);
 
