@@ -151,9 +151,8 @@ section[id]{scroll-margin-top:76px}
 }
 
 /* ============== BOARD ============== */
-.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
-  gap:clamp(24px,4vw,44px);align-items:start}
-@media(max-width:900px){.board-layout{grid-template-columns:1fr}}
+/* the board stands on its own — capped so it doesn't sprawl on wide screens */
+.board-only{max-width:660px}
 .board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:8px}
 .ranks,.files{display:grid;font-weight:700;font-size:11px}
 .ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:16px}
@@ -168,7 +167,7 @@ section[id]{scroll-margin-top:76px}
 .sq--rare{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.14)),
   linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3));
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
-/* the eight core cards that get promoted twice */
+/* the eight cards that also have Secret Rare and Monochrome versions */
 .sq--promo::after{content:"♛";position:absolute;right:6%;bottom:4%;font-size:min(2.4vw,17px);
   line-height:1;color:var(--ink)}
 .sq--promo{box-shadow:inset 0 0 0 3px var(--magenta)}
@@ -198,7 +197,7 @@ section[id]{scroll-margin-top:76px}
 .key-row .rng{font-family:var(--f-body);font-weight:700;font-size:11px;color:var(--grey)}
 .key-row p{font-size:13px;margin:0;line-height:1.4}
 
-/* ============== PROMOTION ============== */
+/* ============== VARIATIONS ============== */
 .promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media(max-width:760px){.promo-grid{grid-template-columns:1fr}}
 .chain{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
@@ -234,6 +233,11 @@ section[id]{scroll-margin-top:76px}
   background:var(--cream-2)}
 .card .meta{padding:7px 8px;border-top:var(--bd) solid var(--ink);display:flex;gap:6px;
   align-items:baseline}
+/* text-only tiles carry no art, so they need their own body */
+.card--text .meta{padding:13px 11px;min-height:74px;align-items:flex-start;flex-direction:column;
+  gap:4px;border-top:0}
+.card--text .no{font-size:15px}
+.card--text .nm{font-size:12.5px}
 .card .no{font-family:var(--f-display);font-size:11px}
 .card .nm{font-size:11px;font-weight:600;line-height:1.2;overflow:hidden}
 .card .tierbar{height:7px;border-bottom:var(--bd) solid var(--ink)}
@@ -245,6 +249,7 @@ section[id]{scroll-margin-top:76px}
   background:var(--paper);border:var(--bd) solid var(--ink);padding:20px;margin-bottom:24px;
   box-shadow:var(--pop) var(--pop) 0 var(--ink)}
 .detail[hidden]{display:none}
+.detail--noart{grid-template-columns:1fr}
 @media(max-width:640px){.detail{grid-template-columns:1fr}}
 .detail img{display:block;width:100%;height:auto;border:2px solid var(--ink)}
 .detail h3{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);text-transform:uppercase;
@@ -332,7 +337,7 @@ section[id]{scroll-margin-top:76px}
   <header class="topbar"><div class="wrap topbar-in">
     <a href="#site" class="brand">Chess <em>Trading Cards</em></a>
     <nav class="topbar-links" aria-label="Sections">
-      <a href="#rarity">Rarity</a><a href="#board">The board</a>
+      <a href="#rarity">Rarity</a><a href="#board">Card list</a>
       <a href="#checklist">Checklist</a><a href="#art">The art</a>
       <a href="#shop" class="link-buy">Shop</a>
     </nav>
@@ -400,58 +405,32 @@ section[id]{scroll-margin-top:76px}
   <section class="band band--blue" id="board">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The core set is a board.</h2>
-        <p>Sixty-four core cards, sixty-four squares, numbered a8 through h1. The thirty-two Commons fill the top half exactly &mdash; ranks 8 to 5 &mdash; and the set gets rarer as it counts down the board.</p>
+        <h2>The card list as a chess board.</h2>
+        <p>64 squares = 64 cards.</p>
       </div>
-      <div class="board-layout rise">
-        <div>
-          <div class="board-frame">
-            <div class="ranks" aria-hidden="true">
-              <span>8</span><span>7</span><span>6</span><span>5</span>
-              <span>4</span><span>3</span><span>2</span><span>1</span>
-            </div>
-            <div class="board" id="boardEl" role="img"
-                 aria-label="The 64-card core set laid out as a chessboard, card 1 on a8 through card 64 on h1. Cards 1 to 32 are Common and fill ranks 8 to 5, cards 33 to 51 are Uncommon, and cards 52 to 64 are Rare. Eight squares are marked as the cards that are promoted to Secret Rare and Monochrome."></div>
-            <div class="files" aria-hidden="true">
-              <span>a</span><span>b</span><span>c</span><span>d</span>
-              <span>e</span><span>f</span><span>g</span><span>h</span>
-            </div>
+      <div class="board-only rise">
+        <div class="board-frame">
+          <div class="ranks" aria-hidden="true">
+            <span>8</span><span>7</span><span>6</span><span>5</span>
+            <span>4</span><span>3</span><span>2</span><span>1</span>
           </div>
-          <p class="readout" id="readout"></p>
+          <div class="board" id="boardEl" role="img"
+               aria-label="The card list laid out as a chess board: 64 squares for 64 cards, card 1 on a8 through card 64 on h1."></div>
+          <div class="files" aria-hidden="true">
+            <span>a</span><span>b</span><span>c</span><span>d</span>
+            <span>e</span><span>f</span><span>g</span><span>h</span>
+          </div>
         </div>
-        <div>
-          <dl class="key">
-            <div class="key-row">
-              <span class="swatch swatch--common" aria-hidden="true"></span>
-              <div><h3>Common <span class="rng">#1&ndash;32</span></h3>
-                <p>Pieces, first moves and the openings everyone knows. Ranks 8 to 5.</p></div>
-            </div>
-            <div class="key-row">
-              <span class="swatch swatch--uncommon" aria-hidden="true"></span>
-              <div><h3>Uncommon <span class="rng">#33&ndash;51</span></h3>
-                <p>Rules, tactics and formats. Deeper cuts, and still matte.</p></div>
-            </div>
-            <div class="key-row">
-              <span class="swatch swatch--rare" aria-hidden="true"></span>
-              <div><h3>Rare <span class="rng">#52&ndash;64</span></h3>
-                <p>Holofoil. Legends, famous games, and the titles: Expert, Master, Grandmaster.</p></div>
-            </div>
-            <div class="key-row">
-              <span class="swatch swatch--promo" aria-hidden="true"></span>
-              <div><h3>Promoted</h3>
-                <p>Eight core cards that come back as Secret Rares and Monochromes.</p></div>
-            </div>
-          </dl>
-        </div>
+        <p class="readout" id="readout"></p>
       </div>
     </div>
   </section>
 
-  <section class="band" id="promotion">
+  <section class="band" id="variations">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>Eight cards get promoted. Twice.</h2>
-        <p>The Secret Rares aren't new subjects. They are eight cards already in the core set, redrawn as full art, and then redrawn again in a single colour. A pawn that reaches the end of the board becomes a queen, then the set goes one further.</p>
+        <h2>These ones also have Secret Rare and Monochrome variations.</h2>
+        <p>Eight cards from the list, printed again as full art.</p>
       </div>
       <div class="promo-grid rise" id="promoGrid"></div>
     </div>
@@ -471,7 +450,7 @@ section[id]{scroll-margin-top:76px}
     <div class="wrap">
       <div class="band-head rise">
         <h2>The First Edition checklist.</h2>
-        <p>All eighty cards. Art is shown for every card that has been printed so far; the rest are still at the printer.</p>
+        <p>All eighty cards. Tap any one for its rarity, category and card text.</p>
       </div>
       <div class="detail rise" id="detail" hidden></div>
       <div class="filters rise" id="filters" role="group" aria-label="Filter the checklist by rarity"></div>
@@ -653,9 +632,10 @@ function tierOf(n){
 }
 function card(n){ return CARDS[n-1]; }
 function pad(n){ return (n<10?'00':n<100?'0':'')+n; }
-function imgSrc(c){ return c[4] ? 'cards/card-'+pad(c[0])+'.png' : 'cards/card-back.png'; }
+// only the Monochromes ship art, so this is only ever called for #73-80
+function imgSrc(c){ return 'cards/card-'+pad(c[0])+'.png'; }
 
-// core card -> Secret Rare -> Monochrome. The eight subjects printed three times.
+// card in the list -> its Secret Rare number -> its Monochrome number
 var CHAINS=[[36,65,73],[41,66,74],[44,67,75],[52,68,76],
             [55,69,77],[59,70,78],[61,71,79],[64,72,80]];
 var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
@@ -701,14 +681,15 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
     readout.innerHTML='<b>'+sq.dataset.sqr+'</b><span class="sep">/</span>'+
       '<span>#'+sq.dataset.n+' '+sq.dataset.name+'</span>'+
       '<span class="sep">/</span><b>'+sq.dataset.tier+'</b>'+
-      (sq.classList.contains('sq--promo')?'<span class="sep">/</span><span>promoted</span>':'');
+      (sq.classList.contains('sq--promo')
+        ?'<span class="sep">/</span><span>also Secret Rare &amp; Monochrome</span>':'');
   }
   board.addEventListener('mouseover',show);
   board.addEventListener('pointerdown',show);
   board.addEventListener('mouseleave',function(){ readout.innerHTML=idle; });
 })();
 
-/* ---------------- promotion chains ---------------- */
+/* ---------------- variation rows ---------------- */
 (function(){
   var host=document.getElementById('promoGrid'); if(!host) return;
   host.innerHTML=CHAINS.map(function(ch){
@@ -749,12 +730,13 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
     var out='';
     for(var n=1;n<=80;n++){
       var t=tierOf(n); if(current!=='all'&&t.k!==current) continue;
-      var c=card(n);
-      out+='<button class="card" type="button" data-n="'+n+'" aria-pressed="'+
-        (selected===n?'true':'false')+'">'+
+      // only the Monochromes show their art
+      var c=card(n), isMono=(t.k==='mono');
+      out+='<button class="card '+(isMono?'card--art':'card--text')+'" type="button" data-n="'+n+
+        '" aria-pressed="'+(selected===n?'true':'false')+'">'+
         '<span class="tierbar tb-'+t.k+'" aria-hidden="true"></span>'+
-        '<img loading="lazy" src="'+imgSrc(c)+'" width="399" height="544" alt="'+
-        (c[4]?c[1]+', '+t.label+' card number '+n:'Card back &mdash; art for #'+n+' '+c[1]+' not shown yet')+'">'+
+        (isMono?'<img loading="lazy" src="'+imgSrc(c)+'" width="399" height="544" alt="'+
+          c[1]+', Monochrome card number '+n+'">':'')+
         '<span class="meta"><span class="no">'+n+'</span><span class="nm">'+c[1]+'</span></span>'+
         '</button>';
     }
@@ -767,12 +749,15 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
     var chain=CHAINS.filter(function(ch){ return ch.indexOf(n)>=0; })[0];
     var chainHtml='';
     if(chain){
-      chainHtml='<span class="chip">Printed 3&times; &middot; #'+chain[0]+' &rarr; #'+
-        chain[1]+' &rarr; #'+chain[2]+'</span>';
+      chainHtml = (n===chain[0])
+        ? '<span class="chip">Also #'+chain[1]+' Secret Rare &middot; #'+chain[2]+' Monochrome</span>'
+        : '<span class="chip">Variation of #'+chain[0]+' '+card(chain[0])[1]+'</span>';
     }
+    var isMono=(t.k==='mono');
+    detail.className='detail rise'+(isMono?'':' detail--noart');
     detail.innerHTML=
-      '<img src="'+imgSrc(c)+'" width="399" height="544" alt="'+
-        (c[4]?c[1]+' card':'Card back, art not shown yet')+'">'+
+      (isMono?'<img src="'+imgSrc(c)+'" width="399" height="544" alt="'+
+        c[1]+', Monochrome card">':'')+
       '<div><h3>'+c[1]+'</h3>'+
       '<div class="row"><span class="chip">#'+n+'</span>'+
       '<span class="chip'+(t.k==='rare'||t.k==='secret'?' chip--holo':'')+'">'+
