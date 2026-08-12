@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chess Trading Cards — Chess deserves better collectibles.</title>
-<meta name="description" content="Original illustrated trading cards for chess. 64 cards, 8 secret rares, Grandmasters serialized to 64. First Edition.">
+<meta name="description" content="Original illustrated trading cards for chess. 80 numbered cards: a 64-card core set, 8 Secret Rares, and 8 one-per-print-run Monochromes. First Edition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -30,12 +30,7 @@ body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-siz
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.data{font-family:var(--f-body);font-weight:700;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase}
-
-/* the pack's own halftone burst, reused as page texture */
-.dots{background-image:radial-gradient(var(--red) 21%,transparent 23%);
-  background-size:15px 15px}
+.data{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 
 /* ============== GATE ============== */
 #gate{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--cream)}
@@ -55,13 +50,11 @@ a{color:inherit;text-decoration:none}
   background:none;border:0;cursor:pointer;padding:6px;z-index:3}
 .gate-skip:hover{color:var(--red-2)}
 .cue{position:absolute;left:50%;bottom:calc(var(--pad) + 4px);transform:translateX(-50%);
-  font-family:var(--f-body);font-weight:700;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink);background:var(--yellow);
-  border:var(--bd) solid var(--ink);padding:8px 14px;
+  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  background:var(--yellow);border:var(--bd) solid var(--ink);padding:8px 14px;
   white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
-  background:var(--holo);background-size:200% 200%;mix-blend-mode:screen;
-  transition:opacity .55s ease}
+  background:var(--holo);background-size:200% 200%;mix-blend-mode:screen;transition:opacity .55s ease}
 .veil{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;
   background:var(--cream);transition:opacity .45s ease}
 
@@ -70,160 +63,240 @@ a{color:inherit;text-decoration:none}
 #site.is-in{opacity:1}
 .topbar{position:sticky;top:0;z-index:60;background:var(--cream);
   border-bottom:var(--bd) solid var(--ink)}
-.topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--f-display);font-size:18px;letter-spacing:-.01em;text-transform:uppercase}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{font-family:var(--f-display);font-size:17px;letter-spacing:-.01em;text-transform:uppercase}
 .brand em{font-style:normal;color:var(--red-2)}
-.topbar-links{display:flex;gap:22px;align-items:center}
+.topbar-links{display:flex;gap:20px;align-items:center}
 .topbar-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .topbar-links a:hover{color:var(--red-2)}
-/* black on red, not white: white-on-red is only 3.2:1, and on the pack
-   itself white type always sits on black anyway */
 .link-buy{background:var(--red);color:var(--ink);border:var(--bd) solid var(--ink);
   padding:8px 14px;box-shadow:4px 4px 0 var(--ink)}
 .link-buy:hover{color:var(--ink)!important;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
-@media(max-width:640px){.topbar-links a:not(.link-buy){display:none}}
+@media(max-width:820px){.topbar-links a:not(.link-buy){display:none}}
 
 /* ============== BUTTONS / CHIPS ============== */
-.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--f-body);
-  font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-  padding:15px 24px;border:var(--bd) solid var(--ink);background:var(--paper);color:var(--ink);
-  box-shadow:var(--pop) var(--pop) 0 var(--ink);cursor:pointer;
-  transition:transform .12s ease,box-shadow .12s ease}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;padding:15px 24px;border:var(--bd) solid var(--ink);
+  background:var(--paper);color:var(--ink);box-shadow:var(--pop) var(--pop) 0 var(--ink);
+  cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
 .btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
-.btn--red{background:var(--red);color:var(--ink)}
-.btn--blue{background:var(--blue);color:var(--ink)}
+.btn--red{background:var(--red)}
+.btn--blue{background:var(--blue)}
 .chip{display:inline-block;font-weight:700;font-size:11px;letter-spacing:.1em;
   text-transform:uppercase;padding:8px 13px;background:var(--ink);color:var(--paper)}
-.chip--holo{background:var(--holo);background-size:180% 180%;
-  animation:holoshift 7s linear infinite;color:var(--ink);
-  border:2px solid var(--ink)}
+.chip--holo{background:var(--holo);background-size:180% 180%;animation:holoshift 7s linear infinite;
+  color:var(--ink);border:2px solid var(--ink)}
 @keyframes holoshift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.chip--serial{background:var(--magenta)}
 
 /* ============== HERO ============== */
-.hero{position:relative;overflow:hidden;padding-top:clamp(56px,10vh,110px);
-  padding-bottom:clamp(52px,8vh,90px)}
+.hero{position:relative;overflow:hidden;padding-top:clamp(52px,9vh,104px);
+  padding-bottom:clamp(48px,7vh,84px)}
 .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:15px 15px;
   -webkit-mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);
   mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);opacity:.7}
 .hero .wrap{position:relative;z-index:1}
-.stamp{display:inline-block;background:var(--ink);color:var(--yellow);
-  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  padding:9px 14px;margin-bottom:24px}
-.hero h1{font-family:var(--f-display);font-size:clamp(42px,9vw,104px);line-height:.92;
-  letter-spacing:-.03em;text-transform:uppercase;margin:0 0 24px;max-width:13ch}
+.stamp{display:inline-block;background:var(--ink);color:var(--yellow);font-weight:700;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;margin-bottom:22px}
+.hero h1{font-family:var(--f-display);font-size:clamp(40px,8.4vw,96px);line-height:.92;
+  letter-spacing:-.03em;text-transform:uppercase;margin:0 0 22px;max-width:13ch}
 .hero h1 em{font-style:normal;color:var(--red-2)}
-.lede{font-size:clamp(17px,2.1vw,21px);line-height:1.45;font-weight:500;
-  max-width:40ch;margin:0 0 32px}
-.actions{display:flex;flex-wrap:wrap;gap:16px}
+.lede{font-size:clamp(17px,2.1vw,21px);line-height:1.45;font-weight:500;max-width:44ch;margin:0 0 30px}
+.actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
+.tally{display:grid;grid-template-columns:repeat(3,auto);gap:0;border:var(--bd) solid var(--ink);
+  background:var(--paper);box-shadow:var(--pop) var(--pop) 0 var(--ink);width:fit-content;max-width:100%}
+.tally div{padding:16px 22px;border-right:var(--bd) solid var(--ink)}
+.tally div:last-child{border-right:0}
+.tally b{display:block;font-family:var(--f-display);font-size:clamp(26px,4vw,40px);line-height:1}
+.tally span{font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:560px){.tally{grid-template-columns:1fr}
+  .tally div{border-right:0;border-bottom:var(--bd) solid var(--ink)}
+  .tally div:last-child{border-bottom:0}}
 
 /* ============== BANDS ============== */
-.band{padding-top:clamp(56px,8vh,96px);padding-bottom:clamp(56px,8vh,96px);
+.band{padding-top:clamp(52px,7vh,88px);padding-bottom:clamp(52px,7vh,88px);
   border-top:var(--bd) solid var(--ink)}
+/* the topbar is sticky, so anchored sections must clear it */
+section[id]{scroll-margin-top:76px}
 .band--yellow{background:var(--yellow)}
 .band--blue{background:var(--blue)}
-.band-head{margin-bottom:40px;max-width:62ch}
-.band-head h2{font-family:var(--f-display);font-size:clamp(28px,5vw,52px);line-height:.98;
+.band--ink{background:var(--ink);color:var(--cream)}
+.band-head{margin-bottom:36px;max-width:64ch}
+.band-head h2{font-family:var(--f-display);font-size:clamp(28px,4.6vw,50px);line-height:.98;
   letter-spacing:-.025em;text-transform:uppercase;margin:0 0 12px}
-.band-head p{font-size:17px;font-weight:500;margin:0;max-width:46ch}
+.band-head p{font-size:17px;font-weight:500;margin:0;max-width:52ch}
 
-/* ============== THE BOARD ============== */
-.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);
-  gap:clamp(24px,4vw,48px);align-items:start}
-@media(max-width:860px){.board-layout{grid-template-columns:1fr}}
+/* ============== RARITY LADDER ============== */
+.ladder{border:var(--bd) solid var(--ink);background:var(--paper);
+  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.rung{display:grid;grid-template-columns:64px 1fr 132px 150px;gap:18px;align-items:center;
+  padding:16px 20px;border-bottom:var(--bd) solid var(--ink)}
+.rung:last-child{border-bottom:0}
+.glyph{width:52px;height:52px;display:grid;place-items:center;font-size:30px;line-height:1;
+  border:var(--bd) solid var(--ink)}
+.g-common{background:var(--cream)} .g-uncommon{background:var(--yellow)}
+.g-rare{background:var(--holo);background-size:200% 200%}
+.g-secret{background:var(--holo);background-size:200% 200%;animation:holoshift 7s linear infinite}
+.g-mono{background:var(--ink);color:var(--paper)}
+.rung h3{font-family:var(--f-display);font-size:17px;text-transform:uppercase;margin:0 0 3px}
+.rung .who{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+.rung .rng{font-family:var(--f-display);font-size:15px}
+.rung .rng small{display:block;font-family:var(--f-body);font-weight:700;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+.rung .treat{font-size:13px;font-weight:500;line-height:1.35}
+@media(max-width:780px){
+  .rung{grid-template-columns:52px 1fr;gap:14px}
+  .rung .rng,.rung .treat{grid-column:2}
+  .rung .rng{margin-top:4px}
+}
+
+/* ============== BOARD ============== */
+.board-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
+  gap:clamp(24px,4vw,44px);align-items:start}
+@media(max-width:900px){.board-layout{grid-template-columns:1fr}}
 .board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:8px}
-.ranks,.files{display:grid;font-weight:700;font-size:11px;color:var(--ink)}
+.ranks,.files{display:grid;font-weight:700;font-size:11px}
 .ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:16px}
 .files{grid-column:2;grid-template-columns:repeat(8,1fr);justify-items:center;padding-top:2px}
-.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;
-  border:4px solid var(--ink);box-shadow:var(--pop) var(--pop) 0 var(--ink);background:var(--ink)}
-.sq{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;
-  padding:5px 0 0 5px;transition:transform .16s ease,filter .16s ease}
-.sq .num{font-weight:700;font-size:9px;line-height:1;color:rgba(0,0,0,.42)}
-.sq--common.sq--lt{background:var(--cream)}
-.sq--common.sq--dk{background:var(--cream-2)}
-.sq--uncommon.sq--lt{background:var(--yellow)}
-.sq--uncommon.sq--dk{background:var(--yellow-2)}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;border:4px solid var(--ink);
+  box-shadow:var(--pop) var(--pop) 0 var(--ink);background:var(--ink)}
+.sq{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;padding:5px 0 0 5px;
+  transition:transform .16s ease,filter .16s ease}
+.sq .num{font-weight:700;font-size:9px;line-height:1;color:rgba(0,0,0,.45)}
+.sq--common.sq--lt{background:var(--cream)} .sq--common.sq--dk{background:var(--cream-2)}
+.sq--uncommon.sq--lt{background:var(--yellow)} .sq--uncommon.sq--dk{background:var(--yellow-2)}
 .sq--rare{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.14)),
   linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3));
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
+/* the eight core cards that get promoted twice */
+.sq--promo::after{content:"♛";position:absolute;right:6%;bottom:4%;font-size:min(2.4vw,17px);
+  line-height:1;color:var(--ink)}
+.sq--promo{box-shadow:inset 0 0 0 3px var(--magenta)}
 @media(hover:hover){
-  .board:hover .sq{filter:saturate(.5) brightness(.86)}
-  .board .sq:hover{filter:none;transform:scale(1.08);z-index:2;
-    box-shadow:0 0 0 3px var(--ink)}
+  .board:hover .sq{filter:saturate(.5) brightness(.88)}
+  .board .sq:hover{filter:none;transform:scale(1.08);z-index:2;box-shadow:0 0 0 3px var(--ink)}
 }
 @media(max-width:640px){.sq .num{display:none}.sq{padding:0}}
-.readout{display:flex;align-items:center;gap:9px;margin-top:18px;min-height:24px;
-  font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.readout{display:flex;align-items:center;gap:9px;margin-top:16px;min-height:26px;flex-wrap:wrap;
+  font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 .readout b{background:var(--ink);color:var(--yellow);padding:4px 8px}
 .readout .sep{opacity:.35}
+.half{margin-top:14px;font-size:14px;font-weight:500;max-width:52ch}
 
-/* legend */
 .key{border:var(--bd) solid var(--ink);background:var(--paper);
   box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.key-row{padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:14px;
-  align-items:start;border-bottom:var(--bd) solid var(--ink)}
+.key-row{padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;
+  border-bottom:var(--bd) solid var(--ink)}
 .key-row:last-child{border-bottom:0}
-.swatch{width:26px;height:26px;border:2px solid var(--ink);margin-top:2px}
+.swatch{width:24px;height:24px;border:2px solid var(--ink);margin-top:2px}
 .swatch--common{background:linear-gradient(135deg,var(--cream) 50%,var(--cream-2) 50%)}
 .swatch--uncommon{background:linear-gradient(135deg,var(--yellow) 50%,var(--yellow-2) 50%)}
 .swatch--rare{background:var(--holo);background-size:200% 200%}
-.key-row h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;margin:0 0 4px;
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.swatch--promo{background:var(--paper);box-shadow:inset 0 0 0 3px var(--magenta)}
+.key-row h3{font-family:var(--f-display);font-size:14px;text-transform:uppercase;margin:0 0 3px;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
 .key-row .rng{font-family:var(--f-body);font-weight:700;font-size:11px;color:var(--grey)}
-.key-row p{font-size:14px;margin:0;line-height:1.45}
+.key-row p{font-size:13px;margin:0;line-height:1.4}
 
-.offlist{margin-top:24px;display:grid;gap:24px}
-.offlist-cell{border:var(--bd) solid var(--ink);padding:22px 20px;
+/* ============== PROMOTION ============== */
+.promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.promo-grid{grid-template-columns:1fr}}
+.chain{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+  background:var(--paper);border:var(--bd) solid var(--ink);padding:13px 15px}
+.chain b{font-family:var(--f-display);font-size:15px;text-transform:uppercase}
+.steps{display:flex;align-items:center;gap:5px;font-weight:700;font-size:11px}
+.steps i{font-style:normal;padding:5px 7px;border:2px solid var(--ink);background:var(--cream)}
+.steps i.s2{background:var(--holo);background-size:200% 200%}
+.steps i.s3{background:var(--ink);color:var(--paper)}
+.steps em{font-style:normal;opacity:.5}
+
+/* ============== MONOCHROME SHOWCASE ============== */
+.mono-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media(max-width:820px){.mono-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mono-strip figure{margin:0}
+.mono-strip img{display:block;width:100%;height:auto;border:var(--bd) solid var(--cream)}
+.mono-strip figcaption{margin-top:8px;font-weight:700;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase}
+.mono-strip figcaption span{color:#9A9A8A}
+
+/* ============== CHECKLIST ============== */
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px}
+.filt{font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 13px;
+  border:var(--bd) solid var(--ink);background:var(--paper);cursor:pointer;font-family:var(--f-body)}
+.filt[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:13px}
+.card{border:var(--bd) solid var(--ink);background:var(--paper);padding:0;cursor:pointer;
+  font-family:var(--f-body);text-align:left;display:flex;flex-direction:column;
+  transition:transform .12s ease,box-shadow .12s ease}
+.card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.card[aria-pressed="true"]{box-shadow:5px 5px 0 var(--magenta)}
+.card img{display:block;width:100%;height:auto;aspect-ratio:198/270;object-fit:cover;
+  background:var(--cream-2)}
+.card .meta{padding:7px 8px;border-top:var(--bd) solid var(--ink);display:flex;gap:6px;
+  align-items:baseline}
+.card .no{font-family:var(--f-display);font-size:11px}
+.card .nm{font-size:11px;font-weight:600;line-height:1.2;overflow:hidden}
+.card .tierbar{height:7px;border-bottom:var(--bd) solid var(--ink)}
+.tb-common{background:var(--cream-2)} .tb-uncommon{background:var(--yellow)}
+.tb-rare,.tb-secret{background:var(--holo);background-size:200% 200%}
+.tb-mono{background:var(--ink)}
+
+.detail{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:start;
+  background:var(--paper);border:var(--bd) solid var(--ink);padding:20px;margin-bottom:24px;
   box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.offlist-cell--blue{background:var(--blue)}
-.offlist-cell--magenta{background:var(--magenta);color:var(--paper)}
-.offlist-cell .tag{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  margin-bottom:10px}
-.offlist-cell h3{font-family:var(--f-display);font-size:19px;text-transform:uppercase;margin:0 0 8px}
-.offlist-cell p{font-size:14px;margin:0 0 16px;line-height:1.45}
+.detail[hidden]{display:none}
+@media(max-width:640px){.detail{grid-template-columns:1fr}}
+.detail img{display:block;width:100%;height:auto;border:2px solid var(--ink)}
+.detail h3{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);text-transform:uppercase;
+  margin:0 0 8px;line-height:1.02}
+.detail .row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.detail p{margin:0;font-size:15px;font-weight:500;line-height:1.5;max-width:52ch}
+.detail .close{margin-top:16px}
 
 /* ============== SHOP ============== */
-.shop{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:24px}
-@media(max-width:860px){.shop{grid-template-columns:1fr}}
-.sku{background:var(--paper);border:var(--bd) solid var(--ink);padding:26px 22px 24px;
+.shop{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:22px}
+@media(max-width:880px){.shop{grid-template-columns:1fr}}
+.sku{background:var(--paper);border:var(--bd) solid var(--ink);padding:24px 20px;
   display:flex;flex-direction:column;box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.sku--feature{background:var(--red);color:var(--ink)}
-.sku .count{font-family:var(--f-display);font-size:clamp(38px,5.5vw,58px);line-height:.9;
+.sku--feature{background:var(--red)}
+.sku .count{font-family:var(--f-display);font-size:clamp(34px,5vw,52px);line-height:.9;
   letter-spacing:-.04em;margin-bottom:4px}
 .sku .unit{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:18px}
-.sku h3{font-family:var(--f-display);font-size:19px;text-transform:uppercase;margin:0 0 8px}
-.sku p{font-size:14px;margin:0 0 22px;line-height:1.45}
-.sku .price{font-family:var(--f-display);font-size:26px;margin-top:auto;margin-bottom:16px}
+  margin-bottom:16px}
+.sku h3{font-family:var(--f-display);font-size:18px;text-transform:uppercase;margin:0 0 8px}
+.sku p{font-size:14px;margin:0 0 20px;line-height:1.45}
+.sku .price{font-family:var(--f-display);font-size:25px;margin-top:auto;margin-bottom:14px}
 .sku .btn{width:100%}
-.ships{margin-top:24px}
+.odds{margin-top:24px;background:var(--ink);color:var(--cream);border:var(--bd) solid var(--ink);
+  padding:20px 22px}
+.odds h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;margin:0 0 12px;
+  color:var(--yellow)}
+.odds ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:10px 26px}
+.odds li{font-weight:700;font-size:13px}
+.odds li b{font-family:var(--f-display);font-size:17px;margin-right:6px}
+.odds .fine{margin:12px 0 0;font-size:12px;font-weight:500;color:#9A9A8A;max-width:60ch}
 
-/* ============== THE ART ============== */
-.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
+/* ============== ART ============== */
+.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);align-items:start}
 @media(max-width:820px){.art-layout{grid-template-columns:1fr}}
 .art-copy p{font-size:17px;line-height:1.5;margin:0 0 16px;max-width:44ch}
-.art-copy strong{font-weight:700}
-/* the pack's own title treatment: white fill, hard black outline */
-.sheet{background:var(--blue);border:var(--bd) solid var(--ink);padding:clamp(24px,3.4vw,36px);
+.sheet{background:var(--blue);border:var(--bd) solid var(--ink);padding:clamp(22px,3.2vw,34px);
   box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.sheet .big{font-family:var(--f-display);font-size:clamp(26px,4vw,42px);line-height:1.02;
+.sheet .big{font-family:var(--f-display);font-size:clamp(25px,3.8vw,40px);line-height:1.02;
   letter-spacing:-.02em;text-transform:uppercase;margin:0 0 16px;color:var(--paper);
   text-shadow:-3px -3px 0 #000,3px -3px 0 #000,-3px 3px 0 #000,3px 3px 0 #000,
     0 -3px 0 #000,0 3px 0 #000,-3px 0 0 #000,3px 0 0 #000}
 .sheet .big mark{background:none;color:var(--yellow)}
 .sheet p{font-size:15px;line-height:1.5;margin:0;font-weight:500}
-.credits{margin-top:26px;border-top:var(--bd) solid var(--ink)}
+.credits{margin-top:24px;border-top:var(--bd) solid var(--ink)}
 .credit{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:12px 0;
   border-bottom:1px solid rgba(0,0,0,.25);align-items:baseline}
-.credit dt{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--grey)}
+.credit dt{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
 .credit dd{font-family:var(--f-display);font-size:15px;margin:0}
 .credit dd span{font-family:var(--f-body);font-weight:500;color:var(--grey)}
 
 /* ============== FOOTER ============== */
-.foot{background:var(--ink);color:var(--cream);padding-top:44px;padding-bottom:52px;
+.foot{background:var(--ink);color:var(--cream);padding-top:42px;padding-bottom:50px;
   border-top:var(--bd) solid var(--ink)}
 .foot-in{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-end}
 .foot-in .t{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);line-height:1;
@@ -231,7 +304,7 @@ a{color:inherit;text-decoration:none}
 .foot-links{display:flex;gap:18px;flex-wrap:wrap}
 .foot-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .foot-links a:hover{color:var(--yellow)}
-.colophon{margin-top:28px;color:#9A9A8A}
+.colophon{margin-top:26px;color:#9A9A8A}
 
 /* ============== MOTION ============== */
 .rise{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
@@ -239,7 +312,7 @@ a{color:inherit;text-decoration:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   .rise{opacity:1;transform:none}
-  .btn:hover{transform:none}
+  .btn:hover,.card:hover{transform:none}
   .board:hover .sq,.board .sq:hover{filter:none;transform:none}
 }
 </style>
@@ -259,6 +332,7 @@ a{color:inherit;text-decoration:none}
   <header class="topbar"><div class="wrap topbar-in">
     <a href="#site" class="brand">Chess <em>Trading Cards</em></a>
     <nav class="topbar-links" aria-label="Sections">
+      <a href="#rarity">Rarity</a><a href="#board">The board</a>
       <a href="#checklist">Checklist</a><a href="#art">The art</a>
       <a href="#shop" class="link-buy">Shop</a>
     </nav>
@@ -266,23 +340,69 @@ a{color:inherit;text-decoration:none}
 
   <section class="hero">
     <div class="wrap">
-      <div class="stamp rise">First Edition · Printing 001</div>
+      <div class="stamp rise">First Edition &middot; Printing 001</div>
       <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
-      <p class="lede rise">Sixty-four cards on the openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
+      <p class="lede rise">Eighty numbered cards on the pieces, openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
       <div class="actions rise">
         <a href="#shop" class="btn btn--red">Shop packs</a>
-        <a href="#checklist" class="btn">See the checklist</a>
+        <a href="#checklist" class="btn">See all 80 cards</a>
+      </div>
+      <div class="tally rise">
+        <div><b>80</b><span>Numbered cards</span></div>
+        <div><b>64</b><span>Core set</span></div>
+        <div><b>8</b><span>One per print run</span></div>
       </div>
     </div>
   </section>
 
-  <section class="band" id="checklist">
+  <section class="band" id="rarity">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The checklist is a board.</h2>
-        <p>Sixty-four cards, sixty-four squares. The set gets rarer as it counts up, which puts all eight rares on the back rank.</p>
+        <h2>The rarity ladder is the piece hierarchy.</h2>
+        <p>Every card carries a piece symbol in its top-left corner, and that symbol is its rarity. The set climbs the same ladder a pawn does: Pawn, Knight, Rook, Queen, King.</p>
       </div>
+      <div class="ladder rise">
+        <div class="rung">
+          <span class="glyph g-common" aria-hidden="true">&#9823;</span>
+          <div><h3>Common</h3><div class="who">Pawn</div></div>
+          <div class="rng">#1&ndash;32<small>32 cards</small></div>
+          <div class="treat">Matte. Half-card art.</div>
+        </div>
+        <div class="rung">
+          <span class="glyph g-uncommon" aria-hidden="true">&#9822;</span>
+          <div><h3>Uncommon</h3><div class="who">Knight</div></div>
+          <div class="rng">#33&ndash;51<small>19 cards</small></div>
+          <div class="treat">Matte. Half-card art.</div>
+        </div>
+        <div class="rung">
+          <span class="glyph g-rare" aria-hidden="true">&#9820;</span>
+          <div><h3>Rare</h3><div class="who">Rook</div></div>
+          <div class="rng">#52&ndash;64<small>13 cards</small></div>
+          <div class="treat">Holographic. Half-card art.</div>
+        </div>
+        <div class="rung">
+          <span class="glyph g-secret" aria-hidden="true">&#9819;</span>
+          <div><h3>Secret Rare</h3><div class="who">Queen</div></div>
+          <div class="rng">#65&ndash;72<small>8 cards</small></div>
+          <div class="treat">Holographic. Full art.</div>
+        </div>
+        <div class="rung">
+          <span class="glyph g-mono" aria-hidden="true">&#9818;</span>
+          <div><h3>Monochrome</h3><div class="who">King</div></div>
+          <div class="rng">#73&ndash;80<small>8 cards</small></div>
+          <div class="treat">Monochromatic full art. One of each per print run.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- blue, so the cream and yellow squares both read against the band -->
+  <section class="band band--blue" id="board">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>The core set is a board.</h2>
+        <p>Sixty-four core cards, sixty-four squares, numbered a8 through h1. The thirty-two Commons fill the top half exactly &mdash; ranks 8 to 5 &mdash; and the set gets rarer as it counts down the board.</p>
+      </div>
       <div class="board-layout rise">
         <div>
           <div class="board-frame">
@@ -290,57 +410,72 @@ a{color:inherit;text-decoration:none}
               <span>8</span><span>7</span><span>6</span><span>5</span>
               <span>4</span><span>3</span><span>2</span><span>1</span>
             </div>
-            <div class="board" id="board" role="img"
-                 aria-label="The 64-card base set laid out as a chessboard, card 001 on a8 through card 064 on h1. Cards 001 to 042 are common, 043 to 056 are uncommon, and 057 to 064 are rare, filling the back rank a1 to h1."></div>
+            <div class="board" id="boardEl" role="img"
+                 aria-label="The 64-card core set laid out as a chessboard, card 1 on a8 through card 64 on h1. Cards 1 to 32 are Common and fill ranks 8 to 5, cards 33 to 51 are Uncommon, and cards 52 to 64 are Rare. Eight squares are marked as the cards that are promoted to Secret Rare and Monochrome."></div>
             <div class="files" aria-hidden="true">
               <span>a</span><span>b</span><span>c</span><span>d</span>
               <span>e</span><span>f</span><span>g</span><span>h</span>
             </div>
           </div>
-          <p class="readout" id="readout" aria-hidden="true"></p>
+          <p class="readout" id="readout"></p>
         </div>
-
-        <div class="side">
+        <div>
           <dl class="key">
             <div class="key-row">
               <span class="swatch swatch--common" aria-hidden="true"></span>
-              <div>
-                <h3>Common <span class="rng">#001–042</span></h3>
-                <p>Openings, tactics, terminology. The backbone of the set, printed matte.</p>
-              </div>
+              <div><h3>Common <span class="rng">#1&ndash;32</span></h3>
+                <p>Pieces, first moves and the openings everyone knows. Ranks 8 to 5.</p></div>
             </div>
             <div class="key-row">
               <span class="swatch swatch--uncommon" aria-hidden="true"></span>
-              <div>
-                <h3>Uncommon <span class="rng">#043–056</span></h3>
-                <p>Deeper cuts. Harder to complete than you'd think, and still matte.</p>
-              </div>
+              <div><h3>Uncommon <span class="rng">#33&ndash;51</span></h3>
+                <p>Rules, tactics and formats. Deeper cuts, and still matte.</p></div>
             </div>
             <div class="key-row">
               <span class="swatch swatch--rare" aria-hidden="true"></span>
-              <div>
-                <h3>Rare <span class="rng">#057–064</span></h3>
-                <p>Holofoil, and it ends on the titles: Expert, Master, Grandmaster.</p>
-              </div>
+              <div><h3>Rare <span class="rng">#52&ndash;64</span></h3>
+                <p>Holofoil. Legends, famous games, and the titles: Expert, Master, Grandmaster.</p></div>
+            </div>
+            <div class="key-row">
+              <span class="swatch swatch--promo" aria-hidden="true"></span>
+              <div><h3>Promoted</h3>
+                <p>Eight core cards that come back as Secret Rares and Monochromes.</p></div>
             </div>
           </dl>
-
-          <div class="offlist">
-            <div class="offlist-cell offlist-cell--blue">
-              <div class="tag">Not on the checklist</div>
-              <h3>Secret Rare · 8 cards</h3>
-              <p>Morphy blindfolded. The Immortal Game. Zugzwang. Left off the printed checklist on purpose, and seeded through the run.</p>
-              <span class="chip chip--holo">Full art · Holofoil</span>
-            </div>
-            <div class="offlist-cell offlist-cell--magenta">
-              <div class="tag">Not on the checklist</div>
-              <h3>Serialized Grandmaster</h3>
-              <p>Hand-numbered in the corner as they come off the press. Sixty-four squares, sixty-four copies.</p>
-              <span class="chip chip--serial">Numbered to 64</span>
-            </div>
-          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="band" id="promotion">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>Eight cards get promoted. Twice.</h2>
+        <p>The Secret Rares aren't new subjects. They are eight cards already in the core set, redrawn as full art, and then redrawn again in a single colour. A pawn that reaches the end of the board becomes a queen, then the set goes one further.</p>
+      </div>
+      <div class="promo-grid rise" id="promoGrid"></div>
+    </div>
+  </section>
+
+  <section class="band band--ink">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2 style="color:var(--yellow)">The Monochromes.</h2>
+        <p>Eight full-art cards, each printed in a single colour, and exactly one of each exists per print run. Numbers 73 to 80.</p>
+      </div>
+      <div class="mono-strip rise" id="monoStrip"></div>
+    </div>
+  </section>
+
+  <section class="band" id="checklist">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>The First Edition checklist.</h2>
+        <p>All eighty cards. Art is shown for every card that has been printed so far; the rest are still at the printer.</p>
+      </div>
+      <div class="detail rise" id="detail" hidden></div>
+      <div class="filters rise" id="filters" role="group" aria-label="Filter the checklist by rarity"></div>
+      <div class="grid rise" id="grid"></div>
     </div>
   </section>
 
@@ -354,26 +489,32 @@ a{color:inherit;text-decoration:none}
         <div class="sku">
           <div class="count">8</div><div class="unit">Cards</div>
           <h3>Booster pack</h3>
-          <p>Eight cards, and one of them is guaranteed to be better than a common.</p>
+          <p>Five Commons, two Uncommons, and one Rare or better.</p>
           <div class="price">$8</div>
           <a href="#" class="btn">Add to cart</a>
         </div>
         <div class="sku">
-          <div class="count">40</div><div class="unit">Cards · 5 packs</div>
+          <div class="count">40</div><div class="unit">Cards &middot; 5 packs</div>
           <h3>Five packs</h3>
           <p>Enough to watch the set take shape and find the holes in it.</p>
           <div class="price">$35</div>
           <a href="#" class="btn">Add to cart</a>
         </div>
         <div class="sku sku--feature">
-          <div class="count">192</div><div class="unit">Cards · 24 packs</div>
+          <div class="count">192</div><div class="unit">Cards &middot; 24 packs</div>
           <h3>Booster box</h3>
           <p>The whole box, plus the First Edition checklist booklet that only ships inside one.</p>
           <div class="price">$144</div>
           <a href="#" class="btn btn--blue">Add to cart</a>
         </div>
       </div>
-      <div class="ships"><span class="data">Ships flat, sleeved, and boxed · All sales final</span></div>
+      <div class="odds rise">
+        <h3>What's in every pack</h3>
+        <ul>
+          <li><b>5</b>Common</li><li><b>2</b>Uncommon</li><li><b>1</b>Rare*</li>
+        </ul>
+        <p class="fine">*In some packs the Rare slot is replaced with a Secret Rare or a one-of-one Monochrome.</p>
+      </div>
     </div>
   </section>
 
@@ -381,16 +522,16 @@ a{color:inherit;text-decoration:none}
     <div class="wrap">
       <div class="band-head rise">
         <h2>The art</h2>
-        <p>Sixty-four originals, every one of them commissioned for this set.</p>
+        <p>Eighty originals, every one of them commissioned and drawn for this set.</p>
       </div>
       <div class="art-layout rise">
         <div class="art-copy">
-          <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, sixty-four times.</p>
+          <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, eighty times.</p>
           <p>Nothing here was pulled from a photo archive, and nothing was traced.</p>
           <dl class="credits">
-            <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>· stinmaster</span></dd></div>
-            <div class="credit"><dt>Created by</dt><dd>Matt <span>· @byredofantome</span></dd></div>
-            <div class="credit"><dt>Printing</dt><dd>First Edition <span>· 001</span></dd></div>
+            <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>&middot; stinmaster</span></dd></div>
+            <div class="credit"><dt>Created by</dt><dd>Matt <span>&middot; @byredofantome</span></dd></div>
+            <div class="credit"><dt>Printing</dt><dd>First Edition <span>&middot; 001</span></dd></div>
           </dl>
         </div>
         <div class="sheet">
@@ -407,10 +548,263 @@ a{color:inherit;text-decoration:none}
         <p class="t">Chess deserves better collectibles.</p>
         <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
       </div>
-      <div class="colophon"><span class="data">chesstradingcard.com · First Edition</span></div>
+      <div class="colophon"><span class="data">chesstradingcard.com &middot; First Edition &middot; 80 cards</span></div>
     </div>
   </footer>
 </main>
+
+<script>
+var CARDS=[
+[1,"Pawn (Black)","Piece","A foot soldier who stands as the first line of defense for the black king.",1],
+[2,"Pawn (White)","Piece","A sometimes overlooked piece that can make or break a game, especially when reaching the end of the board.",1],
+[3,"Knight (Black)","Piece","A versatile defender of the black king, especially critical in closed positions.",1],
+[4,"Knight (White)","Piece","A tricky, maneuvering piece that reaches its maximum power when stationed in the center of the board.",1],
+[5,"Dark-Square Bishop (White)","Piece","A long-range sniper that attacks from distance and is sometimes overlooked.",1],
+[6,"Light-Square Bishop (White)","Piece","A favorite piece of world champions, especially those who prefer bishops over knights.",1],
+[7,"Dark-Square Bishop (Black)","Piece","A pivotal piece in keeping White’s forces at bay, often important to keep on the board.",1],
+[8,"Light-Square Bishop (Black)","Piece","Bishops love open diagonals and are especially strong in the endgame.",1],
+[9,"Rook (White)","Piece","With many pieces on the board, Rooks are often relegated to defense of the King.",1],
+[10,"Rook (Black)","Piece","In the endgame, Rooks come to life, often to escort pawns or dart behind enemy lines.",1],
+[11,"Queen (White)","Piece","Moving as both a Bishop and Rook combined, the Queen can cover the most squares at one time.",1],
+[12,"Queen (Black)","Piece","Your Queen is powerful, but bringing her out too early can backfire if you aren’t careful.",1],
+[13,"King (White)","Piece","The commander of its army, the King often prefers to observe the action rather than become part of it.",1],
+[14,"King (Black)","Piece","In the endgame, the King’s true power is revealed when he advances to lead his remaining pawns down the board.",1],
+[15,"e4","Opening","The “best by test” first move, often leading to open, tactical middle games.",1],
+[16,"d4","Opening","A popular first move, preferred by positional and calculating players.",1],
+[17,"c4","Opening","Popularized by English players, now beloved as a solid, but somewhat offbeat opening option.",1],
+[18,"Nf3","Opening","Solid, flexible, and often lethal, 1. Nf3 is often employed by the world’s strongest players.",1],
+[19,"b3","Opening","A less common, modern approach to opening theory, used to get ‘fresh’ positions.",1],
+[20,"f4","Opening","Bird’s Opening is an aggressive, unconventional chess opening often- played in blitz.",1],
+[21,"Sicilian Defense","Opening","Black’s most fighting response to 1. e4... hope you brought your opening book.",1],
+[22,"Caro-Kann Defense","Opening","Especially common at the novice ranks, this defense can be other-worldly, or a theoretical slog.",1],
+[23,"Ruy Lopez","Opening","Named after Ruy López de Segura, also called “the Spanish”, one of the most studied openings in history.",1],
+[24,"Queen’s Gambit","Opening","After 1. d4 d5, White offers the c-pawn with 2. c4... will Black accept this “free” pawn?",1],
+[25,"Nimzo-Indian Defense","Opening","A highly reputable and flexible chess opening for Black against 1. d4.",1],
+[26,"King’s Indian Defense","Opening","A favorite opening system for Black, chock full of tricks and traps.",1],
+[27,"Italian Game","Opening","Another historical opening, likely to lead to the Giuoco Piano or more aggressive ‘Fried Liver Attack’.",1],
+[28,"Slav Defense","Opening","A fighting option against the Queen’s Gambit focusing on pawn structure and dark square maneuvers.",1],
+[29,"London System","Opening","A stable, reliable opening arising from d4… which may also bore your opponent to sleep.",1],
+[30,"Classical Chess","Time control","The most “official” time control, often regarded as the gold standard for competitive play.",1],
+[31,"Rapid Chess","Time control","A happy medium between Classical and Blitz chess.",1],
+[32,"Blitz Chess","Time control","A favorite time control for casual chess, often employed in social environments and online.",1],
+[33,"Check","","",0],
+[34,"Online Chess","","",0],
+[35,"Correspondence Chess","","",0],
+[36,"Stalemate","","",0],
+[37,"Castling","","",0],
+[38,"Tempo","","",0],
+[39,"En Passant","","",0],
+[40,"Blindfold Chess","","",0],
+[41,"Bullet Chess","","",0],
+[42,"Checkmate","","",0],
+[43,"Zugzwang","","",0],
+[44,"Chessboxing","","",0],
+[45,"Fifty-Move Rule","","",0],
+[46,"Threefold Repetition","","",0],
+[47,"Fork","","",0],
+[48,"Pin","","",0],
+[49,"Skewer","","",0],
+[50,"Prophylaxis","","",0],
+[51,"King Safety","","",0],
+[52,"Paul Morphy","Legend","An American who dominated the global chess scene in the 1800s, known for his blindfold simuls.",1],
+[53,"Wilhelm Steinitz","Legend","The first official chess world champion, achieved by defeating Zukertort in 1886.",1],
+[54,"Emanuel Lasker","Legend","The longest undisputed reign of any world champion, holding the title for 27 years from 1894 to 1921",1],
+[55,"José Raúl Capablanca","Legend","The third chess world champion ushered in a modern era of chess with his exceptional precision & endgame play.",1],
+[56,"Ruy López de Segura","Legend","A Spanish priest and strong chess player who popularized early opening theory.",1],
+[57,"Howard Staunton","Legend","The English player who championed standardized, international customs for chess.",1],
+[58,"The Immortal Game","Famous game","Anderssen gave up both rooks, a bishop, and his queen, for checkmate, defining the romantic era of chess.",1],
+[59,"The Gold Coin Game","Famous game","The game containing a move so beautiful that spectators showered the board with gold coins.",1],
+[60,"The Opera Game","Famous game","Morphy’s brilliant attacking masterpiece, played against two aristocrats during an opera.",1],
+[61,"Game of the Century","Famous game","A queen sacrifice followed by a stunning knight windmill, proving the power of superior calculation.",1],
+[62,"Expert","Title","A well-respected chess title achieved through rigorous training and dedication.",1],
+[63,"Master","Title","An elite title reflecting the top percentile of competitive players, lauded in society as a top intellectual achievement.",1],
+[64,"Grandmaster","Title","Congratulations, you have proved your skill and become the ultimate master of squares.",1],
+[65,"Stalemate","","",0],
+[66,"Bullet Chess","","",0],
+[67,"Chessboxing","","",0],
+[68,"Paul Morphy","","",0],
+[69,"José Raúl Capablanca","","",0],
+[70,"The Gold Coin Game","","",0],
+[71,"Game of the Century","","",0],
+[72,"Grandmaster","","",0],
+[73,"Stalemate","Concept","You aren’t in check, but there are no legal moves on the board... it’s a draw.",1],
+[74,"Bullet Chess","Game type","The fastest time control! Pieces move at Mach speeds, watch out for your clock.",1],
+[75,"Chessboxing","Game type","Alternating rounds of chess and boxing, where you can win by checkmate or knockout.",1],
+[76,"Paul Morphy","Legend","An American who dominated the global chess scene in the 1800s, known for his blindfold simuls.",1],
+[77,"José Raúl Capablanca","Legend","The third chess world champion ushered in a modern era of chess with his exceptional precision & endgame play.",1],
+[78,"The Gold Coin Game","Famous game","The game containing a move so beautiful that spectators showered the board with gold coins.",1],
+[79,"Game of the Century","Famous game","A queen sacrifice followed by a stunning knight windmill, proving the power of superior calculation.",1],
+[80,"Grandmaster","Title","Congratulations, you have proved your skill and become the ultimate master of squares.",1]];
+/* ================================================================
+   THE SET — 80 numbered cards, rendered from the First Edition checklist
+   ================================================================ */
+(function(){
+"use strict";
+var TIERS=[
+  {k:'common',   label:'Common',      glyph:'♟', lo:1,  hi:32},
+  {k:'uncommon', label:'Uncommon',    glyph:'♞', lo:33, hi:51},
+  {k:'rare',     label:'Rare',        glyph:'♜', lo:52, hi:64},
+  {k:'secret',   label:'Secret Rare', glyph:'♛', lo:65, hi:72},
+  {k:'mono',     label:'Monochrome',  glyph:'♚', lo:73, hi:80}
+];
+function tierOf(n){
+  for(var i=0;i<TIERS.length;i++) if(n>=TIERS[i].lo&&n<=TIERS[i].hi) return TIERS[i];
+  return TIERS[0];
+}
+function card(n){ return CARDS[n-1]; }
+function pad(n){ return (n<10?'00':n<100?'0':'')+n; }
+function imgSrc(c){ return c[4] ? 'cards/card-'+pad(c[0])+'.png' : 'cards/card-back.png'; }
+
+// core card -> Secret Rare -> Monochrome. The eight subjects printed three times.
+var CHAINS=[[36,65,73],[41,66,74],[44,67,75],[52,68,76],
+            [55,69,77],[59,70,78],[61,71,79],[64,72,80]];
+var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
+
+/* ---------------- the board: the 64-card core set ---------------- */
+(function(){
+  var board=document.getElementById('boardEl'), readout=document.getElementById('readout');
+  if(!board) return;
+  var FILES='abcdefgh';
+  var RAMP=[[111,211,230],[183,155,232],[232,184,127],[127,224,192]];
+  function sheen(t){
+    t=(t%1+1)%1;
+    var f=t*RAMP.length, i=Math.floor(f), m=f-i;
+    var a=RAMP[i%RAMP.length], b=RAMP[(i+1)%RAMP.length];
+    return 'rgb('+a.map(function(v,k){return Math.round(v+(b[k]-v)*m);}).join(',')+')';
+  }
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<64;i++){
+    var row=Math.floor(i/8), col=i%8, rank=8-row, n=i+1, c=card(n), t=tierOf(n);
+    var sq=document.createElement('div');
+    sq.className='sq sq--'+t.k+' '+(((col+rank)%2===0)?'sq--lt':'sq--dk')+
+                 (PROMOTED[n]?' sq--promo':'');
+    if(t.k==='rare'){
+      var base=col/8;
+      sq.style.setProperty('--a',(58+col*29)+'deg');
+      sq.style.setProperty('--c1',sheen(base));
+      sq.style.setProperty('--c2',sheen(base+0.07));
+      sq.style.setProperty('--c3',sheen(base+0.14));
+    }
+    sq.dataset.n=n; sq.dataset.sqr=FILES[col]+rank; sq.dataset.tier=t.label;
+    sq.dataset.name=c[1];
+    var num=document.createElement('span');
+    num.className='num'; num.textContent=pad(n);
+    sq.appendChild(num); frag.appendChild(sq);
+  }
+  board.appendChild(frag);
+
+  var idle='<b>a8</b><span class="sep">/</span><span>Card 1</span>'+
+           '<span class="sep">&rarr;</span><b>h1</b><span class="sep">/</span><span>Card 64</span>';
+  readout.innerHTML=idle;
+  function show(e){
+    var sq=e.target.closest('.sq'); if(!sq) return;
+    readout.innerHTML='<b>'+sq.dataset.sqr+'</b><span class="sep">/</span>'+
+      '<span>#'+sq.dataset.n+' '+sq.dataset.name+'</span>'+
+      '<span class="sep">/</span><b>'+sq.dataset.tier+'</b>'+
+      (sq.classList.contains('sq--promo')?'<span class="sep">/</span><span>promoted</span>':'');
+  }
+  board.addEventListener('mouseover',show);
+  board.addEventListener('pointerdown',show);
+  board.addEventListener('mouseleave',function(){ readout.innerHTML=idle; });
+})();
+
+/* ---------------- promotion chains ---------------- */
+(function(){
+  var host=document.getElementById('promoGrid'); if(!host) return;
+  host.innerHTML=CHAINS.map(function(ch){
+    return '<div class="chain"><b>'+card(ch[0])[1]+'</b>'+
+      '<span class="steps"><i>#'+ch[0]+'</i><em>&rarr;</em>'+
+      '<i class="s2">#'+ch[1]+'</i><em>&rarr;</em>'+
+      '<i class="s3">#'+ch[2]+'</i></span></div>';
+  }).join('');
+})();
+
+/* ---------------- monochrome showcase ---------------- */
+(function(){
+  var host=document.getElementById('monoStrip'); if(!host) return;
+  var out='';
+  for(var n=73;n<=80;n++){
+    var c=card(n);
+    out+='<figure><img loading="lazy" src="'+imgSrc(c)+'" width="399" height="544" alt="'+
+      c[1]+', Monochrome card number '+n+'"><figcaption>'+c[1]+
+      ' <span>#'+n+'</span></figcaption></figure>';
+  }
+  host.innerHTML=out;
+})();
+
+/* ---------------- the full checklist ---------------- */
+(function(){
+  var grid=document.getElementById('grid'), filters=document.getElementById('filters'),
+      detail=document.getElementById('detail');
+  if(!grid) return;
+  var current='all', selected=null;
+
+  filters.innerHTML=['<button class="filt" type="button" data-f="all" aria-pressed="true">All 80</button>']
+    .concat(TIERS.map(function(t){
+      return '<button class="filt" type="button" data-f="'+t.k+'" aria-pressed="false">'+
+        t.glyph+' '+t.label+' ('+(t.hi-t.lo+1)+')</button>';
+    })).join('');
+
+  function draw(){
+    var out='';
+    for(var n=1;n<=80;n++){
+      var t=tierOf(n); if(current!=='all'&&t.k!==current) continue;
+      var c=card(n);
+      out+='<button class="card" type="button" data-n="'+n+'" aria-pressed="'+
+        (selected===n?'true':'false')+'">'+
+        '<span class="tierbar tb-'+t.k+'" aria-hidden="true"></span>'+
+        '<img loading="lazy" src="'+imgSrc(c)+'" width="399" height="544" alt="'+
+        (c[4]?c[1]+', '+t.label+' card number '+n:'Card back &mdash; art for #'+n+' '+c[1]+' not shown yet')+'">'+
+        '<span class="meta"><span class="no">'+n+'</span><span class="nm">'+c[1]+'</span></span>'+
+        '</button>';
+    }
+    grid.innerHTML=out;
+  }
+
+  function openDetail(n){
+    var c=card(n), t=tierOf(n);
+    selected=n;
+    var chain=CHAINS.filter(function(ch){ return ch.indexOf(n)>=0; })[0];
+    var chainHtml='';
+    if(chain){
+      chainHtml='<span class="chip">Printed 3&times; &middot; #'+chain[0]+' &rarr; #'+
+        chain[1]+' &rarr; #'+chain[2]+'</span>';
+    }
+    detail.innerHTML=
+      '<img src="'+imgSrc(c)+'" width="399" height="544" alt="'+
+        (c[4]?c[1]+' card':'Card back, art not shown yet')+'">'+
+      '<div><h3>'+c[1]+'</h3>'+
+      '<div class="row"><span class="chip">#'+n+'</span>'+
+      '<span class="chip'+(t.k==='rare'||t.k==='secret'?' chip--holo':'')+'">'+
+        t.glyph+' '+t.label+'</span>'+
+      (c[2]?'<span class="chip">'+c[2]+'</span>':'')+chainHtml+'</div>'+
+      '<p>'+(c[3]||'Art and card text for this one are still at the printer.')+'</p>'+
+      '<button class="btn close" type="button" id="detClose">Close</button></div>';
+    detail.hidden=false;
+    draw();
+    document.getElementById('detClose').addEventListener('click',function(){
+      detail.hidden=true; selected=null; draw();
+      grid.querySelector('.card').focus();
+    });
+    detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  filters.addEventListener('click',function(e){
+    var b=e.target.closest('.filt'); if(!b) return;
+    current=b.dataset.f;
+    filters.querySelectorAll('.filt').forEach(function(x){
+      x.setAttribute('aria-pressed', String(x===b));
+    });
+    draw();
+  });
+  grid.addEventListener('click',function(e){
+    var b=e.target.closest('.card'); if(!b) return;
+    openDetail(+b.dataset.n);
+  });
+  draw();
+})();
+})();
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -440,59 +834,6 @@ var io=new IntersectionObserver(function(en){en.forEach(function(x){
   {threshold:.14,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
 
-/* ================================================================
-   THE BOARD — 64 cards, one per square, a8 through h1
-   ================================================================ */
-(function(){
-  var board=document.getElementById('board'), readout=document.getElementById('readout');
-  if(!board) return;
-  var FILES='abcdefgh';
-  function tier(n){ return n<=42?'common':(n<=56?'uncommon':'rare'); }
-
-  // the holo ramp, sampled cyclically so each foil gets its own slice of it
-  var RAMP=[[111,211,230],[183,155,232],[232,184,127],[127,224,192]];
-  function sheen(t){
-    t=(t%1+1)%1;
-    var f=t*RAMP.length, i=Math.floor(f), m=f-i;
-    var a=RAMP[i%RAMP.length], b=RAMP[(i+1)%RAMP.length];
-    return 'rgb('+a.map(function(v,k){return Math.round(v+(b[k]-v)*m);}).join(',')+')';
-  }
-  var frag=document.createDocumentFragment();
-  for(var i=0;i<64;i++){
-    var row=Math.floor(i/8), col=i%8, rank=8-row, n=i+1;
-    var sq=document.createElement('div');
-    // a1 is dark: a square is light when (file index + rank) is even
-    sq.className='sq sq--'+tier(n)+' '+(((col+rank)%2===0)?'sq--lt':'sq--dk');
-    if(tier(n)==='rare'){
-      var base=col/8;
-      sq.style.setProperty('--a',(58+col*29)+'deg');
-      sq.style.setProperty('--c1',sheen(base));
-      sq.style.setProperty('--c2',sheen(base+0.07));
-      sq.style.setProperty('--c3',sheen(base+0.14));
-    }
-    sq.dataset.n=(n<10?'00':(n<100?'0':''))+n;
-    sq.dataset.sqr=FILES[col]+rank;
-    sq.dataset.tier=tier(n);
-    var num=document.createElement('span');
-    num.className='num'; num.textContent=sq.dataset.n;
-    sq.appendChild(num); frag.appendChild(sq);
-  }
-  board.appendChild(frag);
-
-  // states the range by default, so it says something useful on touch too
-  var idle='<b>a8</b><span class="sep">/</span><span>Card 001</span>'+
-           '<span class="sep">&rarr;</span><b>h1</b><span class="sep">/</span><span>Card 064</span>';
-  readout.innerHTML=idle;
-  function show(e){
-    var sq=e.target.closest('.sq'); if(!sq) return;
-    readout.innerHTML='<b>'+sq.dataset.sqr+'</b><span class="sep">/</span>'+
-      '<span>Card '+sq.dataset.n+'</span><span class="sep">/</span>'+
-      '<b>'+sq.dataset.tier+'</b>';
-  }
-  board.addEventListener('mouseover',show);
-  board.addEventListener('pointerdown',show);
-  board.addEventListener('mouseleave',function(){ readout.innerHTML=idle; });
-})();
 
 /* ================================================================
    3D PACK
