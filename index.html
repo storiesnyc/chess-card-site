@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chess Trading Cards — Chess deserves better collectibles.</title>
-<meta name="description" content="Original illustrated trading cards for chess. 80 numbered cards: a 64-card core set, 8 Secret Rares, and 8 one-per-print-run Monochromes. First Edition.">
+<meta name="description" content="Collectible cards that celebrate the tradition, culture, moments, and ideas that make chess unforgettable. First Edition: 32 Commons, 19 Uncommons, 13 Rares, 8 Secret Rares, and 8 Monochromes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -131,7 +131,7 @@ section[id]{scroll-margin-top:76px}
 /* ============== RARITY LADDER ============== */
 .ladder{border:var(--bd) solid var(--ink);background:var(--paper);
   box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.rung{display:grid;grid-template-columns:64px 1fr 132px 150px;gap:18px;align-items:center;
+.rung{display:grid;grid-template-columns:60px 1fr 118px minmax(250px,1.5fr);gap:18px;align-items:center;
   padding:16px 20px;border-bottom:var(--bd) solid var(--ink)}
 .rung:last-child{border-bottom:0}
 .glyph{width:52px;height:52px;display:grid;place-items:center;font-size:30px;line-height:1;
@@ -339,25 +339,25 @@ section[id]{scroll-margin-top:76px}
   <header class="topbar"><div class="wrap topbar-in">
     <a href="#site" class="brand">Chess <em>Trading Cards</em></a>
     <nav class="topbar-links" aria-label="Sections">
-      <a href="#rarity">Rarity</a><a href="#board">Card list</a>
-      <a href="#checklist">Checklist</a><a href="#art">The art</a>
+      <a href="#rarity">Rarity System</a><a href="#board">Card list</a>
+      <a href="#checklist">Checklist</a><a href="#art">The Art</a>
       <a href="#shop" class="link-buy">Shop</a>
     </nav>
   </div></header>
 
   <section class="hero">
     <div class="wrap">
-      <div class="stamp rise">First Edition &middot; Printing 001</div>
+      <div class="stamp rise">First Edition &middot; 80 cards &middot; Printing 001</div>
       <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
-      <p class="lede rise">Eighty numbered cards on the pieces, openings, tactics, players and folklore that chess players actually argue about. Drawn by hand, printed once, numbered.</p>
+      <p class="lede rise">For decades, the only real chess merchandise has been boards, pieces, and clocks. We set out to create something meaningfully different.</p>
       <div class="actions rise">
         <a href="#shop" class="btn btn--red">Shop packs</a>
-        <a href="#checklist" class="btn">See all 80 cards</a>
+        <a href="#checklist" class="btn">See the checklist</a>
       </div>
       <div class="tally rise">
-        <div><b>80</b><span>Numbered cards</span></div>
-        <div><b>64</b><span>Core set</span></div>
-        <div><b>8</b><span>One per print run</span></div>
+        <div><b>80</b><span>Cards in the set</span></div>
+        <div><b>64</b><span>Core Set</span></div>
+        <div><b>8</b><span>One of each per print run</span></div>
       </div>
     </div>
   </section>
@@ -365,39 +365,39 @@ section[id]{scroll-margin-top:76px}
   <section class="band" id="rarity">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The rarity ladder is the piece hierarchy.</h2>
-        <p>Every card carries a piece symbol in its top-left corner, and that symbol is its rarity. The set climbs the same ladder a pawn does: Pawn, Knight, Rook, Queen, King.</p>
+        <h2>Rarity System</h2>
+        <p>Each card contains consistent art, typography, and design. Card specs vary by rarity type as follows:</p>
       </div>
       <div class="ladder rise">
         <div class="rung">
           <span class="glyph g-common" aria-hidden="true">&#9823;</span>
           <div><h3>Common</h3><div class="who">Pawn</div></div>
           <div class="rng">#1&ndash;32<small>32 cards</small></div>
-          <div class="treat">Matte. Half-card art.</div>
+          <div class="treat">Title, Category, Detail, Matte illustration (1/2 card), Illustrator credit, Card number, Border, and Rarity indicator (Pawn).</div>
         </div>
         <div class="rung">
           <span class="glyph g-uncommon" aria-hidden="true">&#9822;</span>
           <div><h3>Uncommon</h3><div class="who">Knight</div></div>
           <div class="rng">#33&ndash;51<small>19 cards</small></div>
-          <div class="treat">Matte. Half-card art.</div>
+          <div class="treat">Same as Common, except for Rarity indicator (Knight).</div>
         </div>
         <div class="rung">
           <span class="glyph g-rare" aria-hidden="true">&#9820;</span>
           <div><h3>Rare</h3><div class="who">Rook</div></div>
           <div class="rng">#52&ndash;64<small>13 cards</small></div>
-          <div class="treat">Holographic. Half-card art.</div>
+          <div class="treat">Same as Common, except for Holographic illustration (1/2 card) and Rarity indicator (Rook).</div>
         </div>
         <div class="rung">
           <span class="glyph g-secret" aria-hidden="true">&#9819;</span>
           <div><h3>Secret Rare</h3><div class="who">Queen</div></div>
           <div class="rng">#65&ndash;72<small>8 cards</small></div>
-          <div class="treat">Holographic. Full art.</div>
+          <div class="treat">Same as Common, except for Holographic illustration (full card) and Rarity indicator (Queen).</div>
         </div>
         <div class="rung">
           <span class="glyph g-mono" aria-hidden="true">&#9818;</span>
           <div><h3>Monochrome</h3><div class="who">King</div></div>
           <div class="rng">#73&ndash;80<small>8 cards</small></div>
-          <div class="treat">Monochromatic full art. One of each per print run.</div>
+          <div class="treat">Same as Common, except for Monochromatic illustration (full card) and Rarity indicator (King).</div>
         </div>
       </div>
     </div>
@@ -432,7 +432,7 @@ section[id]{scroll-margin-top:76px}
     <div class="wrap">
       <div class="band-head rise">
         <h2>These ones also have Secret Rare and Monochrome variations.</h2>
-        <p>Eight cards from the list, printed again as full art.</p>
+        <p>This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</p>
       </div>
       <div class="promo-grid rise" id="promoGrid"></div>
     </div>
@@ -441,8 +441,8 @@ section[id]{scroll-margin-top:76px}
   <section class="band band--ink">
     <div class="wrap">
       <div class="band-head rise">
-        <h2 style="color:var(--yellow)">The Monochromes.</h2>
-        <p>Eight full-art cards, each printed in a single colour, and exactly one of each exists per print run. Numbers 73 to 80.</p>
+        <h2 style="color:var(--yellow)">Monochromes</h2>
+        <p>The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited &mdash; one of each per print run.</p>
       </div>
       <div class="mono-strip rise" id="monoStrip"></div>
     </div>
@@ -451,8 +451,8 @@ section[id]{scroll-margin-top:76px}
   <section class="band" id="checklist">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The First Edition checklist.</h2>
-        <p>All eighty cards. Tap any one for its rarity, category and card text.</p>
+        <h2>First Edition Checklist</h2>
+        <p>This first edition set contains 32 Common cards, 19 Uncommon cards, 13 Rare cards, 8 Secret Rare cards, and 8 Monochromes.</p>
       </div>
       <div class="detail rise" id="detail" hidden></div>
       <div class="filters rise" id="filters" role="group" aria-label="Filter the checklist by rarity"></div>
@@ -464,37 +464,37 @@ section[id]{scroll-margin-top:76px}
     <div class="wrap">
       <div class="band-head rise">
         <h2>Shop</h2>
-        <p>One printing. When the First Edition run is gone, it isn't reprinted.</p>
+        
       </div>
       <div class="shop rise">
         <div class="sku">
           <div class="count">8</div><div class="unit">Cards</div>
           <h3>Booster pack</h3>
-          <p>Five Commons, two Uncommons, and one Rare or better.</p>
+          <p>A random assortment of 5 Common cards, 2 Uncommon cards, and 1 Rare or Secret Rare card.</p>
           <div class="price">$8</div>
           <a href="#" class="btn">Add to cart</a>
         </div>
         <div class="sku">
           <div class="count">40</div><div class="unit">Cards &middot; 5 packs</div>
           <h3>Five packs</h3>
-          <p>Enough to watch the set take shape and find the holes in it.</p>
+          <p>Forty cards. Enough to see the set take shape and find the holes in it.</p>
           <div class="price">$35</div>
           <a href="#" class="btn">Add to cart</a>
         </div>
         <div class="sku sku--feature">
           <div class="count">192</div><div class="unit">Cards &middot; 24 packs</div>
           <h3>Booster box</h3>
-          <p>The whole box, plus the First Edition checklist booklet that only ships inside one.</p>
+          <p>Twenty-four packs, 192 cards, and the First Edition checklist booklet.</p>
           <div class="price">$144</div>
           <a href="#" class="btn btn--blue">Add to cart</a>
         </div>
       </div>
       <div class="odds rise">
-        <h3>What's in every pack</h3>
+        <h3>Each pack</h3>
         <ul>
           <li><b>5</b>Common</li><li><b>2</b>Uncommon</li><li><b>1</b>Rare*</li>
         </ul>
-        <p class="fine">*In some packs the Rare slot is replaced with a Secret Rare or a one-of-one Monochrome.</p>
+        <p class="fine">*In some packs, the Rare slot may be replaced with Secret Rare or 1/1 card.</p>
       </div>
     </div>
   </section>
@@ -502,22 +502,22 @@ section[id]{scroll-margin-top:76px}
   <section class="band" id="art">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The art</h2>
-        <p>Eighty originals, every one of them commissioned and drawn for this set.</p>
+        <h2>The Art (and Artist)</h2>
+        <p>All illustrations are completely hand drawn by stinmaster (Austin McDonald).</p>
       </div>
       <div class="art-layout rise">
         <div class="art-copy">
-          <p>A card can define <strong>zugzwang</strong>, or it can show you what it feels like to be in it. We went with the second one, eighty times.</p>
-          <p>Nothing here was pulled from a photo archive, and nothing was traced.</p>
+          <p>Stinmaster is an NYC-based illustrator and tattoo artist. A mutual friend introduced us and I was immediately struck by his art; combining nostalgia, game culture, fantasy, and anime with intricate dotwork.</p>
+          <p>Stinmaster and I kicked off the project with an immersion session where we spent hours talking chess, handling Pok&eacute;mon and Yu-Gi-Oh! cards, and talking about our vision for the art. From there, stinmaster has shown his talents by translating each idea into an initial sketch, then color mock, then the final illustrations that you see on each card.</p>
           <dl class="credits">
-            <div class="credit"><dt>Illustration</dt><dd>Austin McDonald <span>&middot; stinmaster</span></dd></div>
-            <div class="credit"><dt>Created by</dt><dd>Matt <span>&middot; @byredofantome</span></dd></div>
+            <div class="credit"><dt>Illustration</dt><dd>stinmaster <span>&middot; Austin McDonald</span></dd></div>
+            <div class="credit"><dt>Created by</dt><dd>byredofantome <span>&middot; Matt Biancuzzo</span></dd></div>
             <div class="credit"><dt>Printing</dt><dd>First Edition <span>&middot; 001</span></dd></div>
           </dl>
         </div>
         <div class="sheet">
-          <p class="big">No AI was used for <mark>any</mark> of the illustrations.</p>
-          <p>Worth saying out loud in 2026. An artist was paid, briefed, and given revisions, and that is the whole reason these are worth collecting instead of printing.</p>
+          <p class="big">Every illustration is created entirely by hand. <mark>No AI tools</mark> are used in the creation of this artwork.</p>
+          <p>It was always critical to this project to preserve and promote human artists, as opposed to taking &lsquo;the easy way out&rsquo; with AI-generated content.</p>
         </div>
       </div>
     </div>
@@ -529,7 +529,7 @@ section[id]{scroll-margin-top:76px}
         <p class="t">Chess deserves better collectibles.</p>
         <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
       </div>
-      <div class="colophon"><span class="data">chesstradingcard.com &middot; First Edition &middot; 80 cards</span></div>
+      <div class="colophon"><span class="data">For more, visit us at: chesstradingcard.com</span></div>
     </div>
   </footer>
 </main>
