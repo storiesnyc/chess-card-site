@@ -182,6 +182,9 @@ section[id]{scroll-margin-top:76px}
   font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 .readout b{background:var(--ink);color:var(--yellow);padding:4px 8px}
 .readout .sep{opacity:.35}
+.readout .note{flex-basis:100%;font-weight:500;font-size:13px;letter-spacing:0;
+  text-transform:none;line-height:1.4;max-width:56ch}
+.detail .note{margin-top:12px;font-size:14px;font-weight:500;line-height:1.45;max-width:54ch}
 .half{margin-top:14px;font-size:14px;font-weight:500;max-width:52ch}
 
 .key{border:var(--bd) solid var(--ink);background:var(--paper);
@@ -355,7 +358,7 @@ section[id]{scroll-margin-top:76px}
         <a href="#checklist" class="btn">See the checklist</a>
       </div>
       <div class="tally rise">
-        <div><b>80</b><span>Cards in the set</span></div>
+        <div><b>80</b><span>Numbered cards</span></div>
         <div><b>64</b><span>Core Set</span></div>
         <div><b>8</b><span>One of each per print run</span></div>
       </div>
@@ -684,7 +687,7 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
       '<span>#'+sq.dataset.n+' '+sq.dataset.name+'</span>'+
       '<span class="sep">/</span><b>'+sq.dataset.tier+'</b>'+
       (sq.classList.contains('sq--promo')
-        ?'<span class="sep">/</span><span>also Secret Rare &amp; Monochrome</span>':'');
+        ?'<span class="note">This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</span>':'');
   }
   board.addEventListener('mouseover',show);
   board.addEventListener('pointerdown',show);
@@ -749,11 +752,13 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
     var c=card(n), t=tierOf(n);
     selected=n;
     var chain=CHAINS.filter(function(ch){ return ch.indexOf(n)>=0; })[0];
-    var chainHtml='';
+    var chainHtml='', chainNote='';
     if(chain){
       chainHtml = (n===chain[0])
-        ? '<span class="chip">Also #'+chain[1]+' Secret Rare &middot; #'+chain[2]+' Monochrome</span>'
-        : '<span class="chip">Variation of #'+chain[0]+' '+card(chain[0])[1]+'</span>';
+        ? '<span class="chip">#'+chain[1]+' Secret Rare</span><span class="chip">#'+chain[2]+' Monochrome</span>'
+        : '<span class="chip">#'+chain[0]+' '+card(chain[0])[1]+'</span>';
+      chainNote = (t.k==='mono') ? '<p class="note">The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited &mdash; one of each per print run.</p>'
+                                 : '<p class="note">This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</p>';
     }
     var isMono=(t.k==='mono');
     detail.className='detail rise'+(isMono?'':' detail--noart');
@@ -765,7 +770,7 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
       '<span class="chip'+(t.k==='rare'||t.k==='secret'?' chip--holo':'')+'">'+
         t.glyph+' '+t.label+'</span>'+
       (c[2]?'<span class="chip">'+c[2]+'</span>':'')+chainHtml+'</div>'+
-      '<p>'+(c[3]||'Art and card text for this one are still at the printer.')+'</p>'+
+      (c[3]?'<p>'+c[3]+'</p>':'')+chainNote+
       '<button class="btn close" type="button" id="detClose">Close</button></div>';
     detail.hidden=false;
     draw();
