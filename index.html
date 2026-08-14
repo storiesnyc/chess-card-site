@@ -53,8 +53,10 @@ a{color:inherit;text-decoration:none}
   font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
   background:var(--yellow);border:var(--bd) solid var(--ink);padding:8px 14px;
   white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
+/* a plain warm flare, not a rainbow — the cards are the thing to look at */
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
-  background:var(--holo);background-size:200% 200%;mix-blend-mode:screen;transition:opacity .55s ease}
+  background:radial-gradient(58% 46% at 50% 48%,#FFF6C8 0%,rgba(255,246,200,0) 72%);
+  mix-blend-mode:screen;transition:opacity .55s ease}
 .veil{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;
   background:var(--cream);transition:opacity .45s ease}
 
@@ -828,7 +830,7 @@ function boot(){
   var W=1.0, H=W*130/70, XF=-W*0.325;     // pack size, fold line x
   var BODYH=H*0.5*(100/130);              // half-height of the un-crimped body
   var BULGE=W*0.082;                      // eight cards inflate the bag
-  var renderer, scene, cam, group, strip, body, back, packBody, inner, glow, shadowPl;
+  var renderer, scene, cam, group, strip, body, back, packBody, glow, shadowPl;
   var uniS=[], uniB=[];
   var front=0, target=0, vel=0, exitT=0, opened=false, dragging=false,
       startY=0, moved=0, px=0, py=0, tpx=0, tpy=0, last=0, camZ=4.4;
@@ -1047,21 +1049,36 @@ function boot(){
   packBody=new THREE.Object3D(); packBody.add(body,back);
   group.add(strip,packBody);
 
-  /* iridescent interior, revealed through the tear */
-  var ic=document.createElement('canvas'); ic.width=256; ic.height=256;
-  (function(){
-    var x=ic.getContext('2d');
-    var g=x.createLinearGradient(0,0,256,256);
-    ['#6FD3E6','#B79BE8','#E8B87F','#7FE0C0','#6FD3E6'].forEach(function(col,i,a){
-      g.addColorStop(i/(a.length-1),col);
-    });
-    x.fillStyle=g; x.fillRect(0,0,256,256);
-  })();
-  var itex=new THREE.CanvasTexture(ic);
-  itex.wrapS=itex.wrapT=THREE.RepeatWrapping; itex.encoding=THREE.sRGBEncoding;
-  inner=new THREE.Mesh(new THREE.PlaneGeometry(W*0.98,H*0.98),
-    new THREE.MeshBasicMaterial({map:itex,transparent:true,opacity:0.9}));
-  inner.position.z=-0.012; group.add(inner);
+  /* The eight cards inside. A Common sits on top, the rest of the stack
+     behind it, and a Monochrome goes last so it is the one left peeking
+     past the torn edge. Closed, they sit squared up inside the bag; the
+     fan only spreads as the pack comes apart. */
+  var CARD_W=0.66, CARD_H=CARD_W*270/198;
+  var stack=new THREE.Object3D(); group.add(stack);
+  var stackCards=[];
+  function addCard(src,i){
+    var m=new THREE.MeshBasicMaterial({map:loadTex(src),transparent:true,opacity:0});
+    var msh=new THREE.Mesh(new THREE.PlaneGeometry(CARD_W,CARD_H),m);
+    // z only while closed, so nothing pokes through the pillowed faces
+    msh.position.set(0,0,-0.004-i*0.004);
+    stack.add(msh); stackCards.push(msh);
+  }
+  addCard('cards/pack-card-common.png',0);
+  for(var ci=1;ci<=6;ci++) addCard('cards/stack-back.png',ci);
+  addCard('cards/card-073.png',7);
+  function layoutStack(spread,fade){
+    var last=stackCards.length-1;
+    for(var i=0;i<stackCards.length;i++){
+      var c=stackCards[i];
+      // the Monochrome gets an extra step so it clearly reads as the card
+      // left sticking out of the back of the stack, not just another edge
+      var k=i+(i===last?1.8:0);
+      c.position.x=-spread*0.058*k;
+      c.position.y= spread*0.016*k;
+      c.rotation.z= spread*0.024*k;
+      c.material.opacity=fade;
+    }
+  }
 
   var gc=document.createElement('canvas'); gc.width=gc.height=128;
   (function(){
@@ -1161,13 +1178,14 @@ function boot(){
   });
 
   var exitStart=0;
+  var EXIT_MS=1500;                 // whole tear-open sequence, one place
   function commit(){
     if(opened) return;
     opened=true; target=1; cue.style.opacity='0';
     exitStart=performance.now();
-    setTimeout(function(){ flash.style.opacity='0.55'; },900);
-    setTimeout(function(){ veil.style.opacity='1'; },1250);
-    setTimeout(function(){ open(false); },1500);
+    setTimeout(function(){ flash.style.opacity='0.55'; },EXIT_MS*0.60);
+    setTimeout(function(){ veil.style.opacity='1'; },EXIT_MS*0.83);
+    setTimeout(function(){ open(false); },EXIT_MS);
   }
 
   /* ---------- easing ---------- */
@@ -1181,7 +1199,7 @@ function boot(){
     var dt=Math.min(0.05,(now-last)/1000); last=now;
 
     if(opened){
-      var e=Math.min(1,(now-exitStart)/1500);
+      var e=Math.min(1,(now-exitStart)/EXIT_MS);
       exitT=e;
       target=1;
       // stage 1: tear races to the bottom
@@ -1198,9 +1216,10 @@ function boot(){
       packBody.position.set(bo*0.62,bo*0.06,bo*0.30);
       body.material.opacity=back.material.opacity=1-seg(e,0.62,0.95);
       // stage 4: light from inside
-      inner.material.opacity=0.9;
-      glow.material.opacity=easeInOut(seg(e,0.25,0.85))*1.0;
-      glow.scale.setScalar(1+easeInOut(seg(e,0.25,1))*3.2);
+      // the stack fans out as the bag comes apart
+      layoutStack(easeInOut(seg(e,0.16,0.78)), 1);
+      glow.material.opacity=easeInOut(seg(e,0.25,0.85))*0.45;
+      glow.scale.setScalar(1+easeInOut(seg(e,0.25,1))*2.4);
       // camera pushes in
       var push=easeInOut(seg(e,0.15,1));
       cam.position.z=camZ-push*camZ*0.55;
@@ -1210,13 +1229,14 @@ function boot(){
       var k=dragging?16:9;
       front += (target-front)*(1-Math.exp(-k*dt));
       cam.position.z=camZ;
-      glow.material.opacity=Math.min(0.55,front*0.7);
+      // squared up inside until torn, then visible through the opening
+      layoutStack(0, Math.min(1,front*1.6));
+      glow.material.opacity=Math.min(0.3,front*0.4);
       glow.scale.setScalar(0.7+front*1.1);
     }
 
     uniS.forEach(function(u){ u.uFront.value=front; });
     uniB.forEach(function(u){ u.uFront.value=front; });
-    itex.offset.x=(now*0.00004)%1; itex.offset.y=(now*0.00002)%1;
 
     // parallax + idle float, both smoothed
     px += (tpx-px)*(1-Math.exp(-4*dt));
