@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chess Trading Cards — Chess deserves better collectibles.</title>
+<title>Chess Trading Cards &middot; Chess deserves better collectibles</title>
 <meta name="description" content="Collectible cards that celebrate the tradition, culture, moments, and ideas that make chess unforgettable. First Edition: 32 Commons, 19 Uncommons, 13 Rares, 8 Secret Rares, and 8 Monochromes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +53,7 @@ a{color:inherit;text-decoration:none}
   font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
   background:var(--yellow);border:var(--bd) solid var(--ink);padding:8px 14px;
   white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
-/* a plain warm flare, not a rainbow — the cards are the thing to look at */
+/* a plain warm flare, not a rainbow. The cards are the thing to look at */
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
   background:radial-gradient(58% 46% at 50% 48%,#FFF6C8 0%,rgba(255,246,200,0) 72%);
   mix-blend-mode:screen;transition:opacity .55s ease}
@@ -153,7 +153,7 @@ section[id]{scroll-margin-top:76px}
 }
 
 /* ============== BOARD ============== */
-/* the board stands on its own — capped so it doesn't sprawl on wide screens */
+/* the board stands on its own, capped so it doesn't sprawl on wide screens */
 .board-only{max-width:660px}
 .board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:8px}
 .ranks,.files{display:grid;font-weight:700;font-size:11px}
@@ -264,19 +264,8 @@ section[id]{scroll-margin-top:76px}
 .detail .close{margin-top:16px}
 
 /* ============== SHOP ============== */
-.shop{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:22px}
-@media(max-width:880px){.shop{grid-template-columns:1fr}}
-.sku{background:var(--paper);border:var(--bd) solid var(--ink);padding:24px 20px;
-  display:flex;flex-direction:column;box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.sku--feature{background:var(--red)}
-.sku .count{font-family:var(--f-display);font-size:clamp(34px,5vw,52px);line-height:.9;
-  letter-spacing:-.04em;margin-bottom:4px}
-.sku .unit{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:16px}
-.sku h3{font-family:var(--f-display);font-size:18px;text-transform:uppercase;margin:0 0 8px}
-.sku p{font-size:14px;margin:0 0 20px;line-height:1.45}
-.sku .price{font-family:var(--f-display);font-size:25px;margin-top:auto;margin-bottom:14px}
-.sku .btn{width:100%}
+.storelink{margin-bottom:26px}
+.storelink .btn{font-size:14px;padding:19px 30px}
 .odds{margin-top:24px;background:var(--ink);color:var(--cream);border:var(--bd) solid var(--ink);
   padding:20px 22px}
 .odds h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;margin:0 0 12px;
@@ -410,7 +399,7 @@ section[id]{scroll-margin-top:76px}
   <section class="band band--blue" id="board">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>The card list as a chess board.</h2>
+        <h2>The card list as a chess board</h2>
         <p>64 squares = 64 cards.</p>
       </div>
       <div class="board-only rise">
@@ -434,7 +423,7 @@ section[id]{scroll-margin-top:76px}
   <section class="band" id="variations">
     <div class="wrap">
       <div class="band-head rise">
-        <h2>These ones also have Secret Rare and Monochrome variations.</h2>
+        <h2>These ones also have Secret Rare and Monochrome variations</h2>
         <p>This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</p>
       </div>
       <div class="promo-grid rise" id="promoGrid"></div>
@@ -445,7 +434,7 @@ section[id]{scroll-margin-top:76px}
     <div class="wrap">
       <div class="band-head rise">
         <h2 style="color:var(--yellow)">Monochromes</h2>
-        <p>The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited &mdash; one of each per print run.</p>
+        <p>The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited - one of each per print run.</p>
       </div>
       <div class="mono-strip rise" id="monoStrip"></div>
     </div>
@@ -469,28 +458,8 @@ section[id]{scroll-margin-top:76px}
         <h2>Shop</h2>
         
       </div>
-      <div class="shop rise">
-        <div class="sku">
-          <div class="count">8</div><div class="unit">Cards</div>
-          <h3>Booster pack</h3>
-          <p>A random assortment of 5 Common cards, 2 Uncommon cards, and 1 Rare or Secret Rare card.</p>
-          <div class="price">$8</div>
-          <a href="#" class="btn">Add to cart</a>
-        </div>
-        <div class="sku">
-          <div class="count">40</div><div class="unit">Cards &middot; 5 packs</div>
-          <h3>Five packs</h3>
-          <p>Forty cards. Enough to see the set take shape and find the holes in it.</p>
-          <div class="price">$35</div>
-          <a href="#" class="btn">Add to cart</a>
-        </div>
-        <div class="sku sku--feature">
-          <div class="count">192</div><div class="unit">Cards &middot; 24 packs</div>
-          <h3>Booster box</h3>
-          <p>Twenty-four packs, 192 cards, and the First Edition checklist booklet.</p>
-          <div class="price">$144</div>
-          <a href="#" class="btn btn--blue">Add to cart</a>
-        </div>
+      <div class="storelink rise">
+        <a class="btn btn--red" href="https://chesstradingcard.com">chesstradingcard.com</a>
       </div>
       <div class="odds rise">
         <h3>Each pack</h3>
@@ -620,7 +589,7 @@ var CARDS=[
 [79,"Game of the Century","Famous game","A queen sacrifice followed by a stunning knight windmill, proving the power of superior calculation.",1],
 [80,"Grandmaster","Title","Congratulations, you have proved your skill and become the ultimate master of squares.",1]];
 /* ================================================================
-   THE SET — 80 numbered cards, rendered from the First Edition checklist
+   THE SET: 80 numbered cards, rendered from the First Edition checklist
    ================================================================ */
 (function(){
 "use strict";
@@ -757,7 +726,7 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
       chainHtml = (n===chain[0])
         ? '<span class="chip">#'+chain[1]+' Secret Rare</span><span class="chip">#'+chain[2]+' Monochrome</span>'
         : '<span class="chip">#'+chain[0]+' '+card(chain[0])[1]+'</span>';
-      chainNote = (t.k==='mono') ? '<p class="note">The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited &mdash; one of each per print run.</p>'
+      chainNote = (t.k==='mono') ? '<p class="note">The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited - one of each per print run.</p>'
                                  : '<p class="note">This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</p>';
     }
     var isMono=(t.k==='mono');
@@ -863,7 +832,7 @@ function boot(){
     var g=x.createLinearGradient(0,0,0,512);
     g.addColorStop(0,'#3A3F44'); g.addColorStop(.45,'#14171A'); g.addColorStop(1,'#0A0C0E');
     x.fillStyle=g; x.fillRect(0,0,1024,512);
-    // a hard softbox strip — this is what makes the mylar throw a blown
+    // a hard softbox strip. This is what makes the mylar throw a blown
     // highlight across the face instead of a dull sheen
     x.fillStyle='rgba(255,255,255,0.95)';
     x.fillRect(120,40,470,88);
@@ -1010,7 +979,7 @@ function boot(){
           if(!isBack){
             cuts.push(
               'float e = uXf + sin(vLoc.y*47.0)*0.007 + sin(vLoc.y*113.0)*0.0035 + cos(vLoc.y*19.0)*0.005;',
-              // overlap the two halves rather than butting them at one edge —
+              // overlap the two halves rather than butting them at one edge.
               // butted, the antialiased pixels on each side let the background
               // through and the join reads as a bright seam on a sealed pack
               'float ov = 0.006;',
