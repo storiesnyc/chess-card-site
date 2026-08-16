@@ -6,148 +6,186 @@
 <meta name="description" content="Collectible cards that celebrate the tradition, culture, moments, and ideas that make chess unforgettable. First Edition: 32 Commons, 19 Uncommons, 13 Rares, 8 Secret Rares, and 8 Monochromes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<!-- Inter: the checklist and the box are set in a neo-grotesque, one family
+     across headings and body, with bold italic for emphasis -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  /* straight off the pack artwork */
-  --cream:#FFFAD0; --cream-2:#F2E7B0; --paper:#FFFFFF;
-  --yellow:#FFE200; --yellow-2:#E8CB00;
-  --red:#FF5241; --red-2:#E63A28;
-  --blue:#00A4FF; --magenta:#B7006E;
-  --ink:#000000; --grey:#51555B;
-  --holo:linear-gradient(135deg,#6FD3E6 0%,#B79BE8 26%,#E8B87F 52%,#7FE0C0 74%,#6FD3E6 100%);
-  --f-display:"Archivo Black",Impact,sans-serif;
-  --f-body:"Archivo",system-ui,sans-serif;
-  --pad:clamp(18px,5vw,56px); --maxw:1180px;
-  --bd:3px; --pop:6px;
+  /* Sampled from the First Edition Checklist scans and the box artwork. The
+     checklist is a paper document: off white stock, hairline rules, one
+     neo-grotesque, and a red to amber gradient bar along the foot of every
+     content page. The site follows it rather than the old poster styling. */
+  --paper:#F7F7F7; --panel:#FFFFFF; --sunk:#EFF0F2;
+  --ink:#111315; --ink-soft:#2A2E33; --grey:#5F656D; --line:#E2E4E7;
+  --red:#FF5241; --red-2:#E63A28; --orange:#FF9233; --amber:#FFBF18;
+  /* the gradient bar off the bottom of each checklist page */
+  --band-grad:linear-gradient(90deg,#FF684D 0%,#FF7C41 22%,#FF9233 46%,#FFA925 72%,#FFBF18 100%);
+  /* the five rarity glyph colours from checklist page 5 */
+  --pawn:#54CCE4; --knight:#849CFC; --rook:#78CCFC; --queen:#4884C0; --king:#6048C0;
+  /* board tints: the same hues, dropped back so card numbers stay readable */
+  --pawn-lt:#DFF3F9; --pawn-dk:#C8E9F3;
+  --knight-lt:#E4E8FE; --knight-dk:#D2D9FC;
+  --holo:linear-gradient(135deg,#78CCFC 0%,#849CFC 26%,#C9A6F0 52%,#7FE0C0 74%,#78CCFC 100%);
+  /* aliases kept so older rules and inline styles keep resolving */
+  --cream:var(--paper); --cream-2:var(--sunk);
+  --yellow:var(--amber); --yellow-2:#E8AC10;
+  --blue:var(--queen); --magenta:var(--king);
+  --f-display:"Inter",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --pad:clamp(18px,5vw,56px); --maxw:1120px;
+  --bd:1px; --pop:0px; --r:12px; --r-sm:8px;
+  --sh:0 1px 2px rgba(17,19,21,.05),0 6px 20px rgba(17,19,21,.07);
+  --sh-lift:0 2px 6px rgba(17,19,21,.07),0 16px 40px rgba(17,19,21,.11);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 html.is-locked,html.is-locked body{overflow:hidden;height:100%}
-body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:16px;
-  line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  font-feature-settings:"cv05" 1,"cv08" 1}
+/* the checklist is printed on a lightly textured stock. One tiny inline SVG
+   grain, tiled, rather than an image request */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E")}
+#gate,#site{position:relative;z-index:1}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+:focus-visible{outline:2px solid var(--queen);outline-offset:3px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.data{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+/* the checklist sets even its small print in sentence case, so no caps here */
+.data{font-weight:500;font-size:13px;letter-spacing:0;color:inherit}
 
 /* ============== GATE ============== */
-#gate{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--cream)}
+#gate{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--paper)}
+/* the halftone field carries over from the pack and box front */
 #gate::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:16px 16px;
   -webkit-mask-image:radial-gradient(78% 62% at 50% 42%,#000 0%,transparent 72%);
-  mask-image:radial-gradient(78% 62% at 50% 42%,#000 0%,transparent 72%);opacity:.55}
+  mask-image:radial-gradient(78% 62% at 50% 42%,#000 0%,transparent 72%);opacity:.30}
 #gate.is-skipped{display:none}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;
   touch-action:none;cursor:grab;z-index:1}
 #gl:active{cursor:grabbing}
 .gate-mark{position:absolute;top:var(--pad);left:var(--pad);font-family:var(--f-display);
-  font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);z-index:3;
+  font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);z-index:3;
   pointer-events:none}
 .gate-skip{position:absolute;top:var(--pad);right:var(--pad);font-family:var(--f-body);
-  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  font-weight:600;font-size:12px;letter-spacing:.04em;color:var(--grey);
   background:none;border:0;cursor:pointer;padding:6px;z-index:3}
 .gate-skip:hover{color:var(--red-2)}
 .cue{position:absolute;left:50%;bottom:calc(var(--pad) + 4px);transform:translateX(-50%);
-  font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
-  background:var(--yellow);border:var(--bd) solid var(--ink);padding:8px 14px;
-  white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
-/* a plain warm flare, not a rainbow. The cards are the thing to look at */
+  font-weight:600;font-size:12px;letter-spacing:.02em;color:var(--ink);
+  background:var(--panel);border:var(--bd) solid var(--line);border-radius:999px;padding:10px 18px;
+  box-shadow:var(--sh);white-space:nowrap;z-index:3;pointer-events:none;transition:opacity .5s ease}
 .flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
-  background:radial-gradient(58% 46% at 50% 48%,#FFF6C8 0%,rgba(255,246,200,0) 72%);
+  background:radial-gradient(58% 46% at 50% 48%,#FFF0CE 0%,rgba(255,240,206,0) 72%);
   mix-blend-mode:screen;transition:opacity .55s ease}
 .veil{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;
-  background:var(--cream);transition:opacity .45s ease}
+  background:var(--paper);transition:opacity .45s ease}
 
 /* ============== SHELL ============== */
 #site{opacity:0;transition:opacity .7s ease}
 #site.is-in{opacity:1}
-.topbar{position:sticky;top:0;z-index:60;background:var(--cream);
-  border-bottom:var(--bd) solid var(--ink)}
+.topbar{position:sticky;top:0;z-index:60;background:rgba(247,247,247,.88);
+  backdrop-filter:saturate(1.6) blur(10px);border-bottom:var(--bd) solid var(--line)}
 .topbar-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.brand{font-family:var(--f-display);font-size:17px;letter-spacing:-.01em;text-transform:uppercase}
+.brand{font-family:var(--f-display);font-size:16px;font-weight:800;letter-spacing:-.02em}
 .brand em{font-style:normal;color:var(--red-2)}
-.topbar-links{display:flex;gap:20px;align-items:center}
-.topbar-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-.topbar-links a:hover{color:var(--red-2)}
-.link-buy{background:var(--red);color:var(--ink);border:var(--bd) solid var(--ink);
-  padding:8px 14px;box-shadow:4px 4px 0 var(--ink)}
-.link-buy:hover{color:var(--ink)!important;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.topbar-links{display:flex;gap:22px;align-items:center}
+.topbar-links a{font-weight:500;font-size:14px;letter-spacing:-.005em;color:var(--grey)}
+.topbar-links a:hover{color:var(--ink)}
+.link-buy{background:var(--red);color:#fff;border:0;border-radius:999px;
+  padding:9px 18px;font-weight:600;box-shadow:var(--sh)}
+.link-buy:hover{color:#fff!important;background:var(--red-2)}
+/* an action rather than a section anchor, so it is outlined instead of solid
+   and stays on small screens where the anchors collapse away */
+.link-pack{font-family:inherit;font-weight:600;font-size:14px;letter-spacing:-.005em;
+  color:var(--ink);background:var(--panel);border:var(--bd) solid var(--line);
+  border-radius:999px;padding:9px 16px;cursor:pointer;box-shadow:var(--sh);
+  transition:border-color .15s ease,color .15s ease}
+.link-pack:hover{border-color:var(--ink);color:var(--ink)}
 @media(max-width:820px){.topbar-links a:not(.link-buy){display:none}}
+@media(max-width:460px){.link-pack{display:none}}
 
 /* ============== BUTTONS / CHIPS ============== */
-.btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;
-  letter-spacing:.12em;text-transform:uppercase;padding:15px 24px;border:var(--bd) solid var(--ink);
-  background:var(--paper);color:var(--ink);box-shadow:var(--pop) var(--pop) 0 var(--ink);
-  cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
-.btn:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
-.btn--red{background:var(--red)}
-.btn--blue{background:var(--blue)}
-.chip{display:inline-block;font-weight:700;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;padding:8px 13px;background:var(--ink);color:var(--paper)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;
+  letter-spacing:-.005em;padding:14px 24px;border:var(--bd) solid var(--line);border-radius:999px;
+  background:var(--panel);color:var(--ink);box-shadow:var(--sh);
+  cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh-lift)}
+.btn--red{background:var(--red);color:#fff;border-color:transparent}
+.btn--red:hover{background:var(--red-2)}
+.btn--blue{background:var(--queen);color:#fff;border-color:transparent}
+.chip{display:inline-block;font-weight:600;font-size:12px;letter-spacing:.01em;
+  padding:5px 11px;border-radius:999px;background:var(--sunk);color:var(--ink-soft)}
 .chip--holo{background:var(--holo);background-size:180% 180%;animation:holoshift 7s linear infinite;
-  color:var(--ink);border:2px solid var(--ink)}
+  color:var(--ink)}
 @keyframes holoshift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 
+/* the checklist's page foot: a full bleed red to amber gradient rule */
+.rulebar{height:6px;background:var(--band-grad)}
+
 /* ============== HERO ============== */
-.hero{position:relative;overflow:hidden;padding-top:clamp(52px,9vh,104px);
-  padding-bottom:clamp(48px,7vh,84px)}
+.hero{position:relative;overflow:hidden;padding-top:clamp(56px,9vh,110px);
+  padding-bottom:clamp(52px,7vh,88px)}
 .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:15px 15px;
   -webkit-mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);
-  mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);opacity:.7}
+  mask-image:radial-gradient(52% 62% at 88% 12%,#000 0%,transparent 72%);opacity:.35}
 .hero .wrap{position:relative;z-index:1}
-.stamp{display:inline-block;background:var(--ink);color:var(--yellow);font-weight:700;font-size:11px;
-  letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;margin-bottom:22px}
-.hero h1{font-family:var(--f-display);font-size:clamp(40px,8.4vw,96px);line-height:.92;
-  letter-spacing:-.03em;text-transform:uppercase;margin:0 0 22px;max-width:13ch}
+.hero h1{font-family:var(--f-display);font-size:clamp(38px,7vw,76px);line-height:1.03;
+  font-weight:800;letter-spacing:-.035em;margin:0 0 20px;max-width:15ch}
 .hero h1 em{font-style:normal;color:var(--red-2)}
-.lede{font-size:clamp(17px,2.1vw,21px);line-height:1.45;font-weight:500;max-width:44ch;margin:0 0 30px}
-.actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
-.tally{display:grid;grid-template-columns:repeat(3,auto);gap:0;border:var(--bd) solid var(--ink);
-  background:var(--paper);box-shadow:var(--pop) var(--pop) 0 var(--ink);width:fit-content;max-width:100%}
-.tally div{padding:16px 22px;border-right:var(--bd) solid var(--ink)}
+.lede{font-size:clamp(17px,2.1vw,20px);line-height:1.55;font-weight:400;color:var(--ink-soft);
+  max-width:48ch;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+.tally{display:grid;grid-template-columns:repeat(3,auto);gap:0;border:var(--bd) solid var(--line);
+  border-radius:var(--r);overflow:hidden;background:var(--panel);box-shadow:var(--sh);
+  width:fit-content;max-width:100%}
+.tally div{padding:18px 26px;border-right:var(--bd) solid var(--line)}
 .tally div:last-child{border-right:0}
-.tally b{display:block;font-family:var(--f-display);font-size:clamp(26px,4vw,40px);line-height:1}
-.tally span{font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.tally b{display:block;font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(26px,4vw,38px);line-height:1.1}
+.tally span{font-weight:500;font-size:12px;color:var(--grey)}
 @media(max-width:560px){.tally{grid-template-columns:1fr}
-  .tally div{border-right:0;border-bottom:var(--bd) solid var(--ink)}
+  .tally div{border-right:0;border-bottom:var(--bd) solid var(--line)}
   .tally div:last-child{border-bottom:0}}
 
 /* ============== BANDS ============== */
-.band{padding-top:clamp(52px,7vh,88px);padding-bottom:clamp(52px,7vh,88px);
-  border-top:var(--bd) solid var(--ink)}
+.band{position:relative;padding-top:clamp(56px,7vh,92px);padding-bottom:clamp(56px,7vh,92px);
+  border-top:var(--bd) solid var(--line)}
 /* the topbar is sticky, so anchored sections must clear it */
 section[id]{scroll-margin-top:76px}
-.band--yellow{background:var(--yellow)}
-.band--blue{background:var(--blue)}
-.band--ink{background:var(--ink);color:var(--cream)}
-.band-head{margin-bottom:36px;max-width:64ch}
-.band-head h2{font-family:var(--f-display);font-size:clamp(28px,4.6vw,50px);line-height:.98;
-  letter-spacing:-.025em;text-transform:uppercase;margin:0 0 12px}
-.band-head p{font-size:17px;font-weight:500;margin:0;max-width:52ch}
+.band--yellow{background:linear-gradient(180deg,#FFF8E6 0%,var(--paper) 100%);border-top-color:transparent}
+.band--blue{background:linear-gradient(180deg,#EEF3FB 0%,var(--paper) 100%);border-top-color:transparent}
+.band--ink{background:var(--ink);color:#E9EBEE;border-top-color:transparent}
+.band--ink .band-head p{color:#A9B0B8}
+.band-head{margin-bottom:40px;max-width:64ch}
+.band-head h2{font-family:var(--f-display);font-size:clamp(26px,3.6vw,40px);line-height:1.12;
+  font-weight:800;letter-spacing:-.03em;margin:0 0 12px}
+.band-head p{font-size:17px;font-weight:400;color:var(--grey);margin:0;max-width:56ch}
+.band-head p + p{margin-top:14px}
 
 /* ============== RARITY LADDER ============== */
-.ladder{border:var(--bd) solid var(--ink);background:var(--paper);
-  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.rung{display:grid;grid-template-columns:60px 1fr 118px minmax(250px,1.5fr);gap:18px;align-items:center;
-  padding:16px 20px;border-bottom:var(--bd) solid var(--ink)}
+.ladder{border:var(--bd) solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:var(--panel);box-shadow:var(--sh)}
+.rung{display:grid;grid-template-columns:64px 1fr 118px minmax(250px,1.5fr);gap:20px;align-items:center;
+  padding:18px 22px;border-bottom:var(--bd) solid var(--line)}
 .rung:last-child{border-bottom:0}
 .glyph{width:52px;height:52px;display:grid;place-items:center;font-size:30px;line-height:1;
-  border:var(--bd) solid var(--ink)}
-.g-common{background:var(--cream)} .g-uncommon{background:var(--yellow)}
-.g-rare{background:var(--holo);background-size:200% 200%}
-.g-secret{background:var(--holo);background-size:200% 200%;animation:holoshift 7s linear infinite}
-.g-mono{background:var(--ink);color:var(--paper)}
-.rung h3{font-family:var(--f-display);font-size:17px;text-transform:uppercase;margin:0 0 3px}
-.rung .who{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
-.rung .rng{font-family:var(--f-display);font-size:15px}
-.rung .rng small{display:block;font-family:var(--f-body);font-weight:700;font-size:10px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
-.rung .treat{font-size:13px;font-weight:500;line-height:1.35}
+  border-radius:var(--r-sm);color:#fff}
+.g-common{background:var(--pawn)} .g-uncommon{background:var(--knight)}
+.g-rare{background:var(--rook)}
+.g-secret{background:var(--queen)}
+.g-mono{background:var(--king)}
+.rung h3{font-family:var(--f-display);font-size:17px;font-weight:700;letter-spacing:-.015em;margin:0 0 2px}
+.rung .who{font-weight:500;font-size:13px;color:var(--grey)}
+.rung .rng{font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:-.01em}
+.rung .rng small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;
+  letter-spacing:0;text-transform:none;color:var(--grey)}
+.rung .treat{font-size:14px;font-weight:400;line-height:1.45;color:var(--grey)}
 @media(max-width:780px){
-  .rung{grid-template-columns:52px 1fr;gap:14px}
+  .rung{grid-template-columns:52px 1fr;gap:16px}
   .rung .rng,.rung .treat{grid-column:2}
   .rung .rng{margin-top:4px}
 }
@@ -156,154 +194,168 @@ section[id]{scroll-margin-top:76px}
 /* the board stands on its own, capped so it doesn't sprawl on wide screens */
 .board-only{max-width:660px}
 .board-frame{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;gap:8px}
-.ranks,.files{display:grid;font-weight:700;font-size:11px}
+.ranks,.files{display:grid;font-weight:500;font-size:11px;color:var(--grey)}
 .ranks{grid-template-rows:repeat(8,1fr);align-items:center;justify-items:center;width:16px}
 .files{grid-column:2;grid-template-columns:repeat(8,1fr);justify-items:center;padding-top:2px}
-.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;border:4px solid var(--ink);
-  box-shadow:var(--pop) var(--pop) 0 var(--ink);background:var(--ink)}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;
+  border:var(--bd) solid var(--line);border-radius:var(--r);overflow:hidden;
+  box-shadow:var(--sh);background:var(--line)}
 .sq{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;padding:5px 0 0 5px;
   transition:transform .16s ease,filter .16s ease}
-.sq .num{font-weight:700;font-size:9px;line-height:1;color:rgba(0,0,0,.45)}
-.sq--common.sq--lt{background:var(--cream)} .sq--common.sq--dk{background:var(--cream-2)}
-.sq--uncommon.sq--lt{background:var(--yellow)} .sq--uncommon.sq--dk{background:var(--yellow-2)}
-.sq--rare{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.14)),
-  linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3));
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
+.sq .num{font-weight:600;font-size:9px;line-height:1;color:rgba(17,19,21,.42)}
+.sq--common.sq--lt{background:var(--pawn-lt)} .sq--common.sq--dk{background:var(--pawn-dk)}
+.sq--uncommon.sq--lt{background:var(--knight-lt)} .sq--uncommon.sq--dk{background:var(--knight-dk)}
+.sq--rare{background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.22)),
+  linear-gradient(var(--a,135deg),var(--c1),var(--c2) 52%,var(--c3))}
 /* the eight cards that also have Secret Rare and Monochrome versions */
 .sq--promo::after{content:"♛";position:absolute;right:6%;bottom:4%;font-size:min(2.4vw,17px);
-  line-height:1;color:var(--ink)}
-.sq--promo{box-shadow:inset 0 0 0 3px var(--magenta)}
+  line-height:1;color:var(--king)}
+.sq--promo{box-shadow:inset 0 0 0 2px var(--king)}
+/* the clicked square holds the readout, so it has to stay legible while the
+   rest of the board dims and it must outrank the promo ring */
+.sq--pinned{box-shadow:inset 0 0 0 3px var(--ink);z-index:3}
 @media(hover:hover){
-  .board:hover .sq{filter:saturate(.5) brightness(.88)}
-  .board .sq:hover{filter:none;transform:scale(1.08);z-index:2;box-shadow:0 0 0 3px var(--ink)}
+  .board:hover .sq{filter:saturate(.45) brightness(.97)}
+  .board .sq:hover{filter:none;transform:scale(1.08);z-index:2;box-shadow:0 0 0 2px var(--ink)}
+  .board:hover .sq--pinned{filter:none}
 }
 @media(max-width:640px){.sq .num{display:none}.sq{padding:0}}
-.readout{display:flex;align-items:center;gap:9px;margin-top:16px;min-height:26px;flex-wrap:wrap;
-  font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-.readout b{background:var(--ink);color:var(--yellow);padding:4px 8px}
+.readout{display:flex;align-items:center;gap:10px;margin-top:18px;min-height:26px;flex-wrap:wrap;
+  font-weight:500;font-size:14px;color:var(--grey)}
+.readout b{background:var(--ink);color:#fff;padding:4px 10px;border-radius:999px;
+  font-weight:600;font-size:12px}
 .readout .sep{opacity:.35}
-.readout .note{flex-basis:100%;font-weight:500;font-size:13px;letter-spacing:0;
-  text-transform:none;line-height:1.4;max-width:56ch}
-.detail .note{margin-top:12px;font-size:14px;font-weight:500;line-height:1.45;max-width:54ch}
-.half{margin-top:14px;font-size:14px;font-weight:500;max-width:52ch}
+.readout .note{flex-basis:100%;font-weight:400;font-size:14px;line-height:1.5;max-width:60ch}
+.detail .note{margin-top:12px;font-size:14px;font-weight:400;line-height:1.5;max-width:54ch}
+.half{margin-top:16px;font-size:14px;font-weight:400;color:var(--grey);max-width:52ch}
 
-.key{border:var(--bd) solid var(--ink);background:var(--paper);
-  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.key-row{padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;
-  border-bottom:var(--bd) solid var(--ink)}
+.key{border:var(--bd) solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:var(--panel);box-shadow:var(--sh)}
+.key-row{padding:15px 18px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+  border-bottom:var(--bd) solid var(--line)}
 .key-row:last-child{border-bottom:0}
-.swatch{width:24px;height:24px;border:2px solid var(--ink);margin-top:2px}
-.swatch--common{background:linear-gradient(135deg,var(--cream) 50%,var(--cream-2) 50%)}
-.swatch--uncommon{background:linear-gradient(135deg,var(--yellow) 50%,var(--yellow-2) 50%)}
+.swatch{width:24px;height:24px;border-radius:6px;margin-top:2px}
+.swatch--common{background:linear-gradient(135deg,var(--pawn-lt) 50%,var(--pawn-dk) 50%)}
+.swatch--uncommon{background:linear-gradient(135deg,var(--knight-lt) 50%,var(--knight-dk) 50%)}
 .swatch--rare{background:var(--holo);background-size:200% 200%}
-.swatch--promo{background:var(--paper);box-shadow:inset 0 0 0 3px var(--magenta)}
-.key-row h3{font-family:var(--f-display);font-size:14px;text-transform:uppercase;margin:0 0 3px;
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
-.key-row .rng{font-family:var(--f-body);font-weight:700;font-size:11px;color:var(--grey)}
-.key-row p{font-size:13px;margin:0;line-height:1.4}
+.swatch--promo{background:var(--panel);box-shadow:inset 0 0 0 2px var(--king)}
+.key-row h3{font-family:var(--f-display);font-size:15px;font-weight:700;letter-spacing:-.015em;
+  margin:0 0 3px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.key-row .rng{font-family:var(--f-body);font-weight:500;font-size:12px;color:var(--grey)}
+.key-row p{font-size:14px;margin:0;line-height:1.5;color:var(--grey)}
 
 /* ============== VARIATIONS ============== */
 .promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media(max-width:760px){.promo-grid{grid-template-columns:1fr}}
 .chain{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
-  background:var(--paper);border:var(--bd) solid var(--ink);padding:13px 15px}
-.chain b{font-family:var(--f-display);font-size:15px;text-transform:uppercase}
-.steps{display:flex;align-items:center;gap:5px;font-weight:700;font-size:11px}
-.steps i{font-style:normal;padding:5px 7px;border:2px solid var(--ink);background:var(--cream)}
+  background:var(--panel);border:var(--bd) solid var(--line);border-radius:var(--r);
+  padding:15px 18px;box-shadow:var(--sh)}
+.chain b{font-family:var(--f-display);font-size:15px;font-weight:700;letter-spacing:-.015em}
+.steps{display:flex;align-items:center;gap:6px;font-weight:600;font-size:12px}
+.steps i{font-style:normal;padding:5px 9px;border-radius:999px;background:var(--sunk)}
 .steps i.s2{background:var(--holo);background-size:200% 200%}
-.steps i.s3{background:var(--ink);color:var(--paper)}
-.steps em{font-style:normal;opacity:.5}
+.steps i.s3{background:var(--king);color:#fff}
+.steps em{font-style:normal;opacity:.4}
 
 /* ============== MONOCHROME SHOWCASE ============== */
-.mono-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mono-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media(max-width:820px){.mono-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mono-strip figure{margin:0}
-.mono-strip img{display:block;width:100%;height:auto;border:var(--bd) solid var(--cream)}
-.mono-strip figcaption{margin-top:8px;font-weight:700;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase}
-.mono-strip figcaption span{color:#9A9A8A}
+.mono-strip img{display:block;width:100%;height:auto;border-radius:var(--r-sm);
+  box-shadow:0 6px 22px rgba(0,0,0,.35)}
+.mono-strip figcaption{margin-top:10px;font-weight:600;font-size:13px;color:#E9EBEE}
+.mono-strip figcaption span{color:#868D95;font-weight:500}
 
 /* ============== CHECKLIST ============== */
-.filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px}
-.filt{font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 13px;
-  border:var(--bd) solid var(--ink);background:var(--paper);cursor:pointer;font-family:var(--f-body)}
-.filt[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:13px}
-.card{border:var(--bd) solid var(--ink);background:var(--paper);padding:0;cursor:pointer;
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filt{font-weight:500;font-size:13px;padding:8px 15px;border-radius:999px;
+  border:var(--bd) solid var(--line);background:var(--panel);color:var(--grey);
+  cursor:pointer;font-family:var(--f-body);transition:background .15s ease,color .15s ease}
+.filt:hover{color:var(--ink)}
+.filt[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:16px}
+.card{border:var(--bd) solid var(--line);border-radius:var(--r-sm);overflow:hidden;
+  background:var(--panel);padding:0;cursor:pointer;box-shadow:var(--sh);
   font-family:var(--f-body);text-align:left;display:flex;flex-direction:column;
-  transition:transform .12s ease,box-shadow .12s ease}
-.card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
-.card[aria-pressed="true"]{box-shadow:5px 5px 0 var(--magenta)}
-.card img{display:block;width:100%;height:auto;aspect-ratio:198/270;object-fit:cover;
-  background:var(--cream-2)}
-.card .meta{padding:7px 8px;border-top:var(--bd) solid var(--ink);display:flex;gap:6px;
+  transition:transform .15s ease,box-shadow .15s ease}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-lift)}
+.card[aria-pressed="true"]{box-shadow:0 0 0 2px var(--king),var(--sh-lift)}
+.card img{display:block;width:100%;height:auto;aspect-ratio:63/88;object-fit:cover;
+  background:var(--sunk)}
+.card .meta{padding:9px 10px;border-top:var(--bd) solid var(--line);display:flex;gap:7px;
   align-items:baseline}
 /* text-only tiles carry no art, so they need their own body */
-.card--text .meta{padding:13px 11px;min-height:74px;align-items:flex-start;flex-direction:column;
-  gap:4px;border-top:0}
+.card--text .meta{padding:14px 12px;min-height:76px;align-items:flex-start;flex-direction:column;
+  gap:5px;border-top:0}
 .card--text .no{font-size:15px}
-.card--text .nm{font-size:12.5px}
-.card .no{font-family:var(--f-display);font-size:11px}
-.card .nm{font-size:11px;font-weight:600;line-height:1.2;overflow:hidden}
-.card .tierbar{height:7px;border-bottom:var(--bd) solid var(--ink)}
-.tb-common{background:var(--cream-2)} .tb-uncommon{background:var(--yellow)}
-.tb-rare,.tb-secret{background:var(--holo);background-size:200% 200%}
-.tb-mono{background:var(--ink)}
+.card--text .nm{font-size:13px}
+.card .no{font-family:var(--f-display);font-weight:700;font-size:11px;color:var(--grey)}
+.card .nm{font-size:12px;font-weight:500;line-height:1.3;overflow:hidden}
+.card .tierbar{height:4px}
+.tb-common{background:var(--pawn)} .tb-uncommon{background:var(--knight)}
+.tb-rare{background:var(--rook)} .tb-secret{background:var(--queen)}
+.tb-mono{background:var(--king)}
 
-.detail{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:start;
-  background:var(--paper);border:var(--bd) solid var(--ink);padding:20px;margin-bottom:24px;
-  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
+.detail{display:grid;grid-template-columns:210px 1fr;gap:26px;align-items:start;
+  background:var(--panel);border:var(--bd) solid var(--line);border-radius:var(--r);
+  padding:24px;margin-bottom:26px;box-shadow:var(--sh)}
 .detail[hidden]{display:none}
 .detail--noart{grid-template-columns:1fr}
 @media(max-width:640px){.detail{grid-template-columns:1fr}}
-.detail img{display:block;width:100%;height:auto;border:2px solid var(--ink)}
-.detail h3{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);text-transform:uppercase;
-  margin:0 0 8px;line-height:1.02}
-.detail .row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.detail p{margin:0;font-size:15px;font-weight:500;line-height:1.5;max-width:52ch}
-.detail .close{margin-top:16px}
+.detail img{display:block;width:100%;height:auto;border-radius:var(--r-sm);box-shadow:var(--sh)}
+.detail h3{font-family:var(--f-display);font-size:clamp(20px,3vw,28px);font-weight:800;
+  letter-spacing:-.03em;margin:0 0 10px;line-height:1.12}
+.detail .row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.detail p{margin:0;font-size:15px;font-weight:400;line-height:1.6;color:var(--grey);max-width:56ch}
+.detail .close{margin-top:18px}
 
 /* ============== SHOP ============== */
-.storelink{margin-bottom:26px}
-.storelink .btn{font-size:14px;padding:19px 30px}
-.odds{margin-top:24px;background:var(--ink);color:var(--cream);border:var(--bd) solid var(--ink);
-  padding:20px 22px}
-.odds h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;margin:0 0 12px;
-  color:var(--yellow)}
-.odds ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:10px 26px}
-.odds li{font-weight:700;font-size:13px}
-.odds li b{font-family:var(--f-display);font-size:17px;margin-right:6px}
-.odds .fine{margin:12px 0 0;font-size:12px;font-weight:500;color:#9A9A8A;max-width:60ch}
+.storelink{margin-bottom:28px}
+.storelink .btn{font-size:16px;padding:17px 30px}
+.odds{margin-top:26px;background:var(--panel);border:var(--bd) solid var(--line);
+  border-radius:var(--r);padding:22px 24px;box-shadow:var(--sh)}
+.odds h3{font-family:var(--f-display);font-size:15px;font-weight:700;letter-spacing:-.015em;
+  margin:0 0 14px;color:var(--ink)}
+.odds ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:12px 30px}
+.odds li{font-weight:500;font-size:14px;color:var(--grey)}
+.odds li b{font-family:var(--f-display);font-weight:800;font-size:19px;color:var(--ink);
+  letter-spacing:-.02em;margin-right:7px}
+.odds .fine{margin:14px 0 0;font-size:13px;font-weight:400;color:var(--grey);max-width:60ch}
 
 /* ============== ART ============== */
-.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);align-items:start}
+.art-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
 @media(max-width:820px){.art-layout{grid-template-columns:1fr}}
-.art-copy p{font-size:17px;line-height:1.5;margin:0 0 16px;max-width:44ch}
-.sheet{background:var(--blue);border:var(--bd) solid var(--ink);padding:clamp(22px,3.2vw,34px);
-  box-shadow:var(--pop) var(--pop) 0 var(--ink)}
-.sheet .big{font-family:var(--f-display);font-size:clamp(25px,3.8vw,40px);line-height:1.02;
-  letter-spacing:-.02em;text-transform:uppercase;margin:0 0 16px;color:var(--paper);
-  text-shadow:-3px -3px 0 #000,3px -3px 0 #000,-3px 3px 0 #000,3px 3px 0 #000,
-    0 -3px 0 #000,0 3px 0 #000,-3px 0 0 #000,3px 0 0 #000}
-.sheet .big mark{background:none;color:var(--yellow)}
-.sheet p{font-size:15px;line-height:1.5;margin:0;font-weight:500}
-.credits{margin-top:24px;border-top:var(--bd) solid var(--ink)}
-.credit{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:12px 0;
-  border-bottom:1px solid rgba(0,0,0,.25);align-items:baseline}
-.credit dt{font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
-.credit dd{font-family:var(--f-display);font-size:15px;margin:0}
-.credit dd span{font-family:var(--f-body);font-weight:500;color:var(--grey)}
+.art-copy p{font-size:17px;line-height:1.6;margin:0 0 18px;color:var(--ink-soft);max-width:46ch}
+.sheet{background:var(--ink);border-radius:var(--r);padding:clamp(24px,3.2vw,36px);
+  box-shadow:var(--sh);position:relative;overflow:hidden}
+.sheet::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--band-grad)}
+.sheet .big{font-family:var(--f-display);font-size:clamp(23px,3.2vw,34px);line-height:1.14;
+  font-weight:800;letter-spacing:-.03em;margin:0 0 18px;color:#fff}
+.sheet .big mark{background:none;color:var(--amber)}
+.sheet p{font-size:15px;line-height:1.6;margin:0;font-weight:400;color:#A9B0B8}
+.credits{margin-top:28px;border-top:var(--bd) solid var(--line)}
+.credit{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:14px 0;
+  border-bottom:var(--bd) solid var(--line);align-items:baseline}
+.credit dt{font-weight:500;font-size:12px;color:var(--grey)}
+.credit dd{font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:-.015em;margin:0}
+.credit dd span{font-family:var(--f-body);font-weight:400;color:var(--grey)}
+/* the Kickstarter note closes out the art copy, so it sits inside that column
+   and reads as its last paragraph rather than as a slab under the layout */
+.origin{margin:22px 0 18px;max-width:46ch}
+.origin h3{font-family:var(--f-display);font-size:18px;font-weight:700;
+  letter-spacing:-.02em;margin:0 0 8px}
+.origin p{font-size:17px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:46ch}
 
 /* ============== FOOTER ============== */
-.foot{background:var(--ink);color:var(--cream);padding-top:42px;padding-bottom:50px;
-  border-top:var(--bd) solid var(--ink)}
-.foot-in{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-end}
-.foot-in .t{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);line-height:1;
-  text-transform:uppercase;max-width:16ch;margin:0}
-.foot-links{display:flex;gap:18px;flex-wrap:wrap}
-.foot-links a{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-.foot-links a:hover{color:var(--yellow)}
-.colophon{margin-top:26px;color:#9A9A8A}
+.foot{background:var(--ink);color:#E9EBEE;padding-top:52px;padding-bottom:56px;
+  border-top:0}
+.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+.foot-in .t{font-family:var(--f-display);font-size:clamp(20px,3vw,30px);line-height:1.15;
+  font-weight:800;letter-spacing:-.03em;max-width:18ch;margin:0}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{font-weight:500;font-size:14px;color:#A9B0B8}
+.foot-links a:hover{color:var(--amber)}
+.colophon{margin-top:28px;color:#868D95;font-size:13px}
 
 /* ============== MOTION ============== */
 .rise{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
@@ -331,25 +383,54 @@ section[id]{scroll-margin-top:76px}
   <header class="topbar"><div class="wrap topbar-in">
     <a href="#site" class="brand">Chess <em>Trading Cards</em></a>
     <nav class="topbar-links" aria-label="Sections">
-      <a href="#rarity">Rarity System</a><a href="#board">Card list</a>
-      <a href="#checklist">Checklist</a><a href="#art">The Art</a>
+      <a href="#board">Card list</a><a href="#rarity">Rarity System</a>
+      <a href="#art">The Art</a>
+      <button type="button" id="replay" class="link-pack">Reopen the site</button>
       <a href="#shop" class="link-buy">Shop</a>
     </nav>
   </div></header>
 
   <section class="hero">
     <div class="wrap">
-      <div class="stamp rise">First Edition &middot; 80 cards &middot; Printing 001</div>
-      <h1 class="rise">Chess deserves <em>better</em> collectibles.</h1>
+      <h1 class="rise">Chess deserves <em>better</em> collectibles</h1>
       <p class="lede rise">For decades, the only real chess merchandise has been boards, pieces, and clocks. We set out to create something meaningfully different.</p>
       <div class="actions rise">
         <a href="#shop" class="btn btn--red">Shop packs</a>
-        <a href="#checklist" class="btn">See the checklist</a>
+        <a href="#board" class="btn">See the card list</a>
       </div>
       <div class="tally rise">
         <div><b>80</b><span>Numbered cards</span></div>
         <div><b>64</b><span>Core Set</span></div>
         <div><b>8</b><span>One of each per print run</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- the red to amber rule that closes every content page of the checklist -->
+  <div class="rulebar" role="presentation"></div>
+
+  <!-- blue, so the pale rarity tints all read against the band -->
+  <section class="band band--blue" id="board">
+    <div class="wrap">
+      <div class="band-head rise">
+        <h2>64 squares = 64 cards</h2>
+        <p>The card list as a chess board.</p>
+        <p>Each chess trading card celebrates the moments, ideas, and personalities that make chess unforgettable. From legendary players to iconic openings and defining positions, the collection reflects the depth and culture of the game. The 64-card format is a deliberate nod to the 8&times;8 board.</p>
+      </div>
+      <div class="board-only rise">
+        <div class="board-frame">
+          <div class="ranks" aria-hidden="true">
+            <span>8</span><span>7</span><span>6</span><span>5</span>
+            <span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+          <div class="board" id="boardEl" role="img"
+               aria-label="The card list laid out as a chess board: 64 squares for 64 cards, card 1 on a8 through card 64 on h1."></div>
+          <div class="files" aria-hidden="true">
+            <span>a</span><span>b</span><span>c</span><span>d</span>
+            <span>e</span><span>f</span><span>g</span><span>h</span>
+          </div>
+        </div>
+        <p class="readout" id="readout"></p>
       </div>
     </div>
   </section>
@@ -395,31 +476,6 @@ section[id]{scroll-margin-top:76px}
     </div>
   </section>
 
-  <!-- blue, so the cream and yellow squares both read against the band -->
-  <section class="band band--blue" id="board">
-    <div class="wrap">
-      <div class="band-head rise">
-        <h2>The card list as a chess board</h2>
-        <p>64 squares = 64 cards.</p>
-      </div>
-      <div class="board-only rise">
-        <div class="board-frame">
-          <div class="ranks" aria-hidden="true">
-            <span>8</span><span>7</span><span>6</span><span>5</span>
-            <span>4</span><span>3</span><span>2</span><span>1</span>
-          </div>
-          <div class="board" id="boardEl" role="img"
-               aria-label="The card list laid out as a chess board: 64 squares for 64 cards, card 1 on a8 through card 64 on h1."></div>
-          <div class="files" aria-hidden="true">
-            <span>a</span><span>b</span><span>c</span><span>d</span>
-            <span>e</span><span>f</span><span>g</span><span>h</span>
-          </div>
-        </div>
-        <p class="readout" id="readout"></p>
-      </div>
-    </div>
-  </section>
-
   <section class="band" id="variations">
     <div class="wrap">
       <div class="band-head rise">
@@ -433,22 +489,10 @@ section[id]{scroll-margin-top:76px}
   <section class="band band--ink">
     <div class="wrap">
       <div class="band-head rise">
-        <h2 style="color:var(--yellow)">Monochromes</h2>
+        <h2 style="color:#fff">Monochromes</h2>
         <p>The set also contains 8 Monochromatic cards, which are special versions of Secret Rares. Monochromes are extremely limited - one of each per print run.</p>
       </div>
       <div class="mono-strip rise" id="monoStrip"></div>
-    </div>
-  </section>
-
-  <section class="band" id="checklist">
-    <div class="wrap">
-      <div class="band-head rise">
-        <h2>First Edition Checklist</h2>
-        <p>This first edition set contains 32 Common cards, 19 Uncommon cards, 13 Rare cards, 8 Secret Rare cards, and 8 Monochromes.</p>
-      </div>
-      <div class="detail rise" id="detail" hidden></div>
-      <div class="filters rise" id="filters" role="group" aria-label="Filter the checklist by rarity"></div>
-      <div class="grid rise" id="grid"></div>
     </div>
   </section>
 
@@ -480,11 +524,14 @@ section[id]{scroll-margin-top:76px}
       <div class="art-layout rise">
         <div class="art-copy">
           <p>Stinmaster is an NYC-based illustrator and tattoo artist. A mutual friend introduced us and I was immediately struck by his art; combining nostalgia, game culture, fantasy, and anime with intricate dotwork.</p>
-          <p>Stinmaster and I kicked off the project with an immersion session where we spent hours talking chess, handling Pok&eacute;mon and Yu-Gi-Oh! cards, and talking about our vision for the art. From there, stinmaster has shown his talents by translating each idea into an initial sketch, then color mock, then the final illustrations that you see on each card.</p>
+          <p>Stinmaster and I kicked off the project with an immersion session where we spent hours talking chess, handling our favorite trading cards, and talking about our vision for the art. From there, stinmaster has shown his talents by translating each idea into an initial sketch, then color mock, then the final illustrations that you see on each card.</p>
+          <div class="origin">
+            <h3>How we got started</h3>
+            <p>We ran a Kickstarter in spring 2026 and raised almost $7,000. With that, we secured enough interest to illustrate and print a complete run of our first set. We are excited to share that with the world.</p>
+          </div>
           <dl class="credits">
             <div class="credit"><dt>Illustration</dt><dd>stinmaster <span>&middot; Austin McDonald</span></dd></div>
             <div class="credit"><dt>Created by</dt><dd>byredofantome <span>&middot; Matt Biancuzzo</span></dd></div>
-            <div class="credit"><dt>Printing</dt><dd>First Edition <span>&middot; 001</span></dd></div>
           </dl>
         </div>
         <div class="sheet">
@@ -495,10 +542,12 @@ section[id]{scroll-margin-top:76px}
     </div>
   </section>
 
+  <div class="rulebar" role="presentation"></div>
+
   <footer class="foot">
     <div class="wrap">
       <div class="foot-in">
-        <p class="t">Chess deserves better collectibles.</p>
+        <p class="t">Chess deserves better collectibles</p>
         <div class="foot-links"><a href="#">Instagram</a><a href="#">Kickstarter</a><a href="#">Contact</a></div>
       </div>
       <div class="colophon"><span class="data">For more, visit us at: chesstradingcard.com</span></div>
@@ -619,7 +668,8 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
   var board=document.getElementById('boardEl'), readout=document.getElementById('readout');
   if(!board) return;
   var FILES='abcdefgh';
-  var RAMP=[[111,211,230],[183,155,232],[232,184,127],[127,224,192]];
+  // the holo sheen, keyed to the checklist's rarity glyph colours
+  var RAMP=[[120,204,252],[132,156,252],[201,166,240],[127,224,192]];
   function sheen(t){
     t=(t%1+1)%1;
     var f=t*RAMP.length, i=Math.floor(f), m=f-i;
@@ -650,17 +700,30 @@ var PROMOTED={}; CHAINS.forEach(function(c){ PROMOTED[c[0]]=1; });
   var idle='<b>a8</b><span class="sep">/</span><span>Card 1</span>'+
            '<span class="sep">&rarr;</span><b>h1</b><span class="sep">/</span><span>Card 64</span>';
   readout.innerHTML=idle;
-  function show(e){
-    var sq=e.target.closest('.sq'); if(!sq) return;
+  function render(sq){
     readout.innerHTML='<b>'+sq.dataset.sqr+'</b><span class="sep">/</span>'+
       '<span>#'+sq.dataset.n+' '+sq.dataset.name+'</span>'+
       '<span class="sep">/</span><b>'+sq.dataset.tier+'</b>'+
       (sq.classList.contains('sq--promo')
-        ?'<span class="note">This set contains 8 Secret Rare cards, which are full art adaptations of select cards within the main set.</span>':'');
+        ?'<span class="note">This card also has Secret Rare and Monochrome variations.</span>':'');
   }
-  board.addEventListener('mouseover',show);
-  board.addEventListener('pointerdown',show);
-  board.addEventListener('mouseleave',function(){ readout.innerHTML=idle; });
+  /* Hover previews, a click pins. Once a square is pinned the readout stops
+     following the cursor, so a card can actually be read without holding the
+     mouse still on its square. Clicking another square moves the pin. */
+  var pinned=null;
+  board.addEventListener('mouseover',function(e){
+    if(pinned) return;
+    var sq=e.target.closest('.sq'); if(sq) render(sq);
+  });
+  board.addEventListener('click',function(e){
+    var sq=e.target.closest('.sq'); if(!sq) return;
+    if(pinned) pinned.classList.remove('sq--pinned');
+    pinned=sq; sq.classList.add('sq--pinned');
+    render(sq);
+  });
+  board.addEventListener('mouseleave',function(){
+    if(!pinned) readout.innerHTML=idle;
+  });
 })();
 
 /* ---------------- variation rows ---------------- */
@@ -786,6 +849,22 @@ function open(instant){
 }
 skipBtn.addEventListener('click',function(){ open(true); });
 
+/* Back to the sealed pack. This reloads rather than resetting in place: the
+   tear mutates shader uniforms, the strip and body transforms, six material
+   opacities, the camera and the glow, and unwinding all of that by hand is
+   far easier to get subtly wrong than to just build the scene again. The
+   textures are already cached, so it is not a real fetch. */
+var replayBtn=document.getElementById('replay');
+if(replayBtn){
+  if(!window.THREE) replayBtn.hidden=true;   // nothing to replay without WebGL
+  replayBtn.addEventListener('click',function(){
+    try{ sessionStorage.removeItem('ctc_opened'); }catch(e){}
+    if('scrollRestoration' in history) history.scrollRestoration='manual';
+    scrollTo(0,0);
+    location.reload();
+  });
+}
+
 var seen=false; try{ seen=sessionStorage.getItem('ctc_opened')==='1'; }catch(e){}
 if(seen||!window.THREE){ gate.classList.add('is-skipped'); site.classList.add('is-in'); }
 else{ html.classList.add('is-locked'); boot(); }
@@ -803,8 +882,13 @@ function boot(){
   // the real booster bag: a 70mm x 130mm front panel, so H/W = 130/70
   var W=1.0, H=W*130/70, XF=-W*0.325;     // pack size, fold line x
   var BODYH=H*0.5*(100/130);              // half-height of the un-crimped body
-  var BULGE=W*0.082;                      // eight cards inflate the bag
-  var renderer, scene, cam, group, strip, body, back, packBody, glow, shadowPl;
+  /* Half the pack's thickness. Eight cards at about 0.31 mm are 2.5 mm, and
+     the film and its slack take it to roughly 4 mm, so half of that on a
+     70 mm width is 0.03. It was 0.082, which made the bag 11.5 mm thick: a
+     third of a card stack's worth of air, and the main reason it read as
+     inflated rather than packed. */
+  var BULGE=W*0.030;
+  var renderer, scene, cam, group, strip, body, back, packBody, packLining, glow, shadowPl;
   var uniS=[], uniB=[];
   var front=0, target=0, vel=0, exitT=0, opened=false, dragging=false,
       startY=0, moved=0, px=0, py=0, tpx=0, tpy=0, last=0, camZ=4.4;
@@ -895,17 +979,24 @@ function boot(){
     'float hgt(vec2 p){',
     '  float bx = clamp(p.x/(uW*0.5), -1.0, 1.0);',
     '  float by = clamp(p.y/uBodyH, -1.0, 1.0);',
-    '  float cbx = cos(bx*1.5707963);',
-    '  float cby = cos(by*1.5707963);',
+    /* A pack is not a balloon. It is film stretched over a flat slab of eight
+       cards, so the face sits level right across the card area and only falls
+       away at the edges, where the film drapes down to the seals. Two cosines
+       multiplied give a dome that peaks dead centre, which is what read as a
+       belly. This is a plateau with shoulders instead. */
+    '  float px = 1.0 - smoothstep(0.80, 1.0, abs(bx));',
+    '  float py = 1.0 - smoothstep(0.82, 1.0, abs(by));',
+    '  float slab = px*py;',
     // Baseline half-thickness. Without it the pillow term vanishes at the
     // seals and the mirrored back face lands on exactly the same z as the
     // front, which z-fights across the whole crimp. Film has two layers.
-    '  float h = 0.0035 + uBulge*cbx*cby;',
+    '  float h = 0.0035 + uBulge*slab;',
     '  float seal = smoothstep(0.88, 1.0, abs(by));',
     '  h += sin(p.x*88.0)*0.0032*seal;',
-    // crumpling: broad slack folds, then a finer near-vertical crease octave
-    '  h += (sin(p.x*7.5+p.y*4.2)+sin(p.y*9.5-p.x*3.1))*0.0135*cbx*cby;',
-    '  h += (sin(p.x*17.0+p.y*2.5)*0.6+sin(p.x*26.0-p.y*4.4)*0.4)*0.0075*cbx*cby;',
+    // crumpling: broad slack folds, then a finer near-vertical crease octave.
+    // Confined to the slab, since film over nothing has no cards to crease on
+    '  h += (sin(p.x*7.5+p.y*4.2)+sin(p.y*9.5-p.x*3.1))*0.0060*slab;',
+    '  h += (sin(p.x*17.0+p.y*2.5)*0.6+sin(p.x*26.0-p.y*4.4)*0.4)*0.0034*slab;',
     '  return h;',
     '}'
   ].join('\n');
@@ -971,9 +1062,28 @@ function boot(){
         .replace('#include <begin_vertex>',
           'vec3 transformed = (uSide>0.5)? gPos : bodyPos;');
 
+      /* A booster bag is one sheet: artwork printed on the outside, bare
+         metallized mylar on the inside. Every back-facing fragment is an
+         inner surface, so the lining comes for free off gl_FrontFacing
+         instead of a second set of meshes. Without this the far panel shows
+         its own printed back through the opening, which reads as the pack
+         being inside out. */
       sh.fragmentShader=sh.fragmentShader
         .replace('#include <common>','#include <common>\nvarying vec2 vLoc;\nuniform float uSide;\n'+
           'uniform float uXf;\nuniform float uH;\nuniform float uBodyH;')
+        .replace('#include <map_fragment>','#include <map_fragment>\n'+
+          'if(!gl_FrontFacing) diffuseColor.rgb = vec3(0.78,0.79,0.83);')
+        // the printed side is lifted by an emissive pass so the ink stays
+        // punchy. Foil has no ink to lift, and leaving it on made the lining
+        // glow like paper
+        .replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>\n'+
+          'if(!gl_FrontFacing) totalEmissiveRadiance = vec3(0.0);')
+        // keep the crinkle the roughness map carries, but compress it into a
+        // much shinier range so it reads as foil rather than matte plastic
+        .replace('#include <roughnessmap_fragment>','#include <roughnessmap_fragment>\n'+
+          'if(!gl_FrontFacing) roughnessFactor = 0.15 + roughnessFactor*0.30;')
+        .replace('#include <metalnessmap_fragment>','#include <metalnessmap_fragment>\n'+
+          'if(!gl_FrontFacing) metalnessFactor = 0.92;')
         .replace('#include <clipping_planes_fragment>',function(){
           var cuts=['#include <clipping_planes_fragment>'];
           if(!isBack){
@@ -1020,38 +1130,141 @@ function boot(){
   back =new THREE.Mesh(plane(-W/2, W/2, 128), makeMat('back'));
   back.rotation.y=Math.PI;
   strip.castShadow=body.castShadow=back.castShadow=true;
-  packBody=new THREE.Object3D(); packBody.add(body,back);
-  group.add(strip,packBody);
+  /* The front flap and the far wall move independently once the bag is torn.
+     Parented together, the far wall rode the flap's travel toward the camera
+     and crossed in front of the cards, putting the foil lining on top of the
+     thing it is supposed to sit behind. The cards belong between the two. */
+  packBody=new THREE.Object3D(); packBody.add(body);
+  packLining=new THREE.Object3D(); packLining.add(back);
+  group.add(strip,packBody,packLining);
 
-  /* The eight cards inside. A Common sits on top, the rest of the stack
-     behind it, and a Monochrome goes last so it is the one left peeking
-     past the torn edge. Closed, they sit squared up inside the bag; the
-     fan only spreads as the pack comes apart. */
-  var CARD_W=0.66, CARD_H=CARD_W*270/198;
+  /* The eight cards inside, in the same proportions a real pack holds:
+     5 Common, 2 Uncommon, and one card in the last slot, which is where a
+     Rare, a Secret Rare or a Monochrome lands. The hit goes last in the
+     stack because layoutStack gives the final card an extra step, so it is
+     the one left peeking past the torn edge. Closed, they sit squared up
+     inside the bag; the fan only spreads as the pack comes apart. */
+  /* Real trim is 63 x 88 mm, and the bag above is 70 x 130 mm at W=1.0, so a
+     world unit is 70 mm and the card has to be 63/70 of it. It was hardcoded
+     at 0.66, three quarters of true size, which is why the cards disappeared
+     behind the pack instead of protruding from the torn side. A card is
+     nearly as wide as the bag it ships in. */
+  var CARD_W=W*63/70, CARD_H=CARD_W*88/63;
+  // a real card is die cut, not guillotined square. 3 mm on a 63 mm edge is
+  // the trade card standard and matches the curve drawn into the art
+  var CARD_R=CARD_W*3/63;
+  // one step of the fan, and the extra the hit gets so it clears the rest.
+  // resize() narrows FAN_STEP when the viewport cannot hold the full spread
+  var FAN_STEP=CARD_W*0.211, FAN_LAST=1.2;
+  // how far the opened front flap drifts. The tear is on the left edge, so
+  // the flap swings away to the right and the cards leave to the left
+  var FLAP_X=0.20;
+  /* One geometry shared by all eight. ShapeGeometry derives its UVs from the
+     shape's own coordinates, which leaves the texture unmapped, so they are
+     rewritten to run 0..1 across the card's bounding box. */
+  var cardGeo=(function(){
+    var w=CARD_W, h=CARD_H, r=CARD_R, x=-w/2, y=-h/2, s=new THREE.Shape();
+    s.moveTo(x+r,y);
+    s.lineTo(x+w-r,y); s.quadraticCurveTo(x+w,y,x+w,y+r);
+    s.lineTo(x+w,y+h-r); s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    s.lineTo(x+r,y+h);   s.quadraticCurveTo(x,y+h,x,y+h-r);
+    s.lineTo(x,y+r);     s.quadraticCurveTo(x,y,x+r,y);
+    var g=new THREE.ShapeGeometry(s,10), p=g.attributes.position, uv=g.attributes.uv;
+    for(var i=0;i<p.count;i++) uv.setXY(i,(p.getX(i)-x)/w,(p.getY(i)-y)/h);
+    uv.needsUpdate=true;
+    return g;
+  })();
   var stack=new THREE.Object3D(); group.add(stack);
   var stackCards=[];
   function addCard(src,i){
     var m=new THREE.MeshBasicMaterial({map:loadTex(src),transparent:true,opacity:0});
-    var msh=new THREE.Mesh(new THREE.PlaneGeometry(CARD_W,CARD_H),m);
+    var msh=new THREE.Mesh(cardGeo,m);
     // z only while closed, so nothing pokes through the pillowed faces
     msh.position.set(0,0,-0.004-i*0.004);
     stack.add(msh); stackCards.push(msh);
   }
-  addCard('cards/pack-card-common.png',0);
-  for(var ci=1;ci<=6;ci++) addCard('cards/stack-back.png',ci);
-  addCard('cards/card-073.png',7);
+  /* Ordered so neighbouring cards do not share a background colour, because
+     the fan shows a sliver of each and two reds side by side read as one card. */
+  var PACK=[
+    'cards/pack-card-common.png',   // #1  Pawn (Black)      Common
+    'cards/pack-card-021.png',      // #21 Sicilian Defense  Common
+    'cards/pack-card-004.png',      // #4  Knight (White)    Common
+    'cards/pack-card-032.png',      // #32 Blitz Chess       Common
+    'cards/pack-card-011.png',      // #11 Queen (White)     Common
+    'cards/pack-card-043.png',      // #43 Zugzwang          Uncommon
+    'cards/pack-card-047.png',      // #47 Fork              Uncommon
+    'cards/pack-card-078.png'       // #78 The Gold Coin Game the hit slot
+  ];
+  for(var ci=0;ci<PACK.length;ci++) addCard(PACK[ci],ci);
+
+  /* A halo behind the hit. Drawn as a blurred card silhouette rather than a
+     radial gradient, because a radial on a 63x88 card reads as an oval that
+     does not follow the corners. It is parented to the card itself so it
+     rides along as the fan spreads. */
+  var hitGlow=(function(){
+    var PAD=1.7, cw=256, ch=Math.round(cw*88/63);
+    var c=document.createElement('canvas'); c.width=cw; c.height=ch;
+    var x=c.getContext('2d');
+    // the lit shape runs slightly proud of the card so the halo is already
+    // at full strength where it clears the edge, rather than fading in from
+    // nothing exactly where it becomes visible
+    var iw=cw/PAD*1.06, ih=ch/PAD*1.06, ix=(cw-iw)/2, iy=(ch-ih)/2, r=iw*3/63;
+    x.filter='blur(26px)';
+    // deep amber, not a pale gold. The pack interior is cream, so a light
+    // halo has nowhere brighter to go and simply disappears into it
+    x.fillStyle='rgba(214,138,16,0.98)';
+    // three passes, so the core reads hot and the spill stays soft
+    for(var pass=0;pass<3;pass++){
+      x.beginPath();
+      x.moveTo(ix+r,iy);
+      x.lineTo(ix+iw-r,iy); x.quadraticCurveTo(ix+iw,iy,ix+iw,iy+r);
+      x.lineTo(ix+iw,iy+ih-r); x.quadraticCurveTo(ix+iw,iy+ih,ix+iw-r,iy+ih);
+      x.lineTo(ix+r,iy+ih); x.quadraticCurveTo(ix,iy+ih,ix,iy+ih-r);
+      x.lineTo(ix,iy+r); x.quadraticCurveTo(ix,iy,ix+r,iy);
+      x.closePath(); x.fill();
+    }
+    var t=new THREE.CanvasTexture(c);
+    if('SRGBColorSpace' in THREE) t.colorSpace=THREE.SRGBColorSpace;
+    var m=new THREE.Mesh(
+      new THREE.PlaneGeometry(CARD_W*PAD,CARD_H*PAD),
+      // normal blending, not additive: additive over a cream ground saturates
+      // to white and reads as nothing at all
+      new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:0,
+        depthWrite:false}));
+    // just behind the card, so only the spill past its edges shows
+    m.position.z=-0.0015;
+    m.renderOrder=-1;
+    stackCards[stackCards.length-1].add(m);
+    return m;
+  })();
+
   function layoutStack(spread,fade){
     var last=stackCards.length-1;
     for(var i=0;i<stackCards.length;i++){
       var c=stackCards[i];
       // the Monochrome gets an extra step so it clearly reads as the card
       // left sticking out of the back of the stack, not just another edge
-      var k=i+(i===last?1.8:0);
-      c.position.x=-spread*0.058*k;
-      c.position.y= spread*0.016*k;
-      c.rotation.z= spread*0.024*k;
+      var k=i+(i===last?FAN_LAST:0);
+      // wide enough that each card shows a band of its own art. Any tighter
+      // and the fan reads as a stack of blank white edges
+      c.position.x=-spread*FAN_STEP*k;
+      c.position.y= spread*FAN_STEP*0.20*k;
+      c.rotation.z= spread*0.035*k;
       c.material.opacity=fade;
     }
+    /* The bag tears on one edge only, so every card has to leave through that
+       edge and none may appear past the sealed side. That rules out sliding
+       the stack to centre it, which is what pushed the leading cards out of
+       the pack's right side: the stack stays anchored where the pack is and
+       the fan grows one way. Framing is fixed by moving the whole assembly
+       instead, which carries pack and cards together and so can never put a
+       card on the side that was never opened. */
+    var reach=spread*FAN_STEP*(stackCards.length-1+FAN_LAST);
+    group.position.x=(reach+CARD_W*0.5-(W*0.5+spread*FLAP_X))/2;
+    // the halo arrives late and breathes, so it reads as the card being
+    // special rather than as part of the bag's own light
+    var pulse=0.86+0.14*Math.sin(performance.now()/380);
+    hitGlow.material.opacity=Math.max(0,(spread-0.35)/0.65)*fade*pulse;
   }
 
   var gc=document.createElement('canvas'); gc.width=gc.height=128;
@@ -1097,9 +1310,20 @@ function boot(){
     renderer.setSize(w,h,false);
     cam.aspect=w/h;
     var fill = w<640 ? 0.50 : 0.60;
-    var need = H/(fill*2*Math.tan(THREE.MathUtils.degToRad(30)/2));
-    var widthNeed = (W*1.5)/( (w/h) * 2*Math.tan(THREE.MathUtils.degToRad(30)/2));
+    var t2 = 2*Math.tan(THREE.MathUtils.degToRad(30)/2);
+    var need = H/(fill*t2);
+    var widthNeed = (W*1.5)/( (w/h) * t2);
     camZ=Math.max(need,widthNeed);
+    /* The open fan is wider than the sealed bag, and the camera is locked for
+       the whole tear, so the spread has to fit the frame we already have.
+       Backing the camera off to make room would shrink the pack to a third of
+       a phone screen, so tighten the fan on narrow viewports instead: the
+       cards overlap more, but they stay full size and nothing crops. */
+    var across = camZ*t2*(w/h);
+    var steps = (stackCards.length||8)-1+FAN_LAST;
+    // the spread runs from the fan's far edge to the opened flap's far edge
+    var fixed = CARD_W*0.5 + W*0.5 + FLAP_X;
+    FAN_STEP = Math.min(CARD_W*0.211, Math.max(0.02,(across/1.06 - fixed)/steps));
     cam.updateProjectionMatrix();
   }
   resize(); addEventListener('resize',resize);
@@ -1152,13 +1376,15 @@ function boot(){
   });
 
   var exitStart=0;
-  var EXIT_MS=1500;                 // whole tear-open sequence, one place
+  var EXIT_MS=2600;                 // whole tear-open sequence, one place
   function commit(){
     if(opened) return;
     opened=true; target=1; cue.style.opacity='0';
     exitStart=performance.now();
-    setTimeout(function(){ flash.style.opacity='0.55'; },EXIT_MS*0.60);
-    setTimeout(function(){ veil.style.opacity='1'; },EXIT_MS*0.83);
+    // softened from 0.55 so the flash does not wash out the spread it is
+    // meant to be lighting
+    setTimeout(function(){ flash.style.opacity='0.32'; },EXIT_MS*0.84);
+    setTimeout(function(){ veil.style.opacity='1'; },EXIT_MS*0.90);
     setTimeout(function(){ open(false); },EXIT_MS);
   }
 
@@ -1179,25 +1405,39 @@ function boot(){
       // stage 1: tear races to the bottom
       front += (1-front)*(1-Math.exp(-9*dt));
       // stage 2: strip detaches and spins away
-      var det=easeInOut(seg(e,0.18,0.72));
+      var det=easeInOut(seg(e,0.14,0.52));
       uniS.forEach(function(u){ u.uDetach.value=det*1.0; });
-      strip.position.set(-det*2.1, -det*0.5, det*1.1);
-      strip.rotation.set(det*0.5,-det*1.5,det*0.9);
-      strip.material.opacity=1-seg(e,0.55,0.85);
+      /* Once the strip is off it is litter, so it drops out of frame instead
+         of drifting across it. Hanging beside the opening bag it read as part
+         of the reveal. 3.2 clears the bottom edge at every viewport the
+         camera sizes for, and it is gone before the fan finishes spreading. */
+      strip.position.set(-det*0.30, -det*3.2, det*0.55);
+      strip.rotation.set(det*0.9,-det*0.5,det*0.35);
+      strip.material.opacity=1-seg(e,0.44,0.60);
       // stage 3: body opens toward camera and drifts
-      var bo=easeInOut(seg(e,0.22,0.9));
+      var bo=easeInOut(seg(e,0.16,0.66));
       packBody.rotation.y=bo*0.46; packBody.rotation.z=-bo*0.10;
-      packBody.position.set(bo*0.62,bo*0.06,bo*0.30);
-      body.material.opacity=back.material.opacity=1-seg(e,0.62,0.95);
+      packBody.position.set(bo*FLAP_X,bo*0.06,bo*0.30);
+      /* The far wall is the back of the bag, so it stays put behind the cards
+         and only sags away a little. Its z must never climb past the card
+         stack, which sits between -0.004 and -0.032. */
+      packLining.rotation.y=-bo*0.09; packLining.rotation.z=bo*0.03;
+      packLining.position.set(-bo*0.08,-bo*0.05,-bo*0.06);
+      body.material.opacity=back.material.opacity=1-seg(e,0.45,0.72);
       // stage 4: light from inside
-      // the stack fans out as the bag comes apart
-      layoutStack(easeInOut(seg(e,0.16,0.78)), 1);
-      glow.material.opacity=easeInOut(seg(e,0.25,0.85))*0.45;
-      glow.scale.setScalar(1+easeInOut(seg(e,0.25,1))*2.4);
-      // camera pushes in
-      var push=easeInOut(seg(e,0.15,1));
-      cam.position.z=camZ-push*camZ*0.55;
-      cam.position.y=push*0.06;
+      /* The bag is gone by ~0.72 and the fan is fully spread by ~0.55, so the
+         last third of the sequence is a still hold on the open spread. That
+         hold is the whole point: it is the only chance to read the cards. */
+      layoutStack(easeInOut(seg(e,0.12,0.55)), 1);
+      glow.material.opacity=easeInOut(seg(e,0.20,0.60))*0.45;
+      glow.scale.setScalar(1+easeInOut(seg(e,0.20,0.85))*2.4);
+      /* Locked off. The camera used to dolly in during the tear, which scaled
+         everything on screen: the cards appeared to swell as they came out,
+         so they read as growing rather than as sliding out of the bag. A card
+         is a fixed object, so its on-screen size must not change once it is
+         visible. Frame the shot with the fan's own spread, never the camera. */
+      cam.position.z=camZ;
+      cam.position.y=0;
     }else{
       // critically-damped follow: silky, no jitter, frame-rate independent
       var k=dragging?16:9;

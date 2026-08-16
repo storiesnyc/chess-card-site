@@ -1,1 +1,12 @@
 .DS_Store
+.claude/settings.local.json
+
+# Source documents. They are large, and anything committed here is publicly
+# downloadable from GitHub Pages, so publishing them would put the full print
+# files and every card's art on the open web. Keep them local.
+First Edition Checklist/
+Box Design (AI File)/
+Pack Design (Booster Bag)/
+*.pdf
+*.pages
+Screen Shot *.png
