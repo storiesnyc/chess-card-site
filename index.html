@@ -56,7 +56,11 @@ a{color:inherit;text-decoration:none}
 .data{font-weight:500;font-size:13px;letter-spacing:0;color:inherit}
 
 /* ============== GATE ============== */
-#gate{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--paper)}
+/* An entry overlay, not a section of the page. Laid out in the document flow
+   it added a viewport of height above the header, so once you were on the
+   site you could scroll back up into dead space. Fixed, it never contributes
+   to the scroll at all and the header is the top of the document. */
+#gate{position:fixed;inset:0;z-index:100;overflow:hidden;background:var(--paper)}
 /* the halftone field carries over from the pack and box front */
 #gate::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:radial-gradient(var(--red) 21%,transparent 23%);background-size:16px 16px;
@@ -723,14 +727,17 @@ var gate=document.getElementById('gate'), site=document.getElementById('site'),
     cvs=document.getElementById('gl'), html=document.documentElement;
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function open(instant){
+function open(){
   html.classList.remove('is-locked');
   site.classList.add('is-in');
   try{sessionStorage.setItem('ctc_opened','1');}catch(e){}
-  if(instant){ gate.classList.add('is-skipped'); scrollTo(0,0); }
-  else site.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  /* The gate is a fixed overlay, so there is nothing to scroll from: it is
+     simply taken away and the site fades up behind it. By the time this runs
+     the veil is fully opaque, so the swap is not visible. */
+  gate.classList.add('is-skipped');
+  scrollTo(0,0);
 }
-skipBtn.addEventListener('click',function(){ open(true); });
+skipBtn.addEventListener('click',open);
 
 /* Back to the sealed pack. This reloads rather than resetting in place: the
    tear mutates shader uniforms, the strip and body transforms, six material
@@ -1267,8 +1274,10 @@ function boot(){
     // softened from 0.55 so the flash does not wash out the spread it is
     // meant to be lighting
     setTimeout(function(){ flash.style.opacity='0.32'; },EXIT_MS*0.84);
-    setTimeout(function(){ veil.style.opacity='1'; },EXIT_MS*0.90);
-    setTimeout(function(){ open(false); },EXIT_MS);
+    // the veil fades over .45s, so start it early enough to be fully opaque
+    // by EXIT_MS, when the gate is taken away
+    setTimeout(function(){ veil.style.opacity='1'; },EXIT_MS*0.82);
+    setTimeout(open,EXIT_MS);
   }
 
   /* ---------- easing ---------- */
